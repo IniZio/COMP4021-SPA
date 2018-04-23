@@ -1,0 +1,18 @@
+{
+  "name": "comp4021-spa",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "git@github.com:IniZio/COMP4021-SPA.git",
+  "author": "inizio <newman.kcchow@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "./node_modules/.bin/parcel index.html -p 8080",
+    "build": "./node_modules/.bin/parcel build index.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.7.0"
+  },
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^1.2.0"
+  }
+}
