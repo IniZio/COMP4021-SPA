@@ -1,0 +1,98 @@
+FORMAT: 1A
+HOST: http://ust-course.netlify.com/api
+
+# UST.Course
+Yo man ;)
+
+## User [/user/{id}]
++ Parameters
+    + id: 'abc' (string required)
+
+### Retrieve user information [GET]
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "username" : "thechosenone",
+            }
+        
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            }
+
+### Create user [POST]
++ Request (application/json)
+
+    + Body
+    
+            {
+                "id": "cba",
+                "username": "ihatenaming"
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            }
+    
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": "cba",
+                "username" : "ihatenaming"
+            }
+
+### Update user information [PUT]
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: xxxx
+
+    + Body
+    
+            {
+                "username": "thechosentwo"
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": "abc",
+                "username" : "thechosentwo"
+            }
