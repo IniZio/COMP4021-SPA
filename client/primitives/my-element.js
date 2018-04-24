@@ -8,7 +8,7 @@ class MyElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     // Append template content to custom element
     // const [template] = document.currentScript && document.currentScript.ownerDocument.getElementsByTagName('template')
-    const template = document.getElementById(camelCaseToDash(this.el || this.constructor.name))
+    const template = document.querySelector(`template[id="${camelCaseToDash(this.el || this.constructor.name)}"]`)
     this.shadowRoot.appendChild(template.content.cloneNode(true))
   }
 }
