@@ -1,8 +1,8 @@
-# :nail_care: UST.Course
+# :mortar_board: UST.Course
 
 > COMP4021 SPA Project
 
-### API Documentaion: https://ustcourse.docs.apiary.io/#
+### API Documentaion: https://ustcourse.docs.apiary.io
 
 ## Development
 
@@ -25,14 +25,13 @@ npm run build # Builds project for production
    /* CSS here */
    </style>
 
-   <template id="abc-xyz">
+   <template>
    <!-- HTML here -->
    </template>
 
    <script>
    // JS here
-   // NOTE: the name here must be same as above template id
-   importHtml('abc-xyz', class extends MyElement {})
+   importHtml('abc-xyz')
    </script>
    ```
 
