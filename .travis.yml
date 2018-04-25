@@ -18,6 +18,7 @@ before_install:
   - git config --global user.name "IniZio"
   - git config --global user.email "newman.kcchow@gmail.com"
   - git clone --branch gh-pages "https://${GH_TOKEN}@${GH_REF}" dist
+  - rm -f dist
 
 script:
   - npm run build
