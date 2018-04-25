@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,36 +8,37 @@
   <title>UST.Courses</title>
   <base href="./">
 </head>
+
 <body>
   <!-- Web component polyfills -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
   <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
-
-  <!-- Primitives imports -->
-  <script src="./primitives/my-element.js"></script>
-  <link rel="import" href="./primitives/match-route.html">
-  <link rel="import" href="./primitives/router-link.html">
 
   <!-- Vendor imports -->
   <link rel="import" href="./vendor/bootstrap.html">
   <link rel="import" href="./vendor/jquery.html">
   <link rel="import" href="./vendor/axios.html">
 
+  <style>a {cursor: pointer;}</style>
+
+  <!-- Primitives imports -->
+  <script src="./primitives/my-element.js"></script>
+  <link rel="import" href="./primitives/match-route.html">
+  <link rel="import" href="./primitives/router-link.html">
+
   <!-- HTML imports -->
   <link rel="import" href="./components/api.html">
+  <link rel="import" href="./components/nav-bar.html">
   <link rel="import" href="./components/abc-xyz.html">
 
   <!-- Main content -->
-  <ul class="nav">
-    <router-link to="/d" style="cursor: pointer; margin-right: 20px"><li class="nav-item">Home</li></router-link>
-    <router-link to="/c" style="cursor: pointer"><li class="nav-item">Profile</li></router-link>
-  </ul>
-
-  <match-route path="/d">
+  <nav-bar></nav-bar>
+  <match-route path="/profile">
     <h1>This is D route</h1>
   </match-route>
-  <match-route path="/c">
+  <match-route path="/courses/1">
     <abc-xyz></abc-xyz>
   </match-route>
 </body>
+
 </html>

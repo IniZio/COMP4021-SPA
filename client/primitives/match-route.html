@@ -19,7 +19,7 @@
     constructor () {
       super()
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
-      this.visibilityOnHash({newURL: window.location.href})
+      this.visibilityOnHash({newURL: window.location.href}) 
     }
 
     visibilityOnHash ({newURL = '', oldURL = ''}) {
