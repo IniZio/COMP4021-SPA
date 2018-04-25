@@ -32,13 +32,23 @@
   <link rel="import" href="./components/abc-xyz.html">
 
   <!-- Main content -->
-  <nav-bar></nav-bar>
-  <match-route path="/profile">
-    <h1>This is D route</h1>
-  </match-route>
-  <match-route path="/courses/1">
-    <abc-xyz></abc-xyz>
-  </match-route>
+  <div id="app" style="display: none">
+    <nav-bar></nav-bar>
+    <match-route path="/profile">
+      <h1>This is D route</h1>
+    </match-route>
+    <match-route path="/courses/1">
+      <abc-xyz></abc-xyz>
+    </match-route>
+  </div>
+
+  <script>
+    // Only show when all components are ready
+    window.addEventListener('WebComponentsReady', function(e) {
+      document.getElementById('app').style.display = "block"
+    })
+  </script>
+  <noscript>JavaScript is required</noscript>
 </body>
 
 </html>
