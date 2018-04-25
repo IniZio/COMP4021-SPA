@@ -1,0 +1,1 @@
+<template id="abc-xyz"> <h1>Hello ABC</h1> <button id="send-email" class="btn btn-primary">Send</button> </template> <script>importHtml("abc-xyz",class extends MyElement{connectedCallback(){$(this.shadowRoot).children("#send-email").on("click",async function(){const e=await api.getUser();return console.log(e),!1})}});</script> 
