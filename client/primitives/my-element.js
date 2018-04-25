@@ -4,10 +4,12 @@ class MyElement extends HTMLElement {
 
     this._listeners = []
 
-    // Attach shadow DOM
-    this.attachShadow({mode: 'open'})
-    // Append template content to custom element
-    this.shadowRoot.appendChild(this.template.content.cloneNode(true))
+    if (!this.shadowRoot) {
+      // Attach shadow DOM
+      this.attachShadow({mode: 'open'})
+      // Append template content to custom element
+      this.shadowRoot.appendChild(this.template.content.cloneNode(true))
+    }
   }
 
   connectedCallback () {
