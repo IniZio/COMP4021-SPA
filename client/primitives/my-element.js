@@ -29,11 +29,11 @@ class MyElement extends HTMLElement {
           // e.g. @click
           .filter(attr => attr.name.startsWith('@'))
           .map(attr => {
-            this.removeAttribute(attr.name)
+            node.removeAttribute(attr.name)
             if (instance[attr.value] instanceof Function) {
               const handler = instance[attr.value].bind(instance)
-              this.addEventListener(attr.name.slice(1), handler)
-              instance._listeners.push({el: this, event: attr.name.slice(1), handler})
+              node.addEventListener(attr.name.slice(1), handler)
+              instance._listeners.push({el: node, event: attr.name.slice(1), handler})
             }
           })
       )
