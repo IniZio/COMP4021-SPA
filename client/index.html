@@ -15,6 +15,7 @@
   <!-- Primitives imports -->
   <script src="./primitives/my-element.js"></script>
   <link rel="import" href="./primitives/match-route.html">
+  <link rel="import" href="./primitives/router-link.html">
 
   <!-- Vendor imports -->
   <link rel="import" href="./vendor/bootstrap.html">
@@ -26,6 +27,14 @@
   <link rel="import" href="./components/abc-xyz.html">
 
   <!-- Main content -->
+  <ul class="nav">
+    <router-link to="/d" style="cursor: pointer; margin-right: 20px"><li class="nav-item">Home</li></router-link>
+    <router-link to="/c" style="cursor: pointer"><li class="nav-item">Profile</li></router-link>
+  </ul>
+
+  <match-route path="/d">
+    <h1>This is D route</h1>
+  </match-route>
   <match-route path="/c">
     <abc-xyz></abc-xyz>
   </match-route>
