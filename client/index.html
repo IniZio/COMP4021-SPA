@@ -11,7 +11,10 @@
   <!-- Web component polyfills -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
   <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <!-- Primitives imports -->
   <script src="./primitives/my-element.js"></script>
+  <link rel="import" href="./primitives/match-route.html">
 
   <!-- Vendor imports -->
   <link rel="import" href="./vendor/bootstrap.html">
@@ -23,7 +26,8 @@
   <link rel="import" href="./components/abc-xyz.html">
 
   <!-- Main content -->
-  <abc-xyz></abc-xyz>
-  <xyz-abc></xyz-abc>
+  <match-route path="/c">
+    <abc-xyz></abc-xyz>
+  </match-route>
 </body>
 </html>
