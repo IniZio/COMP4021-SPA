@@ -6,8 +6,8 @@
   "author": "inizio <newman.kcchow@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "BASE_URL=http://localhost:8081 ./node_modules/.bin/parcel index.html -p 8080  --open & php -S localhost:8081 ../server/api.php",
-    "build": "BASE_URL=./api.php ./node_modules/.bin/parcel build index.html --public-url ./ --out-dir ../dist/ && cp ../server/* ../dist/"
+    "dev": "BASE_URL=${BASE_URL} ./node_modules/.bin/parcel index.html -p 8080  --open",
+    "build": "BASE_URL=${BASE_URL} ./node_modules/.bin/parcel build index.html --public-url ./"
   },
   "devDependencies": {
     "parcel-bundler": "^1.7.0"
