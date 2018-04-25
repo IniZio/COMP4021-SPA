@@ -1,0 +1,29 @@
+<template>
+  <slot></slot>
+</template>
+
+<script>
+  exportTag('router-link', class extends MyElement {
+    set to (val) {
+      if (val) {
+        this.setAttribute('to', '');
+      } else {
+        this.removeAttribute('to');
+      }
+    }
+
+    get to () {
+      return this.getAttribute('to')
+    }
+
+    constructor () {
+      super()
+      this.addEventListener('click', this.gotoLink)
+    }
+
+    gotoLink () {
+      const current = window.location.href
+      window.location.href = current.replace(/#(.*)$/, '') + '#' + this.to
+    }
+  })
+</script>

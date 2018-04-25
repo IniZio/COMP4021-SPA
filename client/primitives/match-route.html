@@ -4,10 +4,6 @@
 
 <script>
   exportTag('match-route', class extends MyElement {
-    static get observedAttributes() {
-      return ['path']
-    }
-
     get path () {
       return this.getAttribute('path');
     }
