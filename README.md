@@ -31,7 +31,7 @@ npm run build # Builds project for production
 
    <script>
    // JS here
-   importHtml('abc-xyz')
+   exportTag('abc-xyz')
    </script>
    ```
 

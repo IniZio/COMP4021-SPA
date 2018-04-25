@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  importHtml('abc-xyz', class extends MyElement {
+  exportTag('abc-xyz', class extends MyElement {
     connectedCallback () {
       $(this.shadowRoot).children('#send-email')
         .on('click', async function () {

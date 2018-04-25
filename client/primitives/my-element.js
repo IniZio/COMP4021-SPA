@@ -11,7 +11,7 @@ class MyElement extends HTMLElement {
 window.MyElement = MyElement
 
 // Define custom element
-window.importHtml = (name = '', Class = class extends MyElement {}) => {
+window.exportTag = (name = '', Class = class extends MyElement {}) => {
   Class.template = Class.prototype.template = document.currentScript.parentElement.querySelector('template')
   return window.customElements.define(name, Class)
 }
