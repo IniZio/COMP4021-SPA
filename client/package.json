@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^1.2.0",
+    "observable-slim": "^0.0.3",
     "url-resolve": "^1.0.0"
   }
 }
