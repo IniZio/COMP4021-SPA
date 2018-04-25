@@ -73,3 +73,26 @@ exportTag('xyz-abc', class extends MyElement {
   })
 </script>
 ```
+### 4. Use reactive state
+
+```html
+<template>
+  <input :value="message" @input="changeMessage">
+  <div :children="message"></div>
+</template>
+
+<script>
+  exportTag('abc-xyz', class extends MyElement {
+    // NOTE: Use a function that returns the initial value
+    data () {
+      return {
+        cc: 100,
+        message: 'qq'
+      }
+    }
+    changeMessage (e) {
+      this.data.message = e.target.value
+    }
+  })
+</script>
+```
