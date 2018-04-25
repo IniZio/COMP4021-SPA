@@ -1,10 +1,45 @@
 class MyElement extends HTMLElement {
   constructor () {
     super(...arguments)
+
+    this._listeners = []
+
     // Attach shadow DOM
     this.attachShadow({mode: 'open'})
     // Append template content to custom element
     this.shadowRoot.appendChild(this.template.content.cloneNode(true))
+  }
+
+  connectedCallback () {
+    this.applyListeners()
+  }
+
+  disconnectedCallback () {
+    this.clearListeners()
+  }
+
+  applyListeners () {
+    const instance = this
+
+    this.shadowRoot.querySelectorAll('*')
+      .map(node =>
+        Array.from(node.attributes)
+          // e.g. @click
+          .filter(attr => attr.name.startsWith('@'))
+          .map(attr => {
+            this.removeAttribute(attr.name)
+            if (instance[attr.value] instanceof Function) {
+              const handler = instance[attr.value].bind(instance)
+              this.addEventListener(attr.name.slice(1), handler)
+              instance._listeners.push({el: this, event: attr.name.slice(1), handler})
+            }
+          })
+      )
+  }
+
+  clearListeners () {
+    this._listeners.map(({el, event, handler}) => el.removeEventListener(event, handler))
+    this._listeners.length = 0
   }
 }
 

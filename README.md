@@ -46,3 +46,30 @@ npm run build # Builds project for production
    </body>
    ```
 
+### 2. Access children of the html file in its class
+
+```js
+exportTag('xyz-abc', class extends MyElement {
+  someFunction () {
+    console.log($(this.shadowRoot).children('#send-email'))
+  }
+}
+```
+
+### 3. Add event listeners to template content
+
+```html
+<template>
+  <button @click="sendEmail">Send</button>
+</template>
+
+<script>
+  exportTag('xyz-abc', class extends MyElement {
+    sendEmail (e) {
+      e.preventDefault()
+      api.sendMail()
+      console.log('sending email')
+    }
+  })
+</script>
+```
