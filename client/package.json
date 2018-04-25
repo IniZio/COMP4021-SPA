@@ -6,13 +6,14 @@
   "author": "inizio <newman.kcchow@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "./node_modules/.bin/parcel index.html -p 8080",
-    "build": "./node_modules/.bin/parcel build index.html"
+    "dev": "BASE_URL=http://localhost:8081 ./node_modules/.bin/parcel index.html -p 8080  --open & php -S localhost:8081 ../server/api.php",
+    "build": "BASE_URL=./api.php ./node_modules/.bin/parcel build index.html --public-url ./ --out-dir ../dist/ && cp ../server/* ../dist/"
   },
   "devDependencies": {
     "parcel-bundler": "^1.7.0"
   },
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "^1.2.0"
+    "@webcomponents/webcomponentsjs": "^1.2.0",
+    "url-resolve": "^1.0.0"
   }
 }
