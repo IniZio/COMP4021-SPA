@@ -1,13 +1,17 @@
 <template id="abc-xyz">  
   <h1>Hello ABC</h1>
-  <div id="alert-wee" class="alert alert-success" role="alert">
-      <h4 class="alert-heading">Well done!</h4>
-      <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-      <hr>
-      <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-    </div>
+  <button id="send-email" class="btn btn-primary">Send</button>
 </template>
 
 <script>
-  importHtml('abc-xyz')
+  importHtml('abc-xyz', class extends MyElement {
+    connectedCallback () {
+      $(this.shadowRoot).children('#send-email')
+        .on('click', async function () {
+          const res = await api.getUser()
+          console.log(res)
+          return false
+        })
+    }
+  })
 </script>
