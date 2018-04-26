@@ -75,7 +75,11 @@ class MyElement extends HTMLElement {
                   const newNode = path(paths, instance.data)
                   if (name === 'children') {
                     node.innerText = newNode
-                  } else node.setAttribute(name, newNode)
+                  } else {
+                    node.setAttribute(name, newNode)
+                    // HACK: not sure if value attribute is the only one that sets default rather than live value?
+                    if (name === 'value') node.value = newNode
+                  }
                 }
               )
             )
