@@ -4,17 +4,78 @@ HOST: http://ust-course.netlify.com/api
 # UST.Course
 Yo man ;)
 
-## User [/user/{id}]
+## Auth [/auth/]
+
+### Login user [POST]
++ Request (application/json)
+
+    + Body
+    
+            {
+                "username": "thechosenone",
+                "password": "sosecretithurts"
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true,
+                "token": "randomtoken"
+                "profile": {}
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "profile": {
+                        "type": "object"
+                    }
+                }
+            }
+
+## User [/users/{id}]
 + Parameters
     + id: 'abc' (string required)
 
 ### Retrieve user information [GET]
 + Response 200 (application/json)
 
+    + Headers
+    
+            Authorization: xxxx
+
     + Body
     
             {
-                "username" : "thechosenone",
+                "success": true,
+                "profile": {
+                    "id": "12312312asd",
+                    "username": "thechosenone"
+                }
             }
         
     + Schema
@@ -22,11 +83,19 @@ Yo man ;)
             {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "string"
+                    "success": {
+                        "type": "boolean"
                     },
-                    "username": {
-                        "type": "string"
+                    "profile": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -37,7 +106,6 @@ Yo man ;)
     + Body
     
             {
-                "id": "cba",
                 "username": "ihatenaming"
             }
             
@@ -46,8 +114,8 @@ Yo man ;)
             {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "string"
+                    "success": {
+                        "type
                     },
                     "username": {
                         "type": "string"
@@ -60,8 +128,11 @@ Yo man ;)
     + Body
     
             {
-                "id": "cba",
-                "username" : "ihatenaming"
+                "success": true,
+                "profile": {
+                    "id": "cba",
+                    "username" : "ihatenaming"
+                }
             }
 
 ### Update user information [PUT]
@@ -93,6 +164,218 @@ Yo man ;)
     + Body
     
             {
-                "id": "abc",
-                "username" : "thechosentwo"
+                "success": true,
+                "profile": {
+                    "id": "abc",
+                    "username" : "thechosentwo"
+                }
+            }
+
+## Course [/courses/{id}]
++ Parameters
+    + id: 'abc' (string optional)
+
+### Get courses [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "course": {}
+                "courses": [
+                ]
+            }
+            
+## Course Resource [/courses/{id}/resources/{rid}]
++ Parameters
+    + id: 'abc' (string required)
+    + rid: 'xyz' (string optional)
+
+### Get resources [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "xyz"
+                },
+                "resources": [
+                ]
+            }
+            
+### Create resource [POST]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+    
+    + Body
+
+            {
+                "type": "link",
+                "value": "https://usthing.xyz"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "xyz",
+                    "value": "https://usthing.xyz"
+                }
+            }
+            
+### Edit resource [PUT]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+    
+    + Body
+
+            {
+                "value": "https://clippedjs.github.io"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "xyz",
+                    "value": "https://clippedjs.github.io"
+                }
+            }
+
+### Delete resource [DELETE]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "xyz"
+                }
+            }
+            
+## Course Comment [/courses/{id}/comments/{cid}]
++ Parameters
+    + id: 'abc' (string required)
+    + cid: 'xyz' (string optional)
+
+### Get comments [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "comment": {
+                    "id": "xyz"
+                },
+                "comments": [
+                ]
+            }
+            
+### Create comment [POST]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+    
+    + Body
+
+            {
+                "content": "https://usthing.xyz"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "comment": {
+                    "id": "xyz",
+                    "content": "https://usthing.xyz"
+                }
+            }
+            
+### Edit comment [PUT]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+    
+    + Body
+
+            {
+                "content": "https://clippedjs.github.io"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "xyz",
+                    "content": "https://clippedjs.github.io"
+                }
+            }
+
+### Delete content [DELETE]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "content": {
+                    "id": "xyz"
+                }
             }
