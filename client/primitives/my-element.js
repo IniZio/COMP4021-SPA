@@ -23,6 +23,12 @@ class MyElement extends HTMLElement {
   activateState () {
     const instance = this
 
+    const initial = (
+      instance.data instanceof Function
+      ? instance.data
+      : () => (instance.data || {})
+    )()
+
     this.shadowRoot.querySelectorAll('*')
       .map(node => {
         // Attribute sync
@@ -32,6 +38,9 @@ class MyElement extends HTMLElement {
           .map(attr => {
             const name = attr.name.slice(1)
             node.removeAttribute(attr.name)
+            if (name === 'children') {
+              node.innerText = initial[attr.value]
+            } else node.setAttribute(name, initial[attr.value])
             if (this._mapper.hasOwnProperty(attr.value)) {
               this._mapper[attr.value].push({name, node})
             } else this._mapper[attr.value] = [{name, node}]
@@ -39,11 +48,7 @@ class MyElement extends HTMLElement {
       })
 
     this.data = slim.create(
-      instance.data instanceof Function
-      ? instance.data()
-      : instance.hasOwnProperty('data')
-        ? instance.data
-        : {},
+      initial,
       true,
       changes => {
         changes.map(change => 
@@ -55,7 +60,6 @@ class MyElement extends HTMLElement {
             }
           )
         )
-      // console.log(JSON.stringify(changes, null, 2))
       }
     )
   }
