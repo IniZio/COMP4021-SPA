@@ -1,5 +1,19 @@
 import slim from 'observable-slim'
 
+function path (paths, obj) {
+  paths = Array.isArray(paths) ? paths : paths.split('.')
+  var val = obj
+  var idx = 0
+  while (idx < paths.length) {
+    if (val == null) {
+      return
+    }
+    val = val[paths[idx]]
+    idx += 1
+  }
+  return val
+}
+
 class MyElement extends HTMLElement {
   constructor () {
     super(...arguments)
@@ -39,8 +53,8 @@ class MyElement extends HTMLElement {
             const name = attr.name.slice(1)
             node.removeAttribute(attr.name)
             if (name === 'children') {
-              node.innerText = initial[attr.value]
-            } else node.setAttribute(name, initial[attr.value])
+              node.innerText = path(attr.value, initial)
+            } else node.setAttribute(name, path(attr.value, initial))
             if (this._mapper.hasOwnProperty(attr.value)) {
               this._mapper[attr.value].push({name, node})
             } else this._mapper[attr.value] = [{name, node}]
@@ -51,15 +65,21 @@ class MyElement extends HTMLElement {
       initial,
       true,
       changes => {
-        changes.map(change => 
-          instance._mapper[change.currentPath].map(
-            ({name, node}) => {
-              if (name === 'children') {
-                node.innerText = instance.data[change.currentPath]
-              } else node.setAttribute(name, instance.data[change.currentPath])
-            }
-          )
-        )
+        changes.map(change => {
+          console.log(change.currentPath, instance._mapper)
+          Object.keys(instance._mapper)
+            .filter(paths => paths.startsWith(change.currentPath))
+            .map(paths =>
+              instance._mapper[paths].map(
+                ({name, node}) => {
+                  const newNode = path(paths, instance.data)
+                  if (name === 'children') {
+                    node.innerText = newNode
+                  } else node.setAttribute(name, newNode)
+                }
+              )
+            )
+      })
       }
     )
   }
