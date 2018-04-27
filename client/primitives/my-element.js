@@ -47,6 +47,8 @@ function set (paths, value, obj) {
 }
 
 class MyElement extends HTMLElement {
+  observe = slim.observe
+
   constructor () {
     super(...arguments)
 
