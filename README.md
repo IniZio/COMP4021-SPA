@@ -99,28 +99,14 @@ exportTag('xyz-abc', class extends MyElement {
 
 ### 5. Use global context
 
-1. In index.html:
-```html
-<abc-xyz ~form.message="magic"></abc-xyz>
-```
-
-2. In abc-xyz.html
 ```html
 <template>
-  <input :value="form.message" @input="changeMessage">
-  <div :children="message"></div>
+  <input ~value="magic" @input="changeMessage">
+  <div ~children="magic"></div>
 </template>
 
 <script>
   exportTag('abc-xyz', class extends MyElement {
-    // NOTE: Use a function that returns the initial value
-    data () {
-      return {
-        form: {
-          message: 'qq'
-        }
-      }
-    }
     changeMessage (e) {
       this.context.magic = e.target.value
     }

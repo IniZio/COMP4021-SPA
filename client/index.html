@@ -30,6 +30,7 @@
   <link rel="import" href="./components/api.html">
   <link rel="import" href="./components/nav-bar.html">
   <link rel="import" href="./components/abc-xyz.html">
+  <link rel="import" href="./components/auth-form.html">
 
   <!-- Main content -->
   <div id="app" style="display: none">
@@ -38,7 +39,10 @@
       <h1>This is D route</h1>
     </match-route>
     <match-route path="/courses/1">
-      <abc-xyz ~form.message="magic"></abc-xyz>
+      <abc-xyz ~magic="magic"></abc-xyz>
+    </match-route>
+    <match-route path="/auth">
+      <auth-form></auth-form>
     </match-route>
   </div>
 

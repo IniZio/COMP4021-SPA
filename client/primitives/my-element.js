@@ -127,18 +127,20 @@ class MyElement extends HTMLElement {
   }
 
   activateContext () {
-    const instance = this
+    const instance = this;
 
-    Array.from(this.attributes)
+    [this].concat(this.shadowRoot.querySelectorAll('*')).map(node =>
+      Array.from(node.attributes)
       // e.g. :value
       .filter(attr => attr.name.startsWith('~'))
       .map(attr => {
         const name = attr.name.slice(1)
-        this.removeAttribute(attr.name)
-        if (this._ctxMapper.hasOwnProperty(attr.value)) {
-          this._ctxMapper[attr.value].push({name, node: this})
-        } else this._ctxMapper[attr.value] = [{name, node: this}]
+        node.removeAttribute(attr.name)
+        if (instance._ctxMapper.hasOwnProperty(attr.value)) {
+          instance._ctxMapper[attr.value].push({name, node})
+        } else instance._ctxMapper[attr.value] = [{name, node}]
       })
+    )
 
     slim.observe(SingleSlim.getInstance(), changes => {
       changes.map(change => {
@@ -148,9 +150,14 @@ class MyElement extends HTMLElement {
           .map(paths =>
             instance._ctxMapper[paths].map(
               ({name, node}) => {
-                console.log(name, node)
                 const newNode = path(paths, instance.context)
-                set(name, newNode, instance.data)
+                if (name === 'children') {
+                  node.innerText = newNode
+                } else {
+                  node.setAttribute(name, newNode)
+                  // HACK: not sure if value attribute is the only one that sets default rather than live value?
+                  if (name === 'value') node.value = newNode
+                }
               }
             )
           )

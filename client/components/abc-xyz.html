@@ -1,6 +1,6 @@
 <template id="abc-xyz">  
   <h1>Hello ABC</h1>
-  <input :value="form.message" @input="changeMessage">
+  <input ~value="magic" @input="changeMessage">
   <div :children="form.message"></div>
   <button class="btn btn-primary" @click="sendMail">Send</button>
 </template>
@@ -20,7 +20,7 @@
       this.data.form = {dd: 11, message: 'xyz'}
     }
     changeMessage (e) {
-      this.context.magic = e.target.value
+      this.data.form.message = this.context.magic = e.target.value
     }
   })
 </script>
