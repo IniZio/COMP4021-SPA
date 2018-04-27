@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
       <a class="navbar-brand">
         <router-link to="/">UST.Course</router-link>
       </a>
@@ -24,6 +24,9 @@
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <a class="btn btn-primary" style="margin-left: 20px; color: white">
+          <router-link to="/login">Login</router-link>
+        </a>
       </div>
     </nav>
 </template>

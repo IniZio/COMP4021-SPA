@@ -30,10 +30,11 @@
   <link rel="import" href="./components/api.html">
   <link rel="import" href="./components/nav-bar.html">
   <link rel="import" href="./components/abc-xyz.html">
-  <link rel="import" href="./components/auth-form.html">
+  <link rel="import" href="./components/login-form.html">
+  <link rel="import" href="./components/register-form.html">
 
   <!-- Main content -->
-  <div id="app" style="display: none">
+  <div id="app" class="d-flex flex-column align-items-center" style="display: none; height: 100vh; box-sizing: border-box">
     <nav-bar></nav-bar>
     <match-route path="/profile">
       <h1>This is D route</h1>
@@ -41,8 +42,15 @@
     <match-route path="/courses/1">
       <abc-xyz ~magic="magic"></abc-xyz>
     </match-route>
-    <match-route path="/auth">
-      <auth-form></auth-form>
+    <match-route path="/login">
+      <div class="card p-4" style="width: 18rem; margin-top: 10rem">
+        <login-form></login-form>
+      </div>
+    </match-route>
+    <match-route path="/register">
+      <div class="card p-4" style="width: 18rem; margin-top: 10rem">
+        <register-form></register-form>
+      </div>
     </match-route>
   </div>
 
