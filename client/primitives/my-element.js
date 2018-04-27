@@ -1,9 +1,27 @@
 import slim from 'observable-slim'
 
+const SingleSlim = (() => {
+  let instance
+
+  function createInstance () {
+      const object = slim.create({}, true)
+      return object
+  }
+
+  return {
+      getInstance () {
+          if (!instance) {
+              instance = createInstance()
+          }
+          return instance
+      }
+  }
+})()
+
 function path (paths, obj) {
   paths = Array.isArray(paths) ? paths : paths.split('.')
-  var val = obj
-  var idx = 0
+  let val = obj
+  let idx = 0
   while (idx < paths.length) {
     if (val == null) {
       return
@@ -14,12 +32,28 @@ function path (paths, obj) {
   return val
 }
 
+
+function set (paths, value, obj) {
+  var schema = obj
+  var pList = Array.isArray(paths) ? paths : paths.split('.')
+  var len = pList.length
+  for(var i = 0; i < len-1; i++) {
+      var elem = pList[i]
+      if( !schema[elem] ) schema[elem] = {}
+      schema = schema[elem]
+  }
+
+  schema[pList[len-1]] = value
+}
+
 class MyElement extends HTMLElement {
   constructor () {
     super(...arguments)
 
     this._listeners = []
     this._mapper = {}
+    this.context = SingleSlim.getInstance()
+    this._ctxMapper = {}
 
     if (!this.shadowRoot) {
       // Attach shadow DOM
@@ -32,6 +66,7 @@ class MyElement extends HTMLElement {
   connectedCallback () {
     this.applyListeners()
     this.activateState()
+    this.activateContext()
   }
 
   activateState () {
@@ -90,6 +125,38 @@ class MyElement extends HTMLElement {
 
   diactivateState () {
     slim.remove(this.data)
+  }
+
+  activateContext () {
+    const instance = this
+
+    Array.from(this.attributes)
+      // e.g. :value
+      .filter(attr => attr.name.startsWith('~'))
+      .map(attr => {
+        const name = attr.name.slice(1)
+        this.removeAttribute(attr.name)
+        if (this._ctxMapper.hasOwnProperty(attr.value)) {
+          this._ctxMapper[attr.value].push({name, node: this})
+        } else this._ctxMapper[attr.value] = [{name, node: this}]
+      })
+
+    slim.observe(SingleSlim.getInstance(), changes => {
+      changes.map(change => {
+        // console.log(change.currentPath, instance._ctxMapper)
+        Object.keys(instance._ctxMapper)
+          .filter(paths => paths.startsWith(change.currentPath))
+          .map(paths =>
+            instance._ctxMapper[paths].map(
+              ({name, node}) => {
+                console.log(name, node)
+                const newNode = path(paths, instance.context)
+                set(name, newNode, instance.data)
+              }
+            )
+          )
+      })
+    })
   }
 
   disconnectedCallback () {

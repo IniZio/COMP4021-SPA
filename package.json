@@ -8,6 +8,8 @@
 		"serve": "php -S localhost:8080 -t dist"
 	},
 	"devDependencies": {
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-preset-env": "^1.6.1",
 		"parcel-bundler": "^1.7.1"
 	}
 }

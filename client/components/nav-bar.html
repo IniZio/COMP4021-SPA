@@ -16,6 +16,9 @@
           <li class="nav-item">
             <a class="nav-link"><router-link to="/profile">Profile</router-link></a>
           </li>
+          <li class="nav-item">
+            <button @click="changeContext">MAGIC</button>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -26,5 +29,9 @@
 </template>
 
 <script>
-exportTag('nav-bar')
+exportTag('nav-bar', class extends MyElement {
+  changeContext () {
+    this.context.magic = 'yo m'
+  }
+})
 </script>
