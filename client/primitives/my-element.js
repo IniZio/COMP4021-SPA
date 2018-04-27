@@ -101,7 +101,6 @@ class MyElement extends HTMLElement {
       true,
       changes => {
         changes.map(change => {
-          console.log(change.currentPath, instance._mapper)
           Object.keys(instance._mapper)
             .filter(paths => paths.startsWith(change.currentPath))
             .map(paths =>
@@ -162,6 +161,7 @@ class MyElement extends HTMLElement {
   disconnectedCallback () {
     this.clearListeners()
     this.diactivateState()
+    this.diactivateContext()
   }
 
   applyListeners () {
