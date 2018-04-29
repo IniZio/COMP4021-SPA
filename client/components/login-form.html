@@ -1,17 +1,52 @@
 <template>
-  <form @submit="submitLogin">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input class="form-control" id="username" placeholder="Enter username" :value="form.username" @input="changeField">
-      <div :children="form.username"></div>
+    <div id="loginForm" class="col-6 container rounded bg-white">
+        <div class="row">
+            <div class="col p-3 text-center">
+                <h4>Sign In</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form @submit="submitLogin" id="LoginForm">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-user"></i></div>
+                            </div>
+                            <input type="text" required class="form-control" id="username" name="username" placeholder="Username" :value="form.username" @input="changeField">
+                            <div :children="form.username"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-key"></i></div>
+                            </div>
+                            <input type="password" required class="form-control" id="password" name="password" placeholder="Password" :value="form.password"  @input="changeField">
+                        </div>
+                    </div>
+                    <div style="height: 4rem; margin: auto; width: 304px;">
+                        <!-- reCaptcha key for Localhost -->
+                        <div class="row g-recaptcha" data-sitekey="6LfUDFYUAAAAAMDbYCNjFpKP51yOXmGRcKDeRCzc"></div>
+                    </div>
+                    <br>
+                    <div class="form-group text-center">
+                        <button type="submit" class="col-5 btn btn-primary"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
+                    </div>
+                    <div id="signinError" class="col form-group text-center text-danger" style="display: none">
+                        <i class="fas fa-times"></i> <span>Username or Password is wrong</span>
+                    </div>
+                    <hr>
+                    <div class="form-text text-center mb-2">
+                        Don't have an account?
+                    </div>
+                    <div class="form-group text-center pb-2">
+                        <router-link to="/register"><button id="registerButton" type="button" class="col-5 btn btn-info"><i class="fas fa-clipboard-list mr-2"></i>Register</button></router-link>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Password" :value="form.password" @input="changeField">
-      <a><router-link to="/register">Register an account here</router-link></a>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
 </template>
 
 <script>
