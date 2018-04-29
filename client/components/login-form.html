@@ -25,11 +25,19 @@
                             <input type="password" required class="form-control" id="password" name="password" placeholder="Password" :value="form.password"  @input="changeField">
                         </div>
                     </div>
-                    <div style="height: 4rem; margin: auto; width: 304px;">
+                    <div style="height: 4rem; margin: 0 auto; padding-left: 1.5%; width: 304px;">
                         <!-- reCaptcha key for Localhost -->
                         <div class="row g-recaptcha" data-sitekey="6LfUDFYUAAAAAMDbYCNjFpKP51yOXmGRcKDeRCzc"></div>
                     </div>
                     <br>
+                    <div class="row">
+                        <div class="checkbox" style="margin:0 auto;">
+                            <label>
+                                <input type="checkbox" name="remember" value="true">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group text-center">
                         <button type="submit" class="col-5 btn btn-primary"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
                     </div>
