@@ -16,6 +16,7 @@
 
   <!-- Vendor imports -->
   <link rel="import" href="./vendor/font-awesome.html" async>
+  <link rel="import" href="./vendor/recaptcha.html" async>
   <link rel="import" href="./vendor/bootstrap.html">
   <link rel="import" href="./vendor/jquery.html">
   <link rel="import" href="./vendor/axios.html">
@@ -28,11 +29,11 @@
   <link rel="import" href="./primitives/router-link.html">
 
   <!-- HTML imports -->
-  <link rel="import" href="./components/api.html">
-  <link rel="import" href="./components/nav-bar.html">
-  <link rel="import" href="./components/abc-xyz.html">
-  <link rel="import" href="./components/login-form.html">
-  <link rel="import" href="./components/register-form.html">
+  <link rel="import" href="./components/api.html" async>
+  <link rel="import" href="./components/nav-bar.html" async>
+  <link rel="import" href="./components/abc-xyz.html" async>
+  <link rel="import" href="./components/login-form.html" async>
+  <link rel="import" href="./components/register-form.html" async>
 
   <!-- Main content -->
   <div id="app" class="d-flex flex-column align-items-center" style="display: none; height: 100vh; box-sizing: border-box">
@@ -44,8 +45,10 @@
       <abc-xyz ~magic="magic"></abc-xyz>
     </match-route>
     <match-route path="/login">
-      <div class="card p-4" style="width: 20rem; margin-top: 10rem">
-        <login-form></login-form>
+      <div class="card p-4" style="margin-top: 10rem">
+        <login-form>
+          <div id="login-recaptcha" slot="recaptcha"></div>
+        </login-form>
       </div>
     </match-route>
     <match-route path="/register">
