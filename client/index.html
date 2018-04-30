@@ -52,8 +52,10 @@
       </div>
     </match-route>
     <match-route path="/register">
-      <div class="card p-4" style="width: 20rem; margin-top: 10rem">
-        <register-form></register-form>
+      <div class="card p-4" style="margin-top: 10rem">
+        <register-form>
+          <div id="register-recaptcha" slot="recaptcha"></div>
+        </register-form>
       </div>
     </match-route>
   </div>
