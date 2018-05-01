@@ -1,3 +1,5 @@
+<link rel="import" href="../vendor/recaptcha.html">
+
 <template>
     <div id="login" class="col-12 container rounded bg-white">
         <div class="row">
@@ -24,11 +26,18 @@
                             <input type="password" required class="form-control" id="password" name="password" placeholder="Password" :value="form.password"  @input="changeField">
                         </div>
                     </div>
-                    <div style="height: 4rem; margin: auto; width: 304px;">
-                        <!-- reCaptcha key for Localhost -->
-                        <div class="row g-recaptcha" data-sitekey="6LfUDFYUAAAAAMDbYCNjFpKP51yOXmGRcKDeRCzc"></div>
+                    <div style="height: 4rem; margin: 0 auto">
+                      <slot name="recaptcha"></slot>
                     </div>
                     <br>
+                    <div class="row">
+                        <div class="checkbox" style="margin:0 auto">
+                            <label>
+                                <input type="checkbox" name="remember" value="true">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group text-center">
                         <button type="submit" class="col-5 btn btn-primary" style="min-width: 100%"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
                     </div>
@@ -59,14 +68,34 @@
       }
     }
 
+    connectedCallback () {
+      super.connectedCallback()
+      const instance = this
+      this.captchaWidget = grecaptcha.render(
+        document.getElementById('login-recaptcha'),
+        {
+          sitekey: '6LfUDFYUAAAAAMDbYCNjFpKP51yOXmGRcKDeRCzc',
+          // callback : this.verifyCallback.bind(instance),
+        }
+      )
+    }
+
     changeField (e) {
       this.data.form[e.target.id] = e.target.value
     }
+
+    // verifyCallback (response) {
+      // this.data.form.recaptcha = response
+    // }
 
     submitLogin (e) {
       e.preventDefault()
       e.stopPropagation()
       e.target.classList.add('was-validated')
+      const captcha = grecaptcha.getResponse(this.captchaWidget)
+      grecaptcha.reset(this.captchaWidget)
+      // If no captcha response
+      if (!captcha) return
       if (e.target.checkValidity() === false) return
       console.log('submitting: ', JSON.stringify(this.data.form))
     }

@@ -56,6 +56,70 @@ Yo man ;)
                     }
                 }
             }
+            
+### Logout user [DELETE]
+            
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    }
+                }
+            }
+            
+## Users [/users]
+
+### Create user [POST]
++ Request (application/json)
+
+    + Body
+    
+            {
+                "username": "ihatenaming"
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            }
+    
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true,
+                "profile": {
+                    "id": "cba",
+                    "username" : "ihatenaming"
+                }
+            } 
 
 ## User [/users/{id}]
 + Parameters
@@ -100,40 +164,7 @@ Yo man ;)
                 }
             }
 
-### Create user [POST]
-+ Request (application/json)
 
-    + Body
-    
-            {
-                "username": "ihatenaming"
-            }
-            
-    + Schema
-    
-            {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type
-                    },
-                    "username": {
-                        "type": "string"
-                    }
-                }
-            }
-    
-+ Response 200 (application/json)
-
-    + Body
-    
-            {
-                "success": true,
-                "profile": {
-                    "id": "cba",
-                    "username" : "ihatenaming"
-                }
-            }
 
 ### Update user information [PUT]
 + Request (application/json)
@@ -171,11 +202,54 @@ Yo man ;)
                 }
             }
 
+## Courses [/courses]
+### Get course list [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "courses": [
+                ]
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "courses": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
 ## Course [/courses/{id}]
 + Parameters
     + id: 'abc' (string optional)
 
-### Get courses [GET]
+### Get course [GET]
 + Request (application/json)
 
     + Headers
@@ -189,14 +263,33 @@ Yo man ;)
             {
                 "success": true,
                 "course": {}
-                "courses": [
-                ]
             }
             
-## Course Resource [/courses/{id}/resources/{rid}]
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "course": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }    
+                }
+            }
+            
+## Course Resources [/courses/{id}/resources]
 + Parameters
     + id: 'abc' (string required)
-    + rid: 'xyz' (string optional)
 
 ### Get resources [GET]
 + Request (application/json)
@@ -211,11 +304,74 @@ Yo man ;)
 
             {
                 "success": true,
-                "resource": {
-                    "id": "xyz"
-                },
                 "resources": [
+                    {
+                        "id": "0001",
+                        "name": "Course Note",
+                        "description": "A piece of course note of the course!",
+                        "type": "file"
+                    },
+                    {
+                        "id": "0002",
+                        "name": "Course Note 2",
+                        "description": "A piece of course note of the course!",
+                        "type": "link"
+                    }
                 ]
+            }
+            
+## Course Resource [/courses/{id}/resources/{rid}]
++ Parameters
+    + id: 'abc' (string required)
+    + rid: 'xyz' (string required)
+
+### Get resource [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "resource": {
+                    "id": "0001",
+                    "name": "Course Note",
+                    "description": "A piece of course note of the course!",
+                    "type": "link"
+                }
+            }
+    
+    + Schema
+            
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "resource": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             }
             
 ### Create resource [POST]
@@ -228,7 +384,9 @@ Yo man ;)
     + Body
 
             {
-                "type": "link",
+                "name": "Course Note",
+                "description": "A piece of course note of the course!",
+                "type": "link"
                 "value": "https://usthing.xyz"
             }
 
@@ -238,10 +396,7 @@ Yo man ;)
 
             {
                 "success": true,
-                "resource": {
-                    "id": "xyz",
-                    "value": "https://usthing.xyz"
-                }
+                "id": "xyz"
             }
             
 ### Edit resource [PUT]
@@ -254,7 +409,10 @@ Yo man ;)
     + Body
 
             {
-                "value": "https://clippedjs.github.io"
+                "name": "Course Note",
+                "description": "A piece of course note of the course!",
+                "type": "link"
+                "value": "https://usthing.xyz"
             }
 
 + Response 200 (application/json)
@@ -263,10 +421,7 @@ Yo man ;)
 
             {
                 "success": true,
-                "resource": {
-                    "id": "xyz",
-                    "value": "https://clippedjs.github.io"
-                }
+                "id": "xyz"
             }
 
 ### Delete resource [DELETE]
@@ -281,16 +436,60 @@ Yo man ;)
     + Body
 
             {
-                "success": true,
-                "resource": {
-                    "id": "xyz"
-                }
+                "success": true
             }
             
-## Course Comment [/courses/{id}/comments/{cid}]
+## Course Resource File [/courses/{id}/resources/{rid}/file]
 + Parameters
     + id: 'abc' (string required)
-    + cid: 'xyz' (string optional)
+    + rid: 'xyz' (string required)
+    
+### Upload File [POST]
++ Request
+    
+    + Headers
+    
+            Authorization: xxxx
+            
++ Request (multipart/form-data)
+            
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true
+            }
+            
+### Get File [GET]
+
++ Request
+    
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/octet-stream)
+
+### Delete File [DELETE]
+
++ Request
+    
+    + Headers
+    
+            Authorization: xxxx
+            
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true
+            }
+
+## Course Comments [/courses/{id}/comments]
++ Parameters
+    + id: 'abc' (string required)
 
 ### Get comments [GET]
 + Request (application/json)
@@ -305,10 +504,13 @@ Yo man ;)
 
             {
                 "success": true,
-                "comment": {
-                    "id": "xyz"
-                },
                 "comments": [
+                    {
+                        "id": "0001",
+                        "author": "ben",
+                        "createdTime": "timestamp",
+                        "content": "this course is good!"
+                    }
                 ]
             }
             
@@ -331,9 +533,32 @@ Yo man ;)
 
             {
                 "success": true,
+                "id": "xyz"
+            }
+            
+## Course Comment [/courses/{id}/comments/{cid}]
++ Parameters
+    + id: 'abc' (string required)
+    + cid: 'xyz' (string optional)
+
+### Get comment [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
                 "comment": {
-                    "id": "xyz",
-                    "content": "https://usthing.xyz"
+                    "id": "0001",
+                    "author": "ben",
+                    "createdTime": "timestamp",
+                    "content": "this course is good!"
                 }
             }
             
@@ -355,14 +580,10 @@ Yo man ;)
     + Body
 
             {
-                "success": true,
-                "resource": {
-                    "id": "xyz",
-                    "content": "https://clippedjs.github.io"
-                }
+                "success": true
             }
 
-### Delete content [DELETE]
+### Delete comment [DELETE]
 + Request (application/json)
 
     + Headers
@@ -374,8 +595,5 @@ Yo man ;)
     + Body
 
             {
-                "success": true,
-                "content": {
-                    "id": "xyz"
-                }
+                "success": true
             }
