@@ -51,5 +51,6 @@ switch ($requestObj["path"][0]){
         break;
 }
 
+do_error(404, ERROR_UNEXPECTED);
 cleanup_exit();
 

@@ -25,3 +25,20 @@ function do_error($response_code, $error_message, $responseObj = array()){
     }
     do_response($response_code, $responseObj);
 }
+
+function do_sqlite3_prepared_statement($statement, $values){
+    global $db;
+    $sqlStmt = $db->prepare($statement);
+    foreach ($values as $value){
+        $sqlStmt->bindValue($value["param"],$value["value"],$value["type"]);
+    }
+    $sqlResult = $sqlStmt->execute();
+    $results = array();
+    $resultRow = null;
+    while ($resultRow = $sqlResult->fetchArray(SQLITE3_ASSOC) !== false){
+        array_push($results,$resultRow);
+    }
+    $sqlResult->finalize();
+    $sqlStmt->close();
+    return $results;
+}

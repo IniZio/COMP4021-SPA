@@ -1,7 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: signalng
- * Date: 5/1/18
- * Time: 2:28 PM
- */
+
+switch ($requestObj["method"]) {
+    case "POST":
+
+        break;
+    default:
+        do_error(
+            405,
+            ERROR_HTTP_405);
+        break;
+}
