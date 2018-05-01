@@ -56,6 +56,70 @@ Yo man ;)
                     }
                 }
             }
+            
+### Logout user [DELETE]
+            
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    }
+                }
+            }
+            
+## Users [/users]
+
+### Create user [POST]
++ Request (application/json)
+
+    + Body
+    
+            {
+                "username": "ihatenaming"
+            }
+            
+    + Schema
+    
+            {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            }
+    
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true,
+                "profile": {
+                    "id": "cba",
+                    "username" : "ihatenaming"
+                }
+            } 
 
 ## User [/users/{id}]
 + Parameters
@@ -100,40 +164,7 @@ Yo man ;)
                 }
             }
 
-### Create user [POST]
-+ Request (application/json)
 
-    + Body
-    
-            {
-                "username": "ihatenaming"
-            }
-            
-    + Schema
-    
-            {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type
-                    },
-                    "username": {
-                        "type": "string"
-                    }
-                }
-            }
-    
-+ Response 200 (application/json)
-
-    + Body
-    
-            {
-                "success": true,
-                "profile": {
-                    "id": "cba",
-                    "username" : "ihatenaming"
-                }
-            }
 
 ### Update user information [PUT]
 + Request (application/json)
@@ -171,11 +202,29 @@ Yo man ;)
                 }
             }
 
+## Courses [/courses]
+### Get course list [GET]
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "courses": [
+                ]
+            }
+
 ## Course [/courses/{id}]
 + Parameters
     + id: 'abc' (string optional)
 
-### Get courses [GET]
+### Get course [GET]
 + Request (application/json)
 
     + Headers
@@ -189,8 +238,6 @@ Yo man ;)
             {
                 "success": true,
                 "course": {}
-                "courses": [
-                ]
             }
             
 ## Course Resource [/courses/{id}/resources/{rid}]
@@ -362,7 +409,7 @@ Yo man ;)
                 }
             }
 
-### Delete content [DELETE]
+### Delete comment [DELETE]
 + Request (application/json)
 
     + Headers
