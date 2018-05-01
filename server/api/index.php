@@ -32,7 +32,7 @@ $requestObj["SESSION_Params"] = $_SESSION;
 
 $responseObj = array();
 
-$db = new SQLite3("../data.db");
+$db = new SQLite3("./data.db");
 
 switch ($requestObj["path"][0]){
     case "users":

@@ -8,7 +8,14 @@ if (count($requestObj["path"]) == 1)
             break;
         // GET /users
         case "GET":
-
+            if (is_null($_SESSION["user"]))
+                do_error(
+                    401,
+                    ERROR_USER_NOT_LOGGEDIN);
+            else
+                do_response(
+                    200,
+                    $_SESSION["user"]);
             break;
         default:
             do_error(
@@ -17,7 +24,6 @@ if (count($requestObj["path"]) == 1)
             break;
     }
 else {
-//TODO: Subpath parsing
     $user_id = $requestObj["path"][1];
     switch ($requestObj["method"]) {
         // PUT /users/{id}

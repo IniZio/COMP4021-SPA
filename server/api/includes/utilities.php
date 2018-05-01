@@ -35,7 +35,7 @@ function do_sqlite3_prepared_statement($statement, $values){
     $sqlResult = $sqlStmt->execute();
     $results = array();
     $resultRow = null;
-    while ($resultRow = $sqlResult->fetchArray(SQLITE3_ASSOC) !== false){
+    while (($resultRow = $sqlResult->fetchArray(SQLITE3_ASSOC)) !== false){
         array_push($results,$resultRow);
     }
     $sqlResult->finalize();

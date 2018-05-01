@@ -15,15 +15,16 @@ switch ($requestObj["method"]) {
             )[0];
 
             if (password_verify(
-                $requestObj["POST_JSONObj"]["password"],
-                $userEntry["hashed_password"])) {
+                    $requestObj["POST_JSONObj"]["password"],
+                    $userEntry["hashed_password"])) {
                 $_SESSION["user"] = $userEntry;
-                do_response(200, $responseObj);
-            } else
+                do_response(200, null);
+            } else{
                 do_error(
                     401,
                     ERROR_PASSWORD_NOT_MATCH
                 );
+            }
 
         } else {
             do_error(
