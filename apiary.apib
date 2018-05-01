@@ -202,6 +202,34 @@ Yo man ;)
                 }
             }
 
+## User Picture [/users/{id}/picture]
++ Parameters
+    + id: 'abc' (string required)
+
+### Get User Picture [GET]
++ Request (text/plain)
+    
+    + Headers
+    
+            Authorization: xxxx
+            
++ Response 200 (image/jpeg)
+
+### Upload User Picture [POST]
++ Request (multipart/form-data)
+    
+    + Headers
+    
+            Authorization: xxxx
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "success": true
+            }
+
 ## Courses [/courses]
 ### Get course list [GET]
 + Request (application/json)
