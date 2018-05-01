@@ -2,7 +2,6 @@ create table Users
 (
 	id INTEGER not null,
 	username TEXT not null,
-	hash_salt TEXT not null,
 	hashed_password TEXT not null,
 	picture_file_id INTEGER,
 	first_name TEXT,
