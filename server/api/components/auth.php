@@ -40,8 +40,7 @@ switch ($requestObj["method"]) {
             );
         }
         $_SESSION["user"] = null;
-        $responseObj ["success"] = true;
-        http_response_code(200);
+        do_response(200, null);
         break;
     default:
         do_error(
