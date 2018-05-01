@@ -1,36 +1,49 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: signalng
- * Date: 5/1/18
- * Time: 2:28 PM
- */
 
-switch ($requestObj["method"]){
+switch ($requestObj["method"]) {
     case "POST":
         if (
-            !is_null($requestObj["POST_JSONObj"]["username"])&&
+            !is_null($requestObj["POST_JSONObj"]["username"]) &&
             !is_null($requestObj["POST_JSONObj"]["password"])
-        ){
-            $responseObj ["success"] = true;
-            $responseObj ["token"] = "masterKey02135468910346501749";
-            http_response_code(200);
-            header('Content-Type: application/json');
-        }
-        else{
-            $responseObj ["success"] = false;
-            http_response_code(401);
-            header('Content-Type: application/json');
+        ) {
+            $sqlStmt = $db->prepare(
+                "SELECT * FROM Users WHERE username=:username");
+            $sqlStmt->bindValue(
+                ":username",
+                $requestObj["POST_JSONObj"]["username"]);
+            $sqlResult = $sqlStmt->execute();
+
+            $userEntry = $sqlResult->fetchArray(SQLITE3_ASSOC);
+
+            $sqlResult->finalize();
+            $sqlStmt->close();
+
+            if (password_verify(
+                $requestObj["POST_JSONObj"]["password"],
+                $userEntry["hashed_password"])) {
+                $_SESSION["user"] = $userEntry;
+                do_response(200,$responseObj);
+            }
+            else
+                do_error(
+                    401,
+                    PASSWORD_NOT_MATCH
+                );
+
+        } else {
+            do_error(
+                401,
+                ERROR_PARAMETER_FAULT);
         }
         break;
     case "DELETE":
+        $_SESSION["user"] = null;
         $responseObj ["success"] = true;
         http_response_code(200);
-        header('Content-Type: application/json');
         break;
     default:
-        http_response_code(404);
-        header('Content-Type: application/json');
-        exit();
+        do_error(
+            404,
+            ERROR_HTTP_METHOD_404);
         break;
 }

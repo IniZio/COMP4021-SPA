@@ -1,5 +1,21 @@
 <?php
+
+/*
+ * How to add a new route?
+ *
+ * Add a php file under /components,
+ * Add a case under switch, with value as the path,
+ * include_once your php file in the case,
+ * in your php file, you can use global $requestObj, $responseObj and $db.
+ *
+ * If you need anything other than json response, set $responseObj as null,
+ * and then do your own output and content_type header.
+ */
+
 session_start();
+
+include_once "./includes/utilities.php";
+include_once "./includes/languages/en_US.php";
 
 header('Access-Control-Allow-Origin: *'); 
 header("Access-Control-Allow-Credentials: true");
@@ -16,22 +32,24 @@ $requestObj["SESSION_Params"] = $_SESSION;
 
 $responseObj = array();
 
+$db = new SQLite3("../data.db");
+
 switch ($requestObj["path"][0]){
     case "users":
-        include_once "components/users.php";
+        include "components/users.php";
         break;
     case "auth":
-        include_once "components/auth.php";
+        include "components/auth.php";
         break;
     case "courses":
-        include_once "components/courses.php";
+        include "components/courses.php";
         break;
     default:
-        http_response_code(404);
-        header('Content-Type: application/json');
-        exit();
+        do_error(
+            404,
+            ERROR_HTTP_PATH_404);
         break;
 }
 
-echo json_encode($responseObj);
+cleanup_exit();
 
