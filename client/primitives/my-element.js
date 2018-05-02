@@ -56,6 +56,7 @@ class MyElement extends HTMLElement {
     this._mapper = {}
     this.context = SingleSlim.getInstance()
     this._ctxMapper = {}
+    this.computed = {}
     this.initState()
 
     if (!this.shadowRoot) {
@@ -166,14 +167,18 @@ class MyElement extends HTMLElement {
       .filter(attr => attr.name.startsWith(':'))
       .map(attr => {
         node.removeAttribute(attr.name)
+        const computed = path(attr.value, instance.computed) instanceof Function ? path(attr.value, instance.computed) : null
         const name = attr.name.slice(1)
-        const value = overrides[attr.value] || path(attr.value, this.data)
+        const value = overrides.hasOwnProperty(attr.value) ? overrides[attr.value] :
+          computed ? computed.call(instance, node, overrides) :
+          path(attr.value, this.data)
         if (name === 'children') {
-          node.innerText = value
-        } else node.setAttribute(name, value)
+          node.innerText = '' + value
+        } else node.setAttribute(name, '' + value)
+
         if (this._mapper.hasOwnProperty(attr.value)) {
-          this._mapper[attr.value].push({name, node})
-        } else this._mapper[attr.value] = [{name, node}]
+          this._mapper[attr.value].push({name: (computed ? '' : name), node})
+        } else this._mapper[attr.value] = [{name: (computed ? '' : name), node}]
       })
   }
 
@@ -230,7 +235,7 @@ class MyElement extends HTMLElement {
   disconnectedCallback() {
     this.clearListeners()
     this.diactivateState()
-    this.diactivateContext()
+    // this.diactivateContext()
   }
 
   applyListeners(node) {

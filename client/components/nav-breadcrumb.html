@@ -1,7 +1,9 @@
 <template>
   <ol class="breadcrumb p-1" :abc="path" style="width: 100vw">
     <li x-for="segment:path" class="breadcrumb-item" :abc="segment">
-      <a :children="segment"></a>
+      <router-link :to="fullPath" style="display: inline;">
+        <a :children="segment"></a>
+      </router-link>
     </li>
   </ol>
 </template>
@@ -16,6 +18,14 @@
 
     constructor () {
       super()
+
+      this.computed = {
+        fullPath (node, overrides) {
+          const path = this.data.path
+          return '/' + path.slice(0, path.indexOf(overrides.segment) + 1).join('/')
+        }
+      }
+
       window.addEventListener('hashchange', this.breadcrumbOnHash.bind(this))
       this.breadcrumbOnHash({newURL: window.location.href})
     }
