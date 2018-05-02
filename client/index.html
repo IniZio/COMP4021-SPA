@@ -30,9 +30,8 @@
 
   <!-- HTML imports -->
   <link rel="import" href="./components/api.html" async>
+  <link rel="import" href="./components/nav-breadcrumb.html" async>
   <link rel="import" href="./components/nav-bar.html" async>
-  <link rel="import" href="./components/nav-breadcrumb.html">
-  <link rel="import" href="./components/abc-xyz.html" async>
   <link rel="import" href="./components/login-form.html" async>
   <link rel="import" href="./components/register-form.html" async>
   <link rel="import" href="./components/profile-form.html" async>
@@ -41,9 +40,6 @@
   <div id="app" class="d-flex flex-column align-items-center" style="display: none; height: 100vh; box-sizing: border-box">
     <nav-bar></nav-bar>
     <nav-breadcrumb></nav-breadcrumb>
-    <match-route path="/courses/1">
-      <abc-xyz ~magic="magic"></abc-xyz>
-    </match-route>
     <match-route path="/login">
       <div class="card p-4" style="margin-top: 10rem">
         <login-form>
