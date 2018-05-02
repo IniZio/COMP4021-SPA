@@ -1,40 +1,40 @@
+<style>
+  nav-bar {
+    display: contents;
+  }
+</style>
+
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
-      <a class="navbar-brand">
-        <router-link to="/">UST.Course</router-link>
-      </a>
+      <router-link to="/">
+        <a class="navbar-brand">
+          UST.Course
+        </a>
+      </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link"><router-link to="/courses/1">Course 1</router-link></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"><router-link to="/profile">Profile</router-link></a>
-          </li>
-          <li class="nav-item">
-            <button @click="changeContext">MAGIC</button>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <!-- <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <a class="btn btn-primary" style="margin-left: 20px; color: white">
-          <router-link to="/login">Login</router-link>
-        </a>
+        </form> -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <router-link to="/profile"><a class="nav-link">Profile</a></router-link>
+            </li>
+          </ul>
+        <router-link to="/login">
+          <a class="btn btn-primary" style="margin-left: 20px; color: white">
+            Login
+          </a>
+        </router-link>
       </div>
     </nav>
 </template>
 
 <script>
-exportTag('nav-bar', class extends MyElement {
-  changeContext () {
-    this.context.magic = 'yo m'
-  }
-})
+  exportTag('nav-bar')
 </script>
