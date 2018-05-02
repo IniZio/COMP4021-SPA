@@ -35,11 +35,15 @@
   <link rel="import" href="./components/login-form.html" async>
   <link rel="import" href="./components/register-form.html" async>
   <link rel="import" href="./components/profile-form.html" async>
+  <link rel="import" href="./components/main-page.html">
 
   <!-- Main content -->
   <div id="app" class="d-flex flex-column align-items-center" style="display: none; height: 100vh; box-sizing: border-box">
     <nav-bar></nav-bar>
-    <nav-breadcrumb></nav-breadcrumb>
+    <nav-breadcrumb class="py-3"></nav-breadcrumb>
+    <match-route path="/" exact="true">
+      <main-page></main-page>
+    </match-route>
     <match-route path="/login">
       <div class="card p-4" style="margin-top: 10rem">
         <login-form>

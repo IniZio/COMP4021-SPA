@@ -1,3 +1,9 @@
+<style>
+  match-route {
+    display: contents;
+  }
+</style>
+
 <template>
   <slot></slot>
 </template>
@@ -16,16 +22,20 @@
       }
     }
 
+    get exact () {
+      return this.getAttribute('exact')
+    }
+
     constructor () {
       super()
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
-      this.visibilityOnHash({newURL: window.location.href}) 
+      this.visibilityOnHash({newURL: window.location.href})
     }
 
     visibilityOnHash ({newURL = '', oldURL = ''}) {
       const afterHash = newURL.split('#')[1] || ''
-      if (this.path && !afterHash.startsWith(this.path)) {
-        this._display = this.style.display      
+      if (this.path && (!afterHash.startsWith(this.path) || (this.exact && afterHash !== this.path))) {
+        this._display = this.style.display
         this.style.display = 'none'
       } else {
         if (this.style.display === 'none') {

@@ -31,7 +31,7 @@
     }
 
     breadcrumbOnHash ({newURL = '', oldURL = ''}) {
-      const afterHash = newURL.split('#')[1] || ''
+      const afterHash = newURL.split('#/')[1] || 'main'
       this.data.path = afterHash.replace(/^\//, '').split('/')
     }
   })
