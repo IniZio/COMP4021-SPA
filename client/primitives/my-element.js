@@ -110,7 +110,7 @@ class MyElement extends HTMLElement {
     )
   }
 
-  compile(root = this.shadowRoot) {
+  compile(root = this.shadowRoot, overrides = {}) {
     const instance = this
 
     root.querySelectorAll('[x-for]')
@@ -120,6 +120,7 @@ class MyElement extends HTMLElement {
         const template = node.cloneNode(true)
         // HACK: uses node itself as anchor so not removing it, but definitely not a nice solution
         node.style.display = 'none'
+        node.className = ''
 
         const fragment = document.createDocumentFragment()
         let elements = []
@@ -133,8 +134,9 @@ class MyElement extends HTMLElement {
               const element = template.cloneNode(true)
               element.setAttribute('key', index)
               this.applyListeners(element)
-              this.activateBinds(element, {[name]: single})
+              this.activateBinds(element, Object.assign({}, overrides, {[name]: single}))
               this.activateContext(element)
+              this.compile(element, Object.assign({}, overrides, {[name]: single}))
               return element
             })
 
@@ -151,7 +153,7 @@ class MyElement extends HTMLElement {
       .filter(node => !Object.keys(node.attributes).find(attr => attr.startsWith('x-')))
       .map(node => {
         this.applyListeners(node)
-        this.activateBinds(node)
+        this.activateBinds(node, overrides)
         this.activateContext(node)
       })
   }
