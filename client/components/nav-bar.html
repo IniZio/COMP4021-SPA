@@ -6,9 +6,11 @@
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
-      <a class="navbar-brand">
-        <router-link to="/">UST.Course</router-link>
-      </a>
+      <router-link to="/">
+        <a class="navbar-brand">
+          UST.Course
+        </a>
+      </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,12 +23,14 @@
         </form> -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link"><router-link to="/profile">Profile</router-link></a>
+              <router-link to="/profile"><a class="nav-link">Profile</a></router-link>
             </li>
           </ul>
-        <a class="btn btn-primary" style="margin-left: 20px; color: white">
-          <router-link to="/login">Login</router-link>
-        </a>
+        <router-link to="/login">
+          <a class="btn btn-primary" style="margin-left: 20px; color: white">
+            Login
+          </a>
+        </router-link>
       </div>
     </nav>
 </template>
