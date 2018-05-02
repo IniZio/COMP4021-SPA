@@ -14,7 +14,7 @@ npm run dev # Runs dev server with live-reload
 npm run build # Builds project for production
 ```
 
-## How to
+## How to (Frontend)
 
 #### 1. Add a new html file
 
@@ -112,4 +112,31 @@ exportTag('xyz-abc', class extends MyElement {
     }
   })
 </script>
+```
+
+### 6. Use `x-for` directive
+
+```html
+<template>
+  <div x-for="abc:messages" :children="abc"></div>
+</template>
+
+<script>
+  exportTag('abc-xyz', class extends MyElement {
+    data () {
+      return {
+        messages: ['hello', 'bye', 'magic']
+      }
+    }
+  })
+</script>
+```
+
+## How to (backend)
+
+### 1. Set up sqlite database
+
+```sh
+cd server
+sqlite3 data.db < api/init.sql
 ```
