@@ -19,6 +19,12 @@ function do_check_auth()
     }
 }
 
+function do_sanitize_user_info($user_obj){
+	unset($user_obj["hashed_password"]);
+	unset($user_obj["picture_file_id"]);
+	return $user_obj;
+}
+
 function do_response($response_code, $responseObj = null)
 {
     http_response_code($response_code);

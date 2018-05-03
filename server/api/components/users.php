@@ -49,7 +49,7 @@ if (count($path) == 1)
 			do_check_auth();
 			do_response(
 				200,
-				$_SESSION["user"]);
+				do_sanitize_user_info($_SESSION["user"]));
 			break;
 		// PUT /users
 		case "PUT":
@@ -131,7 +131,7 @@ if (count($path) == 2)
 			if ($user_id == $_SESSION["user"]["id"])
 				do_response(
 					200,
-					$_SESSION["user"]);
+					do_sanitize_user_info($_SESSION["user"]));
 			else
 				error(ERROR_USER_NOT_MATCH);
 			break;

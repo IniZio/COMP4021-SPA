@@ -82,3 +82,22 @@ create unique index Comments_id_uindex
 ;
 
 
+
+create table Files
+(
+	id INTEGER not null,
+	file_name TEXT not null,
+	content_type TEXT not null
+)
+;
+
+create unique index Files_file_name_uindex
+	on Files (file_name)
+;
+
+create unique index Files_id_uindex
+	on Files (id)
+;
+
+
+
