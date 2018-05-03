@@ -16,3 +16,4 @@ const ERROR_USER_NOT_LOGGEDIN = [401, "User not logged in."];
 const ERROR_USER_NOT_MATCH = [401, "User not match."];
 const ERROR_USER_LOGGEDIN = [400, "User logged in."];
 const ERROR_SQL_FAIL = [500, "SQL Error!"];
+const ERROR_NOT_IMPLEMENTED = [500, "Feature not implemented yet!"];

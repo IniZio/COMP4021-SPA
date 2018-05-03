@@ -8,8 +8,10 @@ switch ($method) {
             is_string($post_json["username"]) &&
             is_string($post_json["password"])
         ) {
-            $userEntry = do_sqlite3_prepared_statement(
-                "SELECT * FROM Users WHERE username=:username",
+            $userEntry = do_sqlite3_prepared_statement("
+							SELECT * 
+							FROM Users 
+							WHERE username=:username",
                 [array(
                     "param" => ":username",
                     "value" => $post_json["username"],
