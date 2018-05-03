@@ -19,7 +19,7 @@ function do_check_auth()
     }
 }
 
-function do_response($response_code, $responseObj)
+function do_response($response_code, $responseObj = null)
 {
     http_response_code($response_code);
     if (is_array($responseObj)) {

@@ -51,7 +51,7 @@ if (count($path) == 1)
             break;
     }
 
-$user_id = $path[1];
+$user_id = (int)$path[1];
 if (count($path) == 2)
     switch ($method) {
         // PUT /users/{id}
@@ -106,6 +106,14 @@ if (count($path) == 2)
                     ],
                     true
                 );
+                $_SESSION["user"] = do_sqlite3_prepared_statement(
+                    "SELECT * FROM Users WHERE id=:id",
+                    [array(
+                        "param" => ":id",
+                        "value" => $user_id,
+                        "type" => SQLITE3_INTEGER)]
+                )[0];
+                do_response(200);
             } else
                 error(ERROR_USER_NOT_MATCH);
             break;
