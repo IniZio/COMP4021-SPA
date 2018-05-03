@@ -150,8 +150,16 @@
                             <input type="text" id="courseSummary" name="courseSummary" class="form-control" placeholder="Course name or brief summary of the course">
                         </div>
                     </div>
-                    <div class="form-row justify-content-end mt-3 mr-3">
-                        <div class="col-4">
+                    <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
+                        <div class="col-3 ml-3">
+                            <img id="profPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+                        </div>
+                        <div class="col-3">
+                            <form enctype="multipart/form-data" method="post" action="target.php">
+                                <input type="file" id="profilePhoto" name="profilePhoto" accept=".jpg, .jpeg, .png">
+                            </form>
+                        </div>
+                        <div class="col-3">
                             <input type="text" id="instructorName" name="instructorName" class="form-control" placeholder="Instructor's Name">
                         </div>
                     </div>
