@@ -1,8 +1,53 @@
+<style>
+    @media screen and (min-width: 769px){
+        #course_list{border-right:0.3rem solid #CCFFFF;}
+        .return{display: none;}
+    }
+    @media screen and (max-width: 768px){
+        #course_display{display: none;}
+        .return{display: block;}
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        if($(window).width() < 768){
+            $("#add").click(function(){
+                $("#course_list").hide();
+                $("#course_add").show();
+                $("#course_display").hide();
+                $("#course_edit").hide();
+            });
+            $("#edit").click(function(){
+                $("#course_list").hide();
+                $("#course_add").hide();
+                $("#course_display").hide();
+                $("#course_edit").show();
+            });
+            $(".return").click(function(){
+                $("#course_list").show();
+                $("#course_add").hide();
+                $("#course_display").hide();
+                $("#course_edit").hide();
+            });
+        }else{
+            $("#add").click(function(){
+                $("#course_add").show();
+                $("#course_display").hide();
+                $("#course_edit").hide();
+            });
+            $("#edit").click(function(){
+                $("#course_add").hide();
+                $("#course_display").hide();
+                $("#course_edit").show();
+            });
+        }
+    })
+</script>
 <template>
     <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
         <div class="row" style="height:100%;">
             <!-- List of courses-->
-            <div class="col-3" style="border-right:0.3rem solid #CCFFFF;">
+            <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
                 <div class="row p-0 mr-2 mt-3">
                     <label class="col-3 ml-3 mt-2 p-0" for="search"><strong>Search:</strong></label><input class="col form-control" type="text" id="search">
                 </div>
@@ -48,8 +93,11 @@
                 </nav>
             </div>
             <!-- Display Course -->
-            <div id="course_display" class="col-9" style="display:block;">
+            <div id="course_display" class="col-md-9 col-sm-12">
                 <div class="row">
+                    <div class="ml-3 mt-3">
+                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
+                    </div>
                     <div class="col p-1 text-center mr-3">
                         <p id="title"><u><h3>Course title</h3></u></p>
                     </div>
@@ -78,8 +126,11 @@
                 </div>
             </div>
             <!-- Add Course Form -->
-            <div id="course_add" class="col-9 p-0 mt-4" style="display:none;">
+            <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4">
                 <div class="row">
+                    <div class="ml-5 mt-5" style="position: absolute;">
+                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
+                    </div>
                     <div class="col text-center">
                         <H4>Add course</H4>
                     </div>
@@ -117,8 +168,11 @@
                 </form>
             </div>
             <!-- Edit Course Form -->
-            <div id="course_edit" class="col-9 p-0 mt-4" style="display:none;">
+            <div id="course_edit" class="col-md-9 col-sm-12 p-0 mt-4">
             <div class="row">
+                <div class="ml-5 mt-5" style="position: absolute;">
+                    <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
+                </div>
                 <div class="col text-center">
                     <H4>Edit course</H4>
                 </div>
