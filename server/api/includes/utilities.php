@@ -80,3 +80,6 @@ $path = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 $post_json = json_decode(file_get_contents('php://input'), true);
 
 $db = new SQLite3("./data.db");
+
+define("WEBROOT", dirname(dirname(__DIR__))."/");
+define("FILEDIR", WEBROOT."files/");

@@ -4,6 +4,9 @@ if (count($path) == 1)
     switch ($method) {
         // POST /users
         case "POST":
+            if (is_authed()) {
+                error(ERROR_USER_LOGGEDIN);
+            }
             if (is_string($post_json["username"]) &&
                 is_string($post_json["password"])) {
                 do_sqlite3_prepared_statement(
@@ -132,3 +135,39 @@ if (count($path) == 2)
             break;
     }
 
+
+if (count($path) == 3 &&
+    $path[2] === "picture") {
+    switch ($method) {
+        case "GET":
+            if ($_SESSION["user"]["picture_file_id"] === null) {
+                error(ERROR_HTTP_FILE_404);
+            }
+            $fileEntries = do_sqlite3_prepared_statement(
+                "SELECT file_name, content_type FROM Files WHERE id=:id",
+                [
+                    array(
+                        "param" => ":id",
+                        "value" => $_SESSION["user"]["picture_file_id"],
+                        "type" => SQLITE3_TEXT
+                    )
+                ]
+            );
+            if (count($fileEntries) < 1) {
+                error(ERROR_HTTP_FILE_404);
+            }
+            if (file_exists(FILEDIR . $fileEntries[0]["file_name"])) {
+                header('Content-Type: ' . $fileEntries[0]["content_type"]);
+                readfile(FILEDIR . $fileEntries[0]["file_name"]);
+            } else
+                error(ERROR_HTTP_FILE_404);
+            exit();
+            break;
+        case
+        "POST":
+            break;
+        default:
+            error(ERROR_HTTP_METHOD_NOT_ALLOWED);
+            break;
+    }
+}
