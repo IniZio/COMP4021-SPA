@@ -92,7 +92,8 @@ Yo man ;)
     + Body
     
             {
-                "username": "ihatenaming"
+                "username": "ihatenaming",
+                "password": "pass1234"
             }
             
     + Schema
@@ -100,11 +101,8 @@ Yo man ;)
             {
                 "type": "object",
                 "properties": {
-                    "success": {
-                        "type
-                    },
-                    "username": {
-                        "type": "string"
+                    "id: {
+                        "type": integer
                     }
                 }
             }
@@ -114,11 +112,7 @@ Yo man ;)
     + Body
     
             {
-                "success": true,
-                "profile": {
-                    "id": "cba",
-                    "username" : "ihatenaming"
-                }
+                "id": "cba"
             } 
 
 ## User [/users/{id}]
