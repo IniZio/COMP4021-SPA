@@ -70,3 +70,5 @@ package-lock\.json
 
 #sqlite3 db
 *.db
+
+server/files/
