@@ -43,23 +43,84 @@ if (count($path) == 1)
                 200,
                 $_SESSION["user"]);
             break;
+        // PUT /users
+        case "PUT":
+            break;
         default:
             error(ERROR_HTTP_METHOD_NOT_ALLOWED);
             break;
     }
 
 $user_id = $path[1];
-switch ($method) {
-    // PUT /users/{id}
-    case "PUT":
-
-        break;
-    // GET /users/{id}
-    case "GET":
-
-        break;
-    default:
-        error(ERROR_HTTP_METHOD_NOT_ALLOWED);
-        break;
-}
+if (count($path) == 2)
+    switch ($method) {
+        // PUT /users/{id}
+        case "PUT":
+            do_check_auth();
+            if ($user_id == $_SESSION["user"]["id"]) {
+                do_sqlite3_prepared_statement(
+                    "UPDATE Users 
+                              SET 
+                                  first_name=:first_name,
+                                  last_name=:last_name,
+                                  email=:email, 
+                                  hashed_password=:hashed_password,
+                                  major=:major,
+                                  year=:year, 
+                                  status=:status 
+                              WHERE id=:id",
+                    [
+                        array(
+                            "param" => ":first_name",
+                            "value" => $post_json["first_name"],
+                            "type" => SQLITE3_TEXT),
+                        array(
+                            "param" => ":last_name",
+                            "value" => $post_json["last_name"],
+                            "type" => SQLITE3_TEXT),
+                        array(
+                            "param" => ":email",
+                            "value" => $post_json["email"],
+                            "type" => SQLITE3_TEXT),
+                        array(
+                            "param" => ":hashed_password",
+                            "value" => password_hash($post_json["password"], PASSWORD_DEFAULT),
+                            "type" => SQLITE3_TEXT
+                        ),
+                        array(
+                            "param" => ":major",
+                            "value" => $post_json["major"],
+                            "type" => SQLITE3_TEXT),
+                        array(
+                            "param" => ":year",
+                            "value" => $post_json["year"],
+                            "type" => SQLITE3_INTEGER),
+                        array(
+                            "param" => ":status",
+                            "value" => $post_json["status"],
+                            "type" => SQLITE3_TEXT),
+                        array(
+                            "param" => ":id",
+                            "value" => $user_id,
+                            "type" => SQLITE3_INTEGER),
+                    ],
+                    true
+                );
+            } else
+                error(ERROR_USER_NOT_MATCH);
+            break;
+        // GET /users/{id}
+        case "GET":
+            do_check_auth();
+            if ($user_id == $_SESSION["user"]["id"])
+                do_response(
+                    200,
+                    $_SESSION["user"]);
+            else
+                error(ERROR_USER_NOT_MATCH);
+            break;
+        default:
+            error(ERROR_HTTP_METHOD_NOT_ALLOWED);
+            break;
+    }
 
