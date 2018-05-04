@@ -98,7 +98,7 @@
             <!-- Display Course -->
             <div id="course_display" class="col-md-9 col-sm-12">
                 <div class="row">
-                    <div class="ml-3 mt-3">
+                    <div class="ml-5 mt-4">
                         <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
                     </div>
                     <div class="col p-1 text-center mr-3">
@@ -129,9 +129,9 @@
                 </div>
             </div>
             <!-- Add Course Form -->
-            <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4">
+            <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
                 <div class="row">
-                    <div class="ml-5 mt-5" style="position: absolute;">
+                    <div class="ml-5 mt-2">
                         <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
                     </div>
                     <div class="col text-center">
@@ -156,7 +156,7 @@
                         </div>
                         <div class="col-3">
                             <form enctype="multipart/form-data" method="post" action="target.php">
-                                <input type="file" id="profPhoto" name="profPhoto" accept=".jpg, .jpeg, .png">
+                                <input type="file" id="profilePhoto" name="profilePhoto" accept=".jpg, .jpeg, .png">
                             </form>
                         </div>
                         <div class="col-3">
@@ -174,60 +174,60 @@
                         </div>
                     </div>
                     <div class="row justify-content-center mt-5">
-                            <button type="submit" id="submitAdd" name="submitAdd" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="submitAdd" name="submitAdd" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
             <!-- Edit Course Form -->
-            <div id="course_edit" class="col-md-9 col-sm-12 p-0 mt-4">
-            <div class="row">
-                <div class="ml-5 mt-5" style="position: absolute;">
-                    <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
+            <div id="course_edit" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
+                <div class="row">
+                    <div class="ml-5 mt-2">
+                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
+                    </div>
+                    <div class="col text-center">
+                        <H4>Edit course</H4>
+                    </div>
                 </div>
-                <div class="col text-center">
-                    <H4>Edit course</H4>
-                </div>
+                <hr>
+                <form id="course_edit_form">
+                    <div class="form-row justify-content-center">
+                        <div class="col-3">
+                            <input type="text" id="editCourseTitle" name="editCourseTitle" class="form-control" placeholder="Course Title" value="Course 4021">
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center mt-3">
+                        <div class="col-9">
+                            <input type="text" id="editCourseSummary" name="editCourseSummary" class="form-control" placeholder="Course name or brief summary of the course" value="A course teaching web programming.">
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
+                        <div class="col-3 ml-3">
+                            <img id="editProfPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+                        </div>
+                        <div class="col-3">
+                            <form enctype="multipart/form-data" method="post" action="target.php">
+                                <input type="file" id="uploadProfPhoto" name="uploadProfPhoto" accept=".jpg, .jpeg, .png">
+                            </form>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" id="editInstructorName" name="instructorName" class="form-control" placeholder="Instructor's Name" value="Gibson Lam">
+                        </div>
+                    </div>
+                    <div class="row p-3 justify-content-center" style="height:20rem;">
+                        <div class="col-10">
+                            <div class="row">
+                                <div class="rounded text-center" style="border:2px solid black; width:100%;"><h4>Course Description</h4></div>
+                            </div>
+                            <div class="row mt-2" style="height:100%;">
+                                <textarea type="text" id="editCourseDescription" name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-5">
+                        <button type="submit" id="submitEdit" name="submitEdit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
-            <hr>
-            <form id="course_edit_form">
-                <div class="form-row justify-content-center">
-                    <div class="col-3">
-                        <input type="text" id="editCourseTitle" name="editCourseTitle" class="form-control" placeholder="Course Title" value="Course 4021">
-                    </div>
-                </div>
-                <div class="form-row justify-content-center mt-3">
-                    <div class="col-9">
-                        <input type="text" id="editCourseSummary" name="editCourseSummary" class="form-control" placeholder="Course name or brief summary of the course" value="A course teaching web programming.">
-                    </div>
-                </div>
-                <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
-                    <div class="col-3 ml-3">
-                        <img id="editProfPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
-                    </div>
-                    <div class="col-3">
-                        <form enctype="multipart/form-data" method="post" action="target.php">
-                            <input type="file" id="uploadProfPhoto" name="uploadProfPhoto" accept=".jpg, .jpeg, .png">
-                        </form>
-                    </div>
-                    <div class="col-3">
-                        <input type="text" id="editInstructorName" name="instructorName" class="form-control" placeholder="Instructor's Name" value="Gibson Lam">
-                    </div>
-                </div>
-                <div class="row p-3 justify-content-center" style="height:20rem;">
-                    <div class="col-10">
-                        <div class="row">
-                            <div class="rounded text-center" style="border:2px solid black; width:100%;"><h4>Course Description</h4></div>
-                        </div>
-                        <div class="row mt-2" style="height:100%;">
-                            <textarea type="text" id="editCourseDescription" name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-5">
-                    <button type="submit" id="submitEdit" name="submitEdit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
         </div>
     </div>
 </template>
