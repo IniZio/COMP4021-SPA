@@ -23,18 +23,7 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
-$requestObj = array();
-$requestObj["method"] = $_SERVER['REQUEST_METHOD'];
-$requestObj["path"] = explode('/', trim($_SERVER['PATH_INFO'],'/'));
-$requestObj["POST_JSONObj"] = json_decode(file_get_contents('php://input'),true);
-$requestObj["GET_Params"] = $_GET;
-$requestObj["SESSION_Params"] = $_SESSION;
-
-$responseObj = array();
-
-$db = new SQLite3("./data.db");
-
-switch ($requestObj["path"][0]){
+switch ($path[0]){
     case "users":
         include "components/users.php";
         break;
@@ -45,12 +34,10 @@ switch ($requestObj["path"][0]){
         include "components/courses.php";
         break;
     default:
-        do_error(
-            404,
-            ERROR_HTTP_PATH_404);
+        error(ERROR_HTTP_PATH_404);
         break;
 }
 
-do_error(404, ERROR_UNEXPECTED);
+error(ERROR_UNEXPECTED);
 cleanup_exit();
 
