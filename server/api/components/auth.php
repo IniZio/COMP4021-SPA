@@ -67,6 +67,7 @@ switch ($method) {
 			do_response(200);
 		} else
 			error(ERROR_PASSWORD_NOT_MATCH);
+		break;
 	default:
 		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
 		break;
