@@ -169,6 +169,7 @@ if (count($path) == 3 &&
 			exit();
 			break;
 		case "POST":
+			do_check_auth();
 			if (!isset($_FILES["file"])) {
 				error(ERROR_PARAMETER_FAULT, array("file" => "Post a picture with a form, with file input field id 'file'."));
 			}
@@ -178,6 +179,7 @@ if (count($path) == 3 &&
 			if (!in_array($_FILES["file"]["type"], accepted_image_mime)) {
 				error(ERROR_PARAMETER_FAULT, array("file" => "Image format not accepted."));
 			}
+			$file_name = "";
 			do {
 				$file_name = date("y-m-d-H:i:s") . $_FILES["file"]["name"];
 				$sqlRet = do_sqlite3_prepared_statement(
@@ -199,6 +201,35 @@ if (count($path) == 3 &&
 			if (!move_uploaded_file($_FILES["file"]["tmp_name"], FILEDIR . $file_name)) {
 				error(ERROR_UPLOAD_FILE_FAILED);
 			}
+			$sqlRet = do_sqlite3_prepared_statement(
+				"SELECT id FROM Files WHERE file_name=:file_name",
+				[
+					array(
+						"param" => ":file_name",
+						"value" => $file_name,
+						"type" => SQLITE3_TEXT
+					)
+				]
+			);
+			if (!isset($sqlRet[0]["id"])) {
+				error(ERROR_UNEXPECTED);
+			}
+			do_sqlite3_prepared_statement(
+				"UPDATE Users SET picture_file_id=:pic_id WHERE id=:user_id",
+				[
+					array(
+						"param" => ":pic_id",
+						"value" => $sqlRet[0]["id"],
+						"type" => SQLITE3_INTEGER
+					),
+					array(
+						"param" => ":user_id",
+						"value" => $_SESSION["user"]["id"],
+						"type" => SQLITE3_INTEGER
+					)
+				]
+			);
+			$_SESSION["user"]["picture_file_id"] = $sqlRet[0]["id"];
 			do_response(201);
 			break;
 		default:
