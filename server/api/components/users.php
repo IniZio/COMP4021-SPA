@@ -145,6 +145,7 @@ if (count($path) == 3 &&
 	$path[2] === "picture") {
 	switch ($method) {
 		case "GET":
+			do_check_auth();
 			if ($_SESSION["user"]["picture_file_id"] === null) {
 				error(ERROR_HTTP_FILE_404);
 			}
@@ -231,6 +232,47 @@ if (count($path) == 3 &&
 			);
 			$_SESSION["user"]["picture_file_id"] = $sqlRet[0]["id"];
 			do_response(201);
+			break;
+		case "DELETE":
+			do_check_auth();
+			$sqlRet = do_sqlite3_prepared_statement(
+				"SELECT id,file_name FROM Files WHERE id=:pic_id",
+				[
+					array(
+						"param" => ":pic_id",
+						"value" => $_SESSION["user"]["picture_file_id"],
+						"type" => SQLITE3_INTEGER
+					)
+				]
+			);
+			if (!isset($sqlRet[0])){
+				error(ERROR_UNEXPECTED);
+			}
+			$_SESSION["user"]["picture_file_id"] = null;
+			do_sqlite3_prepared_statement(
+				"UPDATE Users SET picture_file_id=null WHERE id=:id",
+				[
+					array(
+						"param" => ":id",
+						"value" => $_SESSION["user"]["id"],
+						"type" => SQLITE3_INTEGER
+					)
+				],
+				true
+			);
+			do_sqlite3_prepared_statement(
+				"DELETE FROM Files WHERE id=:pic_id",
+				[
+					array(
+						"param" => ":pic_id",
+						"value" => $sqlRet[0]["id"],
+						"type" => SQLITE3_INTEGER
+					)
+				],
+				true
+			);
+			unlink(FILEDIR.$sqlRet[0]["file_name"]);
+			do_response(200);
 			break;
 		default:
 			error(ERROR_HTTP_METHOD_NOT_ALLOWED);
