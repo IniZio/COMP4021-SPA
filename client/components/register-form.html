@@ -12,13 +12,13 @@
         </div>
         <form id="regForm" @submit="submitRegister">
             <div class="form-row">
-              <div class="form-group" style="width: 100%">
+              <div class="col-md-6 col-sm-12 form-group" style="width: 100%">
                 <label for="username">Username</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-user"></i></div>
                   </div>
-                  <input type="text" required class="form-control" id="username" name="username" placeholder="Username" :value="form.username" @input="changeField">
+                  <input type="text" required class="form-control rounded-right" id="username" name="username" placeholder="Username" :value="form.username" @input="changeField">
                   <div :children="form.username"></div>
                   <div id="unavailError" class="col-6 form-text text-center text-danger mt-2" style="display: none; font-size: 0.9rem;">
                       <i class="fas fa-times mr-1"></i>The username is not available.
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="form-row">
-                <div class="col form-group">
+                <div class="col-md-6 col-sm-12 form-group">
                     <label for="password">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -37,7 +37,7 @@
                     </div>
                     <div style="color: red; height: 1rem" :children="invalidPassword"></div>
                 </div>
-                <div class="col form-group">
+                <div class="col-md-6 col-sm-12 form-group">
                     <label for="confirmPassword">Confirm Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -48,11 +48,11 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col form-group">
+                <div class="col-md-6 col-sm-12 form-group">
                     <label for="firstname">First name</label>
                     <input type="text" required class="form-control" id="firstname" name="firstname" placeholder="First Name" :value="form.firstname" @input="changeField">
                 </div>
-                <div class="col form-group">
+                <div class="col-md-6 col-sm-12 form-group">
                     <label for="lastname">Last name</label>
                     <input type="text" required class="form-control" id="lastname" name="lastname" placeholder="Last Name" :value="form.lastname" @input="changeField">
                 </div>
