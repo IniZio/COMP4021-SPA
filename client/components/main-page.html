@@ -1,237 +1,280 @@
 <style>
-    @media screen and (min-width: 769px){
-        #course_list{border-right:0.3rem solid #CCFFFF;}
-        .return{display: none;}
+  @media screen and (min-width: 769px) {
+    #course_list {
+      border-right: 0.3rem solid #CCFFFF;
     }
-    @media screen and (max-width: 768px){
-        #course_display{display: none;}
-        .return{display: block;}
+    .return {
+      display: none;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    #course_display {
+      display: none;
+    }
+    .return {
+      display: block;
+    }
+  }
+
 </style>
-<script>
-    $(document).ready(function(){
-        if($(window).width() < 768){
-            $("#add").click(function(){
-                $("#course_list").hide();
-                $("#course_add").show();
-                $("#course_display").hide();
-                $("#course_edit").hide();
-            });
-            $("#edit").click(function(){
-                $("#course_list").hide();
-                $("#course_add").hide();
-                $("#course_display").hide();
-                $("#course_edit").show();
-            });
-            $(".return").click(function(){
-                $("#course_list").show();
-                $("#course_add").hide();
-                $("#course_display").hide();
-                $("#course_edit").hide();
-            });
-        }else{
-            $("#add").click(function(){
-                $("#course_add").show();
-                $("#course_display").hide();
-                $("#course_edit").hide();
-            });
-            $("#edit").click(function(){
-                $("#course_add").hide();
-                $("#course_display").hide();
-                $("#course_edit").show();
-            });
-        }
-    })
-</script>
 <template>
-    <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
-        <div class="row" style="height:100%;">
-            <!-- List of courses-->
-            <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
-                <div class="row p-0 mr-2 mt-3">
-                    <label class="col-3 ml-3 mt-2 p-0" for="search"><strong>Search:</strong></label><input class="col form-control" type="text" id="search">
-                </div>
-                <hr>
-                <div class="row form-group justify-content-center">
-                    <div class="col">
-                        <button id="add" class="btn btn-secondary" style="width:100%;">Add</button>
-                    </div>
-                    <div class="col">
-                        <button id="delete" class="btn btn-secondary" style="width:100%;">Delete</button>
-                    </div>
-                    <div class="col" style="width:100%;">
-                        <button id="edit" class="btn btn-secondary" style="width:100%;">Edit</button>
-                    </div>
-                </div>
-                <hr>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                        <div class="row">
-                            <div class="col-md-2 col-sm-3 p-2">
-                                <img id="professorPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
-                            </div>
-                            <div class="col-md-10 col-sm-9" style="height:100%;">
-                                <div class="row justify-content-between align-items-center">
-                                    <h5 class="mb-1">COMP4021</h5>
-                                    <small class="mt-1">02-05-18</small>
-                                </div>
-                                <div class="row align-items-center">
-                                    <p class= "mb-1">A course teaching about web programming.</p>
-                                </div>
-                                <div class="row align-self-end">
-                                    <small>Taught by Gibson Lam</small>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <hr>
-                <nav aria-label="Paging">
-                    <ul class="pagination mt-3 justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- Display Course -->
-            <div id="course_display" class="col-md-9 col-sm-12">
-                <div class="row">
-                    <div class="ml-5 mt-4">
-                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
-                    </div>
-                    <div class="col p-1 text-center mr-3">
-                        <p id="title"><u><h3>Course title</h3></u></p>
-                    </div>
-                </div>
-                <div class="row m-0">
-                    <div class="col text-center">
-                        <p id="summary"><h5>Course name or brief summary of the course</h5></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-right mr-5">
-                        <p id="instructor"><h6>Taught by Professor_name</h6></p>
-                    </div>
-                </div>
-                <div class="row p-2" style="height:20rem;">
-                    <div class="col">
-                        <div class="row justify-content-center">
-                            <div class="rounded-top text-center" style="border:2px solid black; width:90%; height: 90%;"><h4>Course Description</h4></div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="rounded-bottom text-center align-items-center" style="border:2px solid black; border-top: 0px; width:90%; height: 90%;">
-                                <h5 id="description">Description here.</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Add Course Form -->
-            <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
-                <div class="row">
-                    <div class="ml-5 mt-2">
-                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
-                    </div>
-                    <div class="col text-center">
-                        <H4>Add course</H4>
-                    </div>
-                </div>
-                <hr>
-                <form id="course_add_form">
-                    <div class="form-row justify-content-center">
-                        <div class="col-3">
-                            <input type="text" id="courseTitle" name="courseTitle" class="form-control" placeholder="Course Title">
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-center mt-3">
-                        <div class="col-9">
-                            <input type="text" id="courseSummary" name="courseSummary" class="form-control" placeholder="Course name or brief summary of the course">
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
-                        <div class="col-3 ml-3">
-                            <img id="profPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
-                        </div>
-                        <div class="col-3">
-                            <form enctype="multipart/form-data" method="post" action="target.php">
-                                <input type="file" id="profilePhoto" name="profilePhoto" accept=".jpg, .jpeg, .png">
-                            </form>
-                        </div>
-                        <div class="col-3">
-                            <input type="text" id="instructorName" name="instructorName" class="form-control" placeholder="Instructor's Name">
-                        </div>
-                    </div>
-                    <div class="row p-3 justify-content-center" style="height:20rem;">
-                        <div class="col-10">
-                            <div class="row">
-                                <div class="rounded text-center" style="border:2px solid black; width:100%;"><h4>Course Description</h4></div>
-                            </div>
-                            <div class="row mt-2" style="height:100%;">
-                                <textarea type="text" id="courseDescription" name="courseDescription" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mt-5">
-                        <button type="submit" id="submitAdd" name="submitAdd" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <!-- Edit Course Form -->
-            <div id="course_edit" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
-                <div class="row">
-                    <div class="ml-5 mt-2">
-                        <button class="return btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></button>
-                    </div>
-                    <div class="col text-center">
-                        <H4>Edit course</H4>
-                    </div>
-                </div>
-                <hr>
-                <form id="course_edit_form">
-                    <div class="form-row justify-content-center">
-                        <div class="col-3">
-                            <input type="text" id="editCourseTitle" name="editCourseTitle" class="form-control" placeholder="Course Title" value="Course 4021">
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-center mt-3">
-                        <div class="col-9">
-                            <input type="text" id="editCourseSummary" name="editCourseSummary" class="form-control" placeholder="Course name or brief summary of the course" value="A course teaching web programming.">
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
-                        <div class="col-3 ml-3">
-                            <img id="editProfPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
-                        </div>
-                        <div class="col-3">
-                            <form enctype="multipart/form-data" method="post" action="target.php">
-                                <input type="file" id="uploadProfPhoto" name="uploadProfPhoto" accept=".jpg, .jpeg, .png">
-                            </form>
-                        </div>
-                        <div class="col-3">
-                            <input type="text" id="editInstructorName" name="instructorName" class="form-control" placeholder="Instructor's Name" value="Gibson Lam">
-                        </div>
-                    </div>
-                    <div class="row p-3 justify-content-center" style="height:20rem;">
-                        <div class="col-10">
-                            <div class="row">
-                                <div class="rounded text-center" style="border:2px solid black; width:100%;"><h4>Course Description</h4></div>
-                            </div>
-                            <div class="row mt-2" style="height:100%;">
-                                <textarea type="text" id="editCourseDescription" name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mt-5">
-                        <button type="submit" id="submitEdit" name="submitEdit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
+  <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
+    <div class="row" style="height:100%;">
+      <!-- List of courses-->
+      <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
+        <div class="row p-0 mr-2 mt-3">
+          <label class="col-3 ml-3 mt-2 p-0" for="search">
+            <strong>Search:</strong>
+          </label>
+          <input class="col form-control" type="text" id="search">
         </div>
+        <hr>
+        <div class="row form-group justify-content-center">
+          <div class="col">
+            <button id="add" class="btn btn-secondary" style="width:100%;">Add</button>
+          </div>
+          <div class="col">
+            <button id="delete" class="btn btn-secondary" style="width:100%;">Delete</button>
+          </div>
+          <div class="col" style="width:100%;">
+            <button id="edit" class="btn btn-secondary" style="width:100%;">Edit</button>
+          </div>
+        </div>
+        <hr>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <div class="row">
+              <div class="col-md-2 col-sm-3 p-2">
+                <img id="professorPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+              </div>
+              <div class="col-md-10 col-sm-9" style="height:100%;">
+                <div class="row justify-content-between align-items-center">
+                  <h5 class="mb-1">COMP4021</h5>
+                  <small class="mt-1">02-05-18</small>
+                </div>
+                <div class="row align-items-center">
+                  <p class="mb-1">A course teaching about web programming.</p>
+                </div>
+                <div class="row align-self-end">
+                  <small>Taught by Gibson Lam</small>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <hr>
+        <nav aria-label="Paging">
+          <ul class="pagination mt-3 justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#">Previous</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Display Course -->
+      <div id="course_display" class="col-md-9 col-sm-12">
+        <div class="row">
+          <div class="ml-5 mt-4">
+            <button class="return btn btn-primary">
+              <i class="fas fa-long-arrow-alt-left"></i>
+            </button>
+          </div>
+          <div class="col p-1 text-center mr-3">
+            <p id="title">
+              <u>
+                <h3>Course title</h3>
+              </u>
+            </p>
+          </div>
+        </div>
+        <div class="row m-0">
+          <div class="col text-center">
+            <p id="summary">
+              <h5>Course name or brief summary of the course</h5>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-right mr-5">
+            <p id="instructor">
+              <h6>Taught by Professor_name</h6>
+            </p>
+          </div>
+        </div>
+        <div class="row p-2" style="height:20rem;">
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="rounded-top text-center" style="border:2px solid black; width:90%; height: 90%;">
+                <h4>Course Description</h4>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="rounded-bottom text-center align-items-center" style="border:2px solid black; border-top: 0px; width:90%; height: 90%;">
+                <h5 id="description">Description here.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add Course Form -->
+      <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
+        <div class="row">
+          <div class="ml-5 mt-2">
+            <button class="return btn btn-primary">
+              <i class="fas fa-long-arrow-alt-left"></i>
+            </button>
+          </div>
+          <div class="col text-center">
+            <H4>Add course</H4>
+          </div>
+        </div>
+        <hr>
+        <form id="course_add_form">
+          <div class="form-row justify-content-center">
+            <div class="col-3">
+              <input type="text" id="courseTitle" name="courseTitle" class="form-control" placeholder="Course Title">
+            </div>
+          </div>
+          <div class="form-row justify-content-center mt-3">
+            <div class="col-9">
+              <input type="text" id="courseSummary" name="courseSummary" class="form-control" placeholder="Course name or brief summary of the course">
+            </div>
+          </div>
+          <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
+            <div class="col-3 ml-3">
+              <img id="profPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+            </div>
+            <div class="col-3">
+              <form enctype="multipart/form-data" method="post" action="target.php">
+                <input type="file" id="profilePhoto" name="profilePhoto" accept=".jpg, .jpeg, .png">
+              </form>
+            </div>
+            <div class="col-3">
+              <input type="text" id="instructorName" name="instructorName" class="form-control" placeholder="Instructor's Name">
+            </div>
+          </div>
+          <div class="row p-3 justify-content-center" style="height:20rem;">
+            <div class="col-10">
+              <div class="row">
+                <div class="rounded text-center" style="border:2px solid black; width:100%;">
+                  <h4>Course Description</h4>
+                </div>
+              </div>
+              <div class="row mt-2" style="height:100%;">
+                <textarea type="text" id="courseDescription" name="courseDescription" class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button type="submit" id="submitAdd" name="submitAdd" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+      <!-- Edit Course Form -->
+      <div id="course_edit" class="col-md-9 col-sm-12 p-0 mt-4" style="display:none;">
+        <div class="row">
+          <div class="ml-5 mt-2">
+            <button class="return btn btn-primary">
+              <i class="fas fa-long-arrow-alt-left"></i>
+            </button>
+          </div>
+          <div class="col text-center">
+            <H4>Edit course</H4>
+          </div>
+        </div>
+        <hr>
+        <form id="course_edit_form">
+          <div class="form-row justify-content-center">
+            <div class="col-3">
+              <input type="text" id="editCourseTitle" name="editCourseTitle" class="form-control" placeholder="Course Title" value="Course 4021">
+            </div>
+          </div>
+          <div class="form-row justify-content-center mt-3">
+            <div class="col-9">
+              <input type="text" id="editCourseSummary" name="editCourseSummary" class="form-control" placeholder="Course name or brief summary of the course"
+                value="A course teaching web programming.">
+            </div>
+          </div>
+          <div class="form-row justify-content-between mt-3 mr-3" style="height: 5rem;">
+            <div class="col-3 ml-3">
+              <img id="editProfPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+            </div>
+            <div class="col-3">
+              <form enctype="multipart/form-data" method="post" action="target.php">
+                <input type="file" id="uploadProfPhoto" name="uploadProfPhoto" accept=".jpg, .jpeg, .png">
+              </form>
+            </div>
+            <div class="col-3">
+              <input type="text" id="editInstructorName" name="instructorName" class="form-control" placeholder="Instructor's Name" value="Gibson Lam">
+            </div>
+          </div>
+          <div class="row p-3 justify-content-center" style="height:20rem;">
+            <div class="col-10">
+              <div class="row">
+                <div class="rounded text-center" style="border:2px solid black; width:100%;">
+                  <h4>Course Description</h4>
+                </div>
+              </div>
+              <div class="row mt-2" style="height:100%;">
+                <textarea type="text" id="editCourseDescription" name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button type="submit" id="submitEdit" name="submitEdit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-  exportTag('main-page')
+  exportTag('main-page', class extends MyElement {
+    connectedCallback() {
+      super.connectedCallback()
+      if ($(window).width() < 768) {
+        $(this.shadowRoot).find("#add").click(function () {
+          $(this.shadowRoot).find("#course_list").hide();
+          $(this.shadowRoot).find("#course_add").show();
+          $(this.shadowRoot).find("#course_display").hide();
+          $(this.shadowRoot).find("#course_edit").hide();
+        });
+        $(this.shadowRoot).find("#edit").click(function () {
+          $(this.shadowRoot).find("#course_list").hide();
+          $(this.shadowRoot).find("#course_add").hide();
+          $(this.shadowRoot).find("#course_display").hide();
+          $(this.shadowRoot).find("#course_edit").show();
+        });
+        $(this.shadowRoot).find(".return").click(function () {
+          $(this.shadowRoot).find("#course_list").show();
+          $(this.shadowRoot).find("#course_add").hide();
+          $(this.shadowRoot).find("#course_display").hide();
+          $(this.shadowRoot).find("#course_edit").hide();
+        });
+      } else {
+        $(this.shadowRoot).find("#add").click(function () {
+          $(this.shadowRoot).find("#course_add").show();
+          $(this.shadowRoot).find("#course_display").hide();
+          $(this.shadowRoot).find("#course_edit").hide();
+        });
+        $(this.shadowRoot).find("#edit").click(function () {
+          $(this.shadowRoot).find("#course_add").hide();
+          $(this.shadowRoot).find("#course_display").hide();
+          $(this.shadowRoot).find("#course_edit").show();
+        });
+      }
+    }
+  })
+
 </script>
