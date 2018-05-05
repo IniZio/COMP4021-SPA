@@ -179,7 +179,7 @@ if (count($path) == 3 &&
 				error(ERROR_PARAMETER_FAULT, array("file" => "Image format not accepted."));
 			}
 			do {
-				$file_name = $_FILES["file"]["name"] . date("y-m-d-H:i:s-e-P");
+				$file_name = date("y-m-d-H:i:s") . $_FILES["file"]["name"];
 				$sqlRet = do_sqlite3_prepared_statement(
 					"INSERT INTO Files (file_name, content_type) VALUES (:file_name, :content_type)",
 					[

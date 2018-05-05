@@ -22,6 +22,8 @@ switch ($method) {
 				error(ERROR_HTTP_USER_404);
 			}
 
+			$userEntry = $userEntries[0];
+
 			if (password_verify(
 				$post_json["password"],
 				$userEntry["hashed_password"])) {
@@ -50,7 +52,7 @@ switch ($method) {
 			$post_json["reset_key"] === "master_reset_passwd"
 		) {
 			do_sqlite3_prepared_statement(
-				"UPDATE Users SET hashed_password=:hashed_passsword WHERE username=:username",
+				"UPDATE Users SET hashed_password=:hashed_password WHERE username=:username",
 				[
 					array(
 						"param" => ":username",
