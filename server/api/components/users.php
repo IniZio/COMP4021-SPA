@@ -40,7 +40,7 @@ if (count($path) == 1)
 				$responseObj = array();
 				$responseObj["id"] = $userEntries[0]["id"];
 
-				do_response(200, $responseObj);
+				do_response(201, $responseObj);
 			} else
 				error(ERROR_PARAMETER_FAULT);
 			break;
@@ -169,7 +169,37 @@ if (count($path) == 3 &&
 			exit();
 			break;
 		case "POST":
-			error(ERROR_NOT_IMPLEMENTED);
+			if (!isset($_FILES["file"])) {
+				error(ERROR_PARAMETER_FAULT, array("file" => "Post a picture with a form, with file input field id 'file'."));
+			}
+			if ($_FILES["file"]["error"] !== UPLOAD_ERR_OK) {
+				error(ERROR_UPLOAD_FILE_FAILED);
+			}
+			if (!in_array($_FILES["file"]["type"], accepted_image_mime)) {
+				error(ERROR_PARAMETER_FAULT, array("file" => "Image format not accepted."));
+			}
+			do {
+				$file_name = $_FILES["file"]["name"] . date("y-m-d-H:i:s-e-P");
+				$sqlRet = do_sqlite3_prepared_statement(
+					"INSERT INTO Files (file_name, content_type) VALUES (:file_name, :content_type)",
+					[
+						array(
+							"param" => ":file_name",
+							"value" => $file_name,
+							"type" => SQLITE3_TEXT
+						),
+						array(
+							"param" => ":content_type",
+							"value" => $_FILES["file"]["type"],
+							"type" => SQLITE3_TEXT
+						)
+					],
+					true, true);
+			} while ($sqlRet !== null);
+			if (!move_uploaded_file($_FILES["file"]["tmp_name"], FILEDIR . $file_name)) {
+				error(ERROR_UPLOAD_FILE_FAILED);
+			}
+			do_response(201);
 			break;
 		default:
 			error(ERROR_HTTP_METHOD_NOT_ALLOWED);
