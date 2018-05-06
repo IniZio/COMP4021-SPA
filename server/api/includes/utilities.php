@@ -36,7 +36,7 @@ function do_response($response_code, $responseObj = null)
 	cleanup_exit();
 }
 
-function error($error, $responseObj = array())
+function error($error, $responseObj = [])
 {
 	if (!is_array($error) ||
 		!is_integer($error[0]) ||
@@ -46,7 +46,7 @@ function error($error, $responseObj = array())
 	do_error($error[0], $error[1], $responseObj);
 }
 
-function do_error($response_code, $error_message, $responseObj = array())
+function do_error($response_code, $error_message, $responseObj = [])
 {
 	if (is_array($responseObj)) {
 		if (is_string($error_message))
@@ -57,7 +57,8 @@ function do_error($response_code, $error_message, $responseObj = array())
 	do_response($response_code, $responseObj);
 }
 
-function do_sqlite3_prepared_statement($statement, $values, $no_return = false, $returnError = false)
+function do_sqlite3_prepared_statement(
+	$statement, $values, $no_return = false, $returnError = false)
 {
 	global $db;
 	$sqlStmt = $db->prepare($statement);
@@ -74,13 +75,14 @@ function do_sqlite3_prepared_statement($statement, $values, $no_return = false, 
 		$sqlStmt->close();
 		do_error(500, $db->lastErrorMsg());
 	}
-	$results = array();
+	$results = [];
 	if (!$no_return) {
 		$resultRow = null;
 		while (($resultRow = $sqlResult->fetchArray(SQLITE3_ASSOC)) !== false) {
 			array_push($results, $resultRow);
 		}
-	} else
+	}
+	else
 		$results = null;
 	$sqlResult->finalize();
 	$sqlStmt->close();
@@ -94,11 +96,11 @@ function get_resource_by_id($id, $resource_name)
 		$sqlRet = do_sqlite3_prepared_statement(
 			"SELECT * FROM " . $resource_name . " WHERE id=:id",
 			[
-				array(
+				[
 					"param" => ":id",
 					"value" => $id,
-					"type" => SQLITE3_INTEGER
-				)
+					"type" => SQLITE3_INTEGER,
+				],
 			]);
 		if (!isset($sqlRet[0])) {
 			error(ERROR_HTTP_RESOURCE_404);
@@ -122,5 +124,5 @@ const accepted_image_mime = [
 	"image/gif",
 	"image/jpeg",
 	"image/png",
-	"image/svg+xml"
+	"image/svg+xml",
 ];
