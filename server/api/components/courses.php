@@ -16,7 +16,9 @@ if (count($path) == 1)
 				$post_json["description"] = null;
 			}
 			do_sqlite3_prepared_statement(
-				"INSERT INTO Courses (name, descrption) VALUES (:name,:description)",
+				"
+				INSERT INTO Courses (name, descrption) 
+				VALUES (:name,:description)",
 				[
 					[
 						"param" => ":name",
@@ -70,7 +72,10 @@ if (count($path) == 2)
 			$post_json["description"] = $course["description"];
 		}
 		do_sqlite3_prepared_statement(
-			"UPDATE Courses SET name=:name, descrption=:description WHERE id=:id",
+			"
+			UPDATE Courses 
+			SET name=:name, descrption=:description 
+			WHERE id=:id",
 			[
 				[
 					"param" => ":name",

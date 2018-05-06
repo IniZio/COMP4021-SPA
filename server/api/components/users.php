@@ -11,10 +11,10 @@ if (count($path) == 1)
 			is_string($post_json["password"])) {
 			do_sqlite3_prepared_statement(
 				"
-								INSERT INTO Users 
-									(username, hashed_password) 
-								VALUES 
-									(:username, :hashed_password);",
+				INSERT INTO Users 
+					(username, hashed_password) 
+				VALUES 
+					(:username, :hashed_password);",
 				[
 					[
 						"param" => ":username",
@@ -31,9 +31,9 @@ if (count($path) == 1)
 
 			$userEntries = do_sqlite3_prepared_statement(
 				"
-								SELECT id 
-                    			FROM Users 
-                    			WHERE username=:username;",
+				SELECT id 
+				FROM Users 
+				WHERE username=:username;",
 				[
 					[
 						"param" => ":username",
@@ -72,16 +72,16 @@ if (count($path) == 2)
 		if ($user_id == $_SESSION["user"]["id"]) {
 			do_sqlite3_prepared_statement(
 				"
-								UPDATE Users 
-								SET 
-									first_name=:first_name,
-									last_name=:last_name,
-									email=:email, 
-									hashed_password=:hashed_password,
-									major=:major,
-									year=:year, 
-									status=:status 
-								WHERE id=:id;",
+				UPDATE Users 
+				SET 
+					first_name=:first_name,
+					last_name=:last_name,
+					email=:email, 
+					hashed_password=:hashed_password,
+					major=:major,
+					year=:year, 
+					status=:status 
+				WHERE id=:id;",
 				[
 					[
 						"param" => ":first_name",
@@ -182,7 +182,8 @@ if (count($path) == 3 &&
 		if (!isset($_FILES["file"])) {
 			error(
 				ERROR_PARAMETER_FAULT,
-				["file" => "Post a picture with a form, with file input field id 'file'."]);
+				["file" => "Post a picture with a form, with file input " .
+					"field id 'file'."]);
 		}
 		if ($_FILES["file"]["error"] !== UPLOAD_ERR_OK) {
 			error(ERROR_UPLOAD_FILE_FAILED);
@@ -196,7 +197,9 @@ if (count($path) == 3 &&
 		do {
 			$file_name = date("y-m-d-H:i:s") . $_FILES["file"]["name"];
 			$sqlRet = do_sqlite3_prepared_statement(
-				"INSERT INTO Files (file_name, content_type) VALUES (:file_name, :content_type)",
+				"
+				INSERT INTO Files (file_name, content_type) 
+				VALUES (:file_name, :content_type)",
 				[
 					[
 						"param" => ":file_name",
@@ -229,7 +232,10 @@ if (count($path) == 3 &&
 			error(ERROR_UNEXPECTED);
 		}
 		do_sqlite3_prepared_statement(
-			"UPDATE Users SET picture_file_id=:pic_id WHERE id=:user_id",
+			"
+			UPDATE Users 
+			SET picture_file_id=:pic_id 
+			WHERE id=:user_id",
 			[
 				[
 					"param" => ":pic_id",

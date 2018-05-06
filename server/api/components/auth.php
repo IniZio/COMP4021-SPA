@@ -10,9 +10,9 @@ case "POST":
 	) {
 		$userEntries = do_sqlite3_prepared_statement(
 			"
-							SELECT * 
-							FROM Users 
-							WHERE username=:username",
+			SELECT * 
+			FROM Users 
+			WHERE username=:username",
 			[[
 				"param" => ":username",
 				"value" => $post_json["username"],
@@ -55,7 +55,10 @@ case "PUT":
 		$post_json["reset_key"] === "master_reset_passwd"
 	) {
 		do_sqlite3_prepared_statement(
-			"UPDATE Users SET hashed_password=:hashed_password WHERE username=:username",
+			"
+			UPDATE Users 
+			SET hashed_password=:hashed_password 
+			WHERE username=:username",
 			[
 				[
 					"param" => ":username",
