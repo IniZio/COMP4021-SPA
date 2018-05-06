@@ -66,9 +66,6 @@ if (count($path) == 1)
 			200,
 			do_sanitize_user_info($_SESSION["user"]));
 		break;
-		// PUT /users
-	case "PUT":
-		break;
 	default:
 		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
 		break;
@@ -81,6 +78,37 @@ if (count($path) == 2)
 	case "PUT":
 		do_check_auth();
 		if ($user_id == $_SESSION["user"]["id"]) {
+			$post_json["first_name"] =
+				is_string($post_json["first_name"]) ?
+					$post_json["first_name"] :
+					$_SESSION["user"]["first_name"];
+
+			$post_json["last_name"] =
+				is_string($post_json["last_name"]) ?
+					$post_json["last_name"] :
+					$_SESSION["user"]["last_name"];
+
+			$post_json["email"] =
+				is_string($post_json["email"]) ?
+					$post_json["email"] :
+					$_SESSION["user"]["email"];
+
+			$post_json["major"] =
+				is_string($post_json["major"]) ?
+					$post_json["major"] :
+					$_SESSION["user"]["major"];
+
+			$post_json["year"] =
+				is_integer($post_json["year"]) ?
+					$post_json["year"] :
+					$_SESSION["user"]["year"];
+
+			$post_json["status"] =
+				is_string($post_json["status"]) ?
+					$post_json["status"] :
+					$_SESSION["user"]["status"];
+
+
 			do_sqlite3_prepared_statement(
 				"
 				UPDATE Users 
@@ -88,7 +116,6 @@ if (count($path) == 2)
 					first_name=:first_name,
 					last_name=:last_name,
 					email=:email, 
-					hashed_password=:hashed_password,
 					major=:major,
 					year=:year, 
 					status=:status 
@@ -97,40 +124,62 @@ if (count($path) == 2)
 					[
 						"param" => ":first_name",
 						"value" => $post_json["first_name"],
-						"type" => SQLITE3_TEXT],
+						"type" => SQLITE3_TEXT,
+					],
 					[
 						"param" => ":last_name",
 						"value" => $post_json["last_name"],
-						"type" => SQLITE3_TEXT],
+						"type" => SQLITE3_TEXT,
+					],
 					[
 						"param" => ":email",
 						"value" => $post_json["email"],
-						"type" => SQLITE3_TEXT],
-					[
-						"param" => ":hashed_password",
-						"value" => password_hash(
-							$post_json["password"], PASSWORD_DEFAULT),
 						"type" => SQLITE3_TEXT,
 					],
 					[
 						"param" => ":major",
 						"value" => $post_json["major"],
-						"type" => SQLITE3_TEXT],
+						"type" => SQLITE3_TEXT,
+					],
 					[
 						"param" => ":year",
 						"value" => $post_json["year"],
-						"type" => SQLITE3_INTEGER],
+						"type" => SQLITE3_INTEGER,
+					],
 					[
 						"param" => ":status",
 						"value" => $post_json["status"],
-						"type" => SQLITE3_TEXT],
+						"type" => SQLITE3_TEXT,
+					],
 					[
 						"param" => ":id",
 						"value" => $user_id,
-						"type" => SQLITE3_INTEGER],
+						"type" => SQLITE3_INTEGER,
+					],
 				],
 				true
 			);
+			if (is_string($post_json["password"])) {
+				do_sqlite3_prepared_statement(
+					"
+					UPDATE Users 
+					SET hashed_password=:hashed_password
+					WHERE id=:id",
+					[
+						[
+							"param" => ":hashed_password",
+							"value" => password_hash(
+								$post_json["password"], PASSWORD_DEFAULT),
+							"type" => SQLITE3_TEXT,
+						],
+						[
+							"param" => ":id",
+							"value" => $user_id,
+							"type" => SQLITE3_INTEGER,
+						],
+					],
+					true);
+			}
 			$_SESSION["user"] = do_sqlite3_prepared_statement(
 				"SELECT * FROM Users WHERE id=:id",
 				[[
