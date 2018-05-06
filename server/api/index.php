@@ -37,6 +37,19 @@ case "auth":
 case "courses":
 	include "components/courses.php";
 	break;
+case "master":
+	if ($method === "DELETE" &&
+		$post_json["master_key"] === "master_delete_key") {
+		do_sqlite3_prepared_statement("DELETE FROM Users",[]);
+		do_sqlite3_prepared_statement("DELETE FROM Courses",[]);
+		do_sqlite3_prepared_statement("DELETE FROM Comments",[]);
+		do_sqlite3_prepared_statement("DELETE FROM Resources",[]);
+		do_sqlite3_prepared_statement("DELETE FROM Files",[]);
+		do_sqlite3_prepared_statement("DELETE FROM sqlite_sequence",[]);
+		do_response(200);
+	}
+	else error(ERROR_USER_NOT_LOGGEDIN);
+	break;
 default:
 	error(ERROR_HTTP_PATH_404);
 	break;
