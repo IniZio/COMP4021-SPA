@@ -23,6 +23,8 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
+if ($method === "OPTIONS") do_response(200);
+
 switch ($path[0]){
     case "users":
         include "components/users.php";
