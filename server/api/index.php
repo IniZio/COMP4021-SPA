@@ -46,6 +46,7 @@ case "master":
 		do_sqlite3_prepared_statement("DELETE FROM Resources",[]);
 		do_sqlite3_prepared_statement("DELETE FROM Files",[]);
 		do_sqlite3_prepared_statement("DELETE FROM sqlite_sequence",[]);
+		unset($_SESSION["user"]);
 		do_response(200);
 	}
 	else error(ERROR_USER_NOT_LOGGEDIN);

@@ -9,7 +9,7 @@ if (count($path) == 1)
 		}
 		if (is_string($post_json["username"]) &&
 			is_string($post_json["password"])) {
-			do_sqlite3_prepared_statement(
+			$sqlRet = do_sqlite3_prepared_statement(
 				"
 				INSERT INTO Users 
 					(username, hashed_password) 
@@ -27,7 +27,18 @@ if (count($path) == 1)
 						"type" => SQLITE3_TEXT,
 					],
 				],
+				true,
 				true);
+			if ($sqlRet[0] != 0) {
+				switch ($sqlRet[0]) {
+				case 19:
+					error(ERROR_USER_ALREADY_EXIST);
+					break;
+				default:
+					error(ERROR_UNEXPECTED);
+					break;
+				}
+			}
 
 			$userEntries = do_sqlite3_prepared_statement(
 				"
