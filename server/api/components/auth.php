@@ -10,8 +10,8 @@ case "POST":
 	) {
 		$userEntries = do_sqlite3_prepared_statement(
 			"
-			SELECT * 
-			FROM Users 
+			SELECT *
+			FROM Users
 			WHERE username=:username",
 			[[
 				"param" => ":username",
@@ -27,9 +27,13 @@ case "POST":
 
 		if (password_verify(
 			$post_json["password"],
-			$userEntry["hashed_password"])) {
-			$_SESSION["user"] = $userEntry;
-			do_response(201);
+      $userEntry["hashed_password"])
+    ) {
+      unset($userEntry["hashed_password"]);
+      $_SESSION["user"] = $userEntry;
+      $responseObj = [];
+			$responseObj["user"] = $userEntry;
+			do_response(201, $responseObj);
 		}
 		else {
 			error(ERROR_PASSWORD_NOT_MATCH);
@@ -56,8 +60,8 @@ case "PUT":
 	) {
 		do_sqlite3_prepared_statement(
 			"
-			UPDATE Users 
-			SET hashed_password=:hashed_password 
+			UPDATE Users
+			SET hashed_password=:hashed_password
 			WHERE username=:username",
 			[
 				[

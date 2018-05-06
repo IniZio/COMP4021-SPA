@@ -11,9 +11,9 @@ if (count($path) == 1)
 			is_string($post_json["password"])) {
 			$sqlRet = do_sqlite3_prepared_statement(
 				"
-				INSERT INTO Users 
-					(username, hashed_password) 
-				VALUES 
+				INSERT INTO Users
+					(username, hashed_password)
+				VALUES
 					(:username, :hashed_password);",
 				[
 					[
@@ -42,16 +42,21 @@ if (count($path) == 1)
 
 			$userEntries = do_sqlite3_prepared_statement(
 				"
-				SELECT id 
-				FROM Users 
+				SELECT *
+				FROM Users
 				WHERE username=:username;",
 				[
 					[
 						"param" => ":username",
 						"value" => $post_json["username"],
 						"type" => SQLITE3_TEXT],
-				]);
-			$responseObj = [];
+        ]);
+      $userEntry = $userEntries[0];
+      unset($userEntry["hashed_password"]);
+
+      $_SESSION["user"] = $userEntry;
+      $responseObj = [];
+			$responseObj["user"] = $userEntry;
 			$responseObj["id"] = $userEntries[0]["id"];
 
 			do_response(201, $responseObj);
@@ -111,14 +116,14 @@ if (count($path) == 2)
 
 			do_sqlite3_prepared_statement(
 				"
-				UPDATE Users 
-				SET 
+				UPDATE Users
+				SET
 					first_name=:first_name,
 					last_name=:last_name,
-					email=:email, 
+					email=:email,
 					major=:major,
-					year=:year, 
-					status=:status 
+					year=:year,
+					status=:status
 				WHERE id=:id;",
 				[
 					[
@@ -162,7 +167,7 @@ if (count($path) == 2)
 			if (is_string($post_json["password"])) {
 				do_sqlite3_prepared_statement(
 					"
-					UPDATE Users 
+					UPDATE Users
 					SET hashed_password=:hashed_password
 					WHERE id=:id",
 					[
@@ -180,13 +185,18 @@ if (count($path) == 2)
 					],
 					true);
 			}
-			$_SESSION["user"] = do_sqlite3_prepared_statement(
+			$userEntry = do_sqlite3_prepared_statement(
 				"SELECT * FROM Users WHERE id=:id",
 				[[
 					"param" => ":id",
 					"value" => $user_id,
 					"type" => SQLITE3_INTEGER]]
-			)[0];
+      )[0];
+      unset($userEntry["hashed_password"]);
+
+      $_SESSION["user"] = $userEntry;
+      $responseObj = [];
+			$responseObj["user"] = $userEntry;
 			do_response(200);
 		}
 		else
@@ -258,7 +268,7 @@ if (count($path) == 3 &&
 			$file_name = date("y-m-d-H:i:s") . $_FILES["file"]["name"];
 			$sqlRet = do_sqlite3_prepared_statement(
 				"
-				INSERT INTO Files (file_name, content_type) 
+				INSERT INTO Files (file_name, content_type)
 				VALUES (:file_name, :content_type)",
 				[
 					[
@@ -293,8 +303,8 @@ if (count($path) == 3 &&
 		}
 		do_sqlite3_prepared_statement(
 			"
-			UPDATE Users 
-			SET picture_file_id=:pic_id 
+			UPDATE Users
+			SET picture_file_id=:pic_id
 			WHERE id=:user_id",
 			[
 				[
