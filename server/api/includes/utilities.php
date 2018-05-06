@@ -87,15 +87,35 @@ function do_sqlite3_prepared_statement($statement, $values, $no_return = false, 
 	return $results;
 }
 
+function get_resource_by_id($id, $resource_name)
+{
+	if (is_integer($id) &&
+		is_string($resource_name)) {
+		$sqlRet = do_sqlite3_prepared_statement(
+			"SELECT * FROM " . $resource_name . " WHERE id=:id",
+			[
+				array(
+					"param" => ":id",
+					"value" => $id,
+					"type" => SQLITE3_INTEGER
+				)
+			]);
+		if (!isset($sqlRet[0])) {
+			error(ERROR_HTTP_RESOURCE_404);
+		}
+		return $sqlRet[0];
+	}
+	return null;
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 $post_json = json_decode(file_get_contents('php://input'), true);
 
-$db = new SQLite3("./data.db");
-
 define("WEBROOT", dirname(dirname(__DIR__)) . "/");
 define("FILEDIR", WEBROOT . "files/");
+
+$db = new SQLite3(WEBROOT . "data.db");
 
 const accepted_image_mime = [
 	"image/bmp",

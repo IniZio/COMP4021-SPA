@@ -52,19 +52,7 @@ if (count($path) == 1)
 	}
 
 $course_id = $path[1];
-$sqlRet = do_sqlite3_prepared_statement(
-	"SELECT * FROM Courses WHERE id=:id",
-	[
-		array(
-			"param" => ":id",
-			"value" => $course_id,
-			"type" => SQLITE3_INTEGER
-		)
-	]);
-if (!isset($sqlRet[0])) {
-	error(ERROR_HTTP_RESOURCE_404);
-}
-$course = $sqlRet[0];
+$course = get_resource_by_id($course_id, "Courses");
 
 if (count($path) == 2)
 	switch ($method) {
@@ -104,7 +92,8 @@ if (count($path) == 2)
 			break;
 		case "DELETE":
 			do_check_auth();
-			do_sqlite3_prepared_statement("DELETE FROM Courses WHERE id=:id",
+			do_sqlite3_prepared_statement(
+				"DELETE FROM Courses WHERE id=:id",
 				[
 					array(
 						"param" => ":id",
