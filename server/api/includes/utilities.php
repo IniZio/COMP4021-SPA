@@ -119,7 +119,7 @@ $post_json = json_decode(file_get_contents('php://input'), true);
 define("WEBROOT", dirname(dirname(__DIR__)) . "/");
 define("FILEDIR", WEBROOT . "files/");
 
-$db = new SQLite3(WEBROOT . "data.db");
+$db = new SQLite3(WEBROOT . "api/data.db");
 
 const accepted_image_mime = [
 	"image/bmp",
