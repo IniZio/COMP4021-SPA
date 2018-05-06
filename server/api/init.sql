@@ -1,103 +1,89 @@
-create table Users
+CREATE TABLE Comments
 (
-	id INTEGER not null,
-	username TEXT not null,
-	hashed_password TEXT not null,
-	picture_file_id INTEGER,
-	first_name TEXT,
-	last_name TEXT,
-	email TEXT,
-	major TEXT,
-	year INTEGER,
-	status TEXT
-)
-;
-
-create unique index Users_Auth_id_uindex
-	on Users (id)
-;
-
-create unique index Users_Auth_username_uindex
-	on Users (username)
-;
-
-create unique index Users_email_uindex
-	on Users (email)
-;
-
-create index Users_major_index
-	on Users (major)
-;
+  id                INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  author_user_id    INTEGER                           NOT NULL,
+  content           TEXT                              NOT NULL,
+  created_timestamp INTEGER                           NOT NULL,
+  course_id         INTEGER                           NOT NULL
+);
+CREATE UNIQUE INDEX Comments_id_uindex
+  ON Comments (id);
+CREATE INDEX Comments_author_user_id_index
+  ON Comments (author_user_id);
+CREATE INDEX Comments_course_id_index
+  ON Comments (course_id);
 
 
 
-create table Resources
+CREATE TABLE Courses
 (
-	id INTEGER not null,
-	name TEXT not null,
-	course_id INTEGER not null,
-	description TEXT,
-	type TEXT not null,
-	file_id INTEGER,
-	text_content TEXT
-)
-;
-
-create unique index Resources_id_uindex
-	on Resources (id)
-;
+  id         INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  name       TEXT                              NOT NULL,
+  descrption TEXT
+);
+CREATE UNIQUE INDEX Courses_id_uindex
+  ON Courses (id);
+CREATE UNIQUE INDEX Courses_name_uindex
+  ON Courses (name);
 
 
 
-create table Courses
+CREATE TABLE Files
 (
-	id INTEGER not null,
-	name TEXT not null,
-	descrption TEXT
-)
-;
-
-create unique index Courses_id_uindex
-	on Courses (id)
-;
-
-create unique index Courses_name_uindex
-	on Courses (name)
-;
+  id           INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  file_name    TEXT                              NOT NULL,
+  content_type TEXT                              NOT NULL
+);
+CREATE UNIQUE INDEX Files_id_uindex
+  ON Files (id);
+CREATE UNIQUE INDEX Files_file_name_uindex
+  ON Files (file_name);
 
 
 
-create table Comments
+CREATE TABLE Resources
 (
-	id INTEGER not null,
-	author_user_id INTEGER not null,
-	content TEXT not null,
-	created_timestamp INTEGER not null,
-	course_id INTEGER not null
-)
-;
+  id           INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  name         TEXT                              NOT NULL,
+  course_id    INTEGER                           NOT NULL,
+  description  TEXT,
+  type         TEXT                              NOT NULL,
+  file_id      INTEGER,
+  text_content TEXT
+);
+CREATE UNIQUE INDEX Resources_id_uindex
+  ON Resources (id);
+CREATE INDEX Resources_name_index
+  ON Resources (name);
+CREATE INDEX Resources_course_id_index
+  ON Resources (course_id);
+CREATE INDEX Resources_type_index
+  ON Resources (type);
 
-create unique index Comments_id_uindex
-	on Comments (id)
-;
 
 
-
-create table Files
+CREATE TABLE Users
 (
-	id INTEGER not null,
-	file_name TEXT not null,
-	content_type TEXT not null
-)
-;
-
-create unique index Files_file_name_uindex
-	on Files (file_name)
-;
-
-create unique index Files_id_uindex
-	on Files (id)
-;
-
-
-
+  id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  username        TEXT                              NOT NULL,
+  hashed_password TEXT                              NOT NULL,
+  picture_file_id INTEGER,
+  first_name      TEXT,
+  last_name       TEXT,
+  email           TEXT,
+  major           TEXT,
+  year            INTEGER,
+  status          TEXT
+);
+CREATE UNIQUE INDEX Users_Auth_id_uindex
+  ON Users (id);
+CREATE UNIQUE INDEX Users_Auth_username_uindex
+  ON Users (username);
+CREATE UNIQUE INDEX Users_email_uindex
+  ON Users (email);
+CREATE INDEX Users_major_index
+  ON Users (major);
+CREATE INDEX Users_year_index
+  ON Users (year);
+CREATE INDEX Users_status_index
+  ON Users (status);
