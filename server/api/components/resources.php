@@ -78,6 +78,7 @@ if (count($path) == 3)
 		do_response(201);
 		break;
 	default:
+		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
 		break;
 	}
 
@@ -149,6 +150,7 @@ if (count($path) == 4)
 		do_response(200);
 		break;
 	default:
+		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
 		break;
 	}
 
@@ -290,5 +292,6 @@ if ($path[4] === "file")
 		do_response(200);
 		break;
 	default:
+		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
 		break;
 	}
