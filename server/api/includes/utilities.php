@@ -9,7 +9,7 @@ function cleanup_exit()
 
 function is_authed()
 {
-	return !is_null($_SESSION["user"]);
+	return isset($_SESSION["user"]);
 }
 
 function do_check_auth()
