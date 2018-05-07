@@ -3,7 +3,7 @@
 		"postinstall": "cd client && npm i",
 		"//dev": "lerna run dev",
 		"//build": "lerna run build",
-		"dev": "BASE_URL=http://localhost:8081/api ./node_modules/.bin/parcel client/index.html -p 8080  --open & php -S localhost:8081 -t server",
+		"dev": "ln -rs server/* dist/ && BASE_URL=./api ./node_modules/.bin/parcel watch client/index.html -d dist --public-url ./ & php -S localhost:8080 -t dist",
 		"build": "BASE_URL=./api ./node_modules/.bin/parcel build client/index.html --public-url ./ --out-dir dist && cp -R server/* dist",
 		"serve": "php -S localhost:8080 -t dist"
 	},
