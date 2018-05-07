@@ -1,4 +1,5 @@
 <template>
+
   <ol class="breadcrumb p-1 px-4" style="width: 60vw; height: 2rem; margin: auto">
     <li x-for="segment:path" class="breadcrumb-item" :abc="segment" style="text-transform: capitalize">
       <router-link :to="fullPath" style="display: inline;">
@@ -16,8 +17,8 @@
       }
     }
 
-    constructor () {
-      super()
+    connectedCallback () {
+      super.connectedCallback()
 
       this.computed = {
         fullPath (node, overrides) {

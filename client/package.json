@@ -10,6 +10,8 @@
     "build": "BASE_URL=${BASE_URL} ./node_modules/.bin/parcel build index.html --public-url ./"
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "parcel-bundler": "^1.7.0"
   },
   "dependencies": {

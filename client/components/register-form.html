@@ -1,4 +1,5 @@
 <template>
+
     <div class="container rounded bg-white p-3" style="min-width: 30rem">
         <div class="row">
             <!-- <div class="ml-3" style="position: absolute">
@@ -18,7 +19,7 @@
                   <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-user"></i></div>
                   </div>
-                  <input type="text" required class="form-control rounded-right" id="username" name="username" placeholder="Username" :value="form.username" @input="changeField">
+                  <input type="text" required class="form-control rounded-right"  name="username" placeholder="Username" :value="form.username" @input="changeField">
                   <div :children="form.username"></div>
                   <div id="unavailError" class="col-6 form-text text-center text-danger mt-2" style="display: none; font-size: 0.9rem;">
                       <i class="fas fa-times mr-1"></i>The username is not available.
@@ -33,7 +34,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-key"></i></div>
                         </div>
-                        <input type="password" required class="form-control" id="password" name="password" placeholder="Password" :value="form.password" @input="changeField">
+                        <input type="password" required class="form-control"  name="password" placeholder="Password" :value="form.password" @input="changeField">
                     </div>
                     <div style="color: red; height: 1rem" :children="invalidPassword"></div>
                 </div>
@@ -50,15 +51,16 @@
             <div class="form-row">
                 <div class="col-md-6 col-sm-12 form-group">
                     <label for="first_name">First name</label>
-                    <input type="text" required class="form-control" id="first_name" name="first_name" placeholder="First Name" :value="form.first_name" @input="changeField">
+                    <input type="text" required class="form-control"  name="first_name" placeholder="First Name" :value="form.first_name" @input="changeField">
                 </div>
                 <div class="col-md-6 col-sm-12 form-group">
                     <label for="last_name">Last name</label>
-                    <input type="text" required class="form-control" id="last_name" name="last_name" placeholder="Last Name" :value="form.last_name" @input="changeField">
+                    <input type="text" required class="form-control"  name="last_name" placeholder="Last Name" :value="form.last_name" @input="changeField">
                 </div>
             </div>
             <div style="height: 4rem; margin: auto; width: 304px;">
-              <slot name="recaptcha"></slot>
+              <!-- <slot name="recaptcha"></slot> -->
+              <div id="register-recaptcha" slot="recaptcha"></div>
             </div>
             <div class="col form-group text-center mt-4">
                 <button type="submit" name="register" class="col-6 btn btn-primary"><i class="fas fa-clipboard-list mr-2"></i>Register</button>
@@ -105,7 +107,7 @@
     }
 
     changeField (e) {
-      this.data.form[e.target.id] = e.target.value
+      this.data.form[e.target.name] = e.target.value
     }
 
     async submitRegister (e) {

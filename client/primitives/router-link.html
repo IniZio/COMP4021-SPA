@@ -22,8 +22,8 @@
       return this.getAttribute('to')
     }
 
-    constructor () {
-      super()
+    connectedCallback () {
+      super.connectedCallback()
       this.addEventListener('click', this.gotoLink)
     }
 

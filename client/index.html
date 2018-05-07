@@ -10,8 +10,27 @@
 </head>
 
 <body>
+  <style>
+      @import url(https://bootswatch.com/4/lumen/bootstrap.min.css);
+      @import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
+  </style>
   <!-- Web component polyfills -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script> -->
+  <!-- <script src="./node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
+  <!-- <script>
+    (function() {
+    if ('registerElement' in document
+        && 'import' in document.createElement('link')
+        && 'content' in document.createElement('template')) {
+      // platform is good!
+    } else {
+      // polyfill the platform!
+      var e = document.createElement('script');
+      e.src = './node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js';
+      document.body.insertBefore(e, document.getElementById('adaptor').nextSibling);
+    }
+  })()
+  </script> -->
   <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
 
   <!-- Vendor imports -->
@@ -21,11 +40,12 @@
   <link rel="import" href="./vendor/sweetalert.html">
   <link rel="import" href="./vendor/jquery.html">
   <link rel="import" href="./vendor/axios.html">
+  <script src="./helpers/observable.js"></script>
 
   <style>a {cursor: pointer;}</style>
 
   <!-- Primitives imports -->
-  <script src="./primitives/my-element.js"></script>
+  <link rel="import" href="./primitives/my-element.html">
   <link rel="import" href="./primitives/match-route.html">
   <link rel="import" href="./primitives/router-link.html">
 
@@ -46,28 +66,30 @@
 
   <!-- Main content -->
   <x-app>
-    <nav-bar></nav-bar>
-    <nav-breadcrumb class="py-3"></nav-breadcrumb>
-    <match-route path="/" exact="true" protected="true">
-      <main-page></main-page>
-    </match-route>
-    <match-route path="/login">
-      <div class="card p-4" style="margin-top: 10rem">
-        <login-form>
-          <div id="login-recaptcha" slot="recaptcha"></div>
-        </login-form>
-      </div>
-    </match-route>
-    <match-route path="/register">
-      <div class="card p-4" style="margin-top: 5rem">
-        <register-form>
-          <div id="register-recaptcha" slot="recaptcha"></div>
-        </register-form>
-      </div>
-    </match-route>
-    <match-route path="/profile" protected="true">
-      <profile-form></profile-form>
-    </match-route>
+    <div class="d-flex flex-column align-items-center" style="height: 100vh; box-sizing: border-box">
+      <nav-bar></nav-bar>
+      <nav-breadcrumb class="py-3"></nav-breadcrumb>
+      <match-route path="/" exact="true" protected="true">
+        <main-page></main-page>
+      </match-route>
+      <match-route path="/login">
+        <div class="card p-4" style="margin-top: 10rem">
+          <login-form>
+            <!-- <div id="login-recaptcha" slot="recaptcha"></div> -->
+          </login-form>
+        </div>
+      </match-route>
+      <match-route path="/register">
+        <div class="card p-4" style="margin-top: 5rem">
+          <register-form>
+            <!-- <div id="register-recaptcha" slot="recaptcha"></div> -->
+          </register-form>
+        </div>
+      </match-route>
+      <match-route path="/profile" protected="true">
+        <profile-form></profile-form>
+      </match-route>
+    </div>
   </x-app>
   <noscript>JavaScript is required</noscript>
 </body>

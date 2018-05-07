@@ -1,4 +1,6 @@
-import slim from 'observable-slim'
+<script>
+// import slim from 'observable-slim'
+// const slim = window.ObservableSlim
 
 const SingleSlim = (() => {
   let instance
@@ -47,29 +49,34 @@ function set(paths, value, obj) {
 }
 
 class MyElement extends HTMLElement {
-  observe = slim.observe
-
   constructor() {
-    super(...arguments)
+    super()
 
+    this.observe = slim.observe
     this._listeners = []
     this._mapper = {}
     this.context = SingleSlim.getInstance()
     this._ctxMapper = {}
     this.computed = {}
     this.initState()
-
-    if (!this.shadowRoot) {
-      // Attach shadow DOM
-      this.attachShadow({
-        mode: 'open'
-      })
-      // Append template content to custom element
-      this.shadowRoot.appendChild(this.template.content.cloneNode(true))
-    }
   }
 
   connectedCallback() {
+    console.log()
+    // if (this.shadow || this.template.content.querySelectorAll('slot').length) {
+    if (this.shadow) {
+      if (!this.shadowRoot) {
+        // Attach shadow DOM
+        this.attachShadow({
+          mode: 'open'
+        })
+
+        // Append template content to custom element
+        this.shadowRoot.appendChild(this.template.content)
+      }
+    } else {
+      this.appendChild(document.importNode(this.template.content, true))
+    }
     this.compile()
   }
 
@@ -111,10 +118,10 @@ class MyElement extends HTMLElement {
     )
   }
 
-  compile(root = this.shadowRoot, overrides = {}) {
+  compile(root = this, overrides = {}) {
     const instance = this
 
-    root.querySelectorAll('[x-for]')
+    Array.from(root.querySelectorAll('[x-for]'))
       .map(node => {
         const [name, iterable] = node.attributes['x-for'].value.split(':')
         node.removeAttribute('x-for')
@@ -149,7 +156,7 @@ class MyElement extends HTMLElement {
         renderList()
       })
 
-    root.querySelectorAll('[x-if]')
+    Array.from(root.querySelectorAll('[x-if]'))
       .map(node => {
         const name = node.attributes['x-if'].value
         node.removeAttribute('x-if')
@@ -173,7 +180,7 @@ class MyElement extends HTMLElement {
       })
 
     // Apply listeners and data binding to nodes without directives
-    root.querySelectorAll('*')
+    Array.from(root.querySelectorAll('*'))
       .filter(node => !Object.keys(node.attributes).find(attr => attr.startsWith('x-')))
       .map(node => {
         this.applyListeners(node)
@@ -294,9 +301,10 @@ class MyElement extends HTMLElement {
 window.MyElement = MyElement
 
 // Define custom element
-window.exportTag = (name = '', Class = class extends MyElement {}) => {
-  Class.template = Class.prototype.template = document.currentScript.parentElement.querySelector('template')
-  return window.customElements.define(name, Class)
+window.exportTag = (name = '', Class = class extends MyElement {}, {shadow = false} = {}) => {
+  Class.template = Class.prototype.template = document.currentScript.parentElement.querySelector('template').cloneNode(true)
+  Class.shadow = Class.prototype.shadow = shadow
+  document.currentScript.parentElement.querySelector('template').remove()
+  return customElements.define(name, Class)
 }
-
-export default MyElement
+</script>

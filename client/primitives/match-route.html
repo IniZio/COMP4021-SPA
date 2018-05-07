@@ -26,8 +26,8 @@
       return this.getAttribute('exact')
     }
 
-    constructor () {
-      super()
+    connectedCallback () {
+      super.connectedCallback()
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
       this.visibilityOnHash({newURL: window.location.href})
 
@@ -54,7 +54,7 @@
       } else {
         this.active = true
         if (this.style.display === 'none') {
-          this.style.display = 'block'
+          this.style.display = 'contents'
         }
       }
     }
