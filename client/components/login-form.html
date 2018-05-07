@@ -105,6 +105,7 @@
       try {
         const {data: {user}} = await api.login(this.data.form)
         this.context.profile = user
+        // Cookies.set('userId', user.id)
 
         console.log(this.context.profile, user)
       } catch (e) {

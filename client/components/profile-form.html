@@ -1,5 +1,5 @@
 <template>
-    
+
   <div id="profileEdit" class="container rounded bg-white" style="width:50rem; border:2px solid black">
     <div class="row">
       <div class="col p-3 text-center">
@@ -107,7 +107,7 @@
               </label>
             </div>
             <div class="col-7">
-              <select class="form-control" id="year" name="year" :value="form.year" @input="changeField">
+              <select class="form-control" name="year" :value="form.year" @input="changeField">
                 <option value="year1">Year 1</option>
                 <option value="year2">Year 2</option>
                 <option value="year3">Year 3</option>
@@ -181,8 +181,9 @@
     }
 
     changeField (e) {
-      console.log(e.target.id, e.target.value)
-      this.data.form[e.target.id] = e.target.value
+      // console.log(e.target.name, e.target.value)
+      console.table(this.data.form)
+      this.data.form[e.target.name] = e.target.value
     }
 
     async submitProfile (e) {

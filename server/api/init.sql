@@ -77,7 +77,7 @@ CREATE TABLE Users
   last_name       TEXT,
   email           TEXT,
   major           TEXT,
-  year            INTEGER,
+  year            TEXT,
   status          TEXT
 );
 CREATE UNIQUE INDEX Users_Auth_id_uindex
