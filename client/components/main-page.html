@@ -19,9 +19,11 @@
 
 </style>
 <template>
+
   <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
     <div class="row" style="height:100%;">
       <!-- List of courses-->
+      <match-route path="/courses">
       <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
         <div class="row form-group justify-content-center mt-3">
             <div class="col">
@@ -88,6 +90,7 @@
           </ul>
         </nav>
       </div>
+      </match-route>
       <!-- Display Course -->
       <div id="course_display" class="col-md-9 col-sm-12">
         <div class="row">

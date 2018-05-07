@@ -1,17 +1,14 @@
 <template>
-  <div class="d-flex flex-column align-items-center" style="height: 100vh; box-sizing: border-box">
-    <slot></slot>
-  </div>
 </template>
 
 <script>
   exportTag('x-app', class extends MyElement {
-    constructor () {
-      super()
-      this.shadowRoot.host.style.display = 'none'
+    connectedCallback () {
+      super.connectedCallback()
+      this.style.display = 'none'
       // Only show when all components are ready
       window.addEventListener('WebComponentsReady', (e) => {
-        this.shadowRoot.host.style.display = 'contents'
+        this.style.display = 'contents'
       })
 
       this.observe(this.context, () => {

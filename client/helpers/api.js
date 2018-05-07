@@ -2,7 +2,7 @@ const BASE_URL = process.env.BASE_URL
 
 const $http = axios.create({
   baseURL: BASE_URL,
-  // withCredentials: true,
+  withCredentials: true
 })
 
 const api =  {

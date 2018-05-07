@@ -1,6 +1,9 @@
 <link rel="import" href="../vendor/recaptcha.html">
 
 <template>
+
+
+
     <div id="login" class="col-12 container rounded bg-white">
         <div class="row">
             <div class="col p-3 text-center">
@@ -15,7 +18,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-user"></i></div>
                             </div>
-                            <input type="text" required class="form-control" id="username" name="username" placeholder="Username" :value="form.username" @input="changeField">
+                            <input type="text" required class="form-control"  name="username" placeholder="Username" :value="form.username" @input="changeField">
                         </div>
                     </div>
                     <div class="form-group">
@@ -23,11 +26,12 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-key"></i></div>
                             </div>
-                            <input type="password" required class="form-control" id="password" name="password" placeholder="Password" :value="form.password"  @input="changeField">
+                            <input type="password" required class="form-control"  name="password" placeholder="Password" :value="form.password"  @input="changeField">
                         </div>
                     </div>
                     <div style="height: 4rem; margin: 0 auto">
-                      <slot name="recaptcha"></slot>
+                      <!-- <slot name="recaptcha"></slot> -->
+                      <div id="login-recaptcha" slot="recaptcha"></div>
                     </div>
                     <br>
                     <div class="row">
@@ -71,6 +75,7 @@
     connectedCallback () {
       super.connectedCallback()
       const instance = this
+      console.log('login captcha', document.getElementById('login-recaptcha'), this.querySelector('*'))
       this.captchaWidget = grecaptcha.render(
         document.getElementById('login-recaptcha'),
         {
@@ -81,7 +86,7 @@
     }
 
     changeField (e) {
-      this.data.form[e.target.id] = e.target.value
+      this.data.form[e.target.name] = e.target.value
     }
 
     // verifyCallback (response) {
@@ -101,7 +106,7 @@
         const {data: {user}} = await api.login(this.data.form)
         this.context.profile = user
 
-        console.log(this.context.profile)
+        console.log(this.context.profile, user)
       } catch (e) {
         switch (e.response && e.response.status) {
           case 404:
