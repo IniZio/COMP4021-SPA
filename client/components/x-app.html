@@ -11,6 +11,11 @@
         this.style.display = 'contents'
       })
 
+      api.getProfile()
+      .then(({data: profile}) => {
+        this.context.profile = profile
+      })
+
       this.observe(this.context, () => {
         this.context.isLoggedIn = !!this.context.profile
         this.context.notLoggedIn = !this.context.profile

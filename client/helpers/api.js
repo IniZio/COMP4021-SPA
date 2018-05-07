@@ -17,10 +17,14 @@ const api =  {
     url: 'users',
     data: form
   }),
+  logout: () => $http({
+    method: 'DELETE',
+    url: 'auth'
+  }),
   // Profile
   getProfile: id => $http({
     method: 'GET',
-    url: `users/${id}`
+    url: `users`
   }),
   updateProfile: (id, form) => $http({
     method: 'PUT',

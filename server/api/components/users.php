@@ -104,7 +104,7 @@ if (count($path) == 2)
 					$_SESSION["user"]["major"];
 
 			$post_json["year"] =
-				is_integer($post_json["year"]) ?
+				is_string($post_json["year"]) ?
 					$post_json["year"] :
 					$_SESSION["user"]["year"];
 
@@ -149,7 +149,7 @@ if (count($path) == 2)
 					[
 						"param" => ":year",
 						"value" => $post_json["year"],
-						"type" => SQLITE3_INTEGER,
+						"type" => SQLITE3_TEXT,
 					],
 					[
 						"param" => ":status",
@@ -197,7 +197,7 @@ if (count($path) == 2)
       $_SESSION["user"] = $userEntry;
       $responseObj = [];
 			$responseObj["user"] = $userEntry;
-			do_response(200);
+			do_response(200, $responseObj);
 		}
 		else
 			error(ERROR_USER_NOT_MATCH);
@@ -205,10 +205,11 @@ if (count($path) == 2)
 		// GET /users/{id}
 	case "GET":
 		do_check_auth();
-		if ($user_id == $_SESSION["user"]["id"])
-			do_response(
-				200,
-				do_sanitize_user_info($_SESSION["user"]));
+		if ($user_id == $_SESSION["user"]["id"]) {
+      $responseObj = [];
+			$responseObj["user"] = do_sanitize_user_info($_SESSION["user"]);
+			do_response(200, $responseObj);
+    }
 		else
 			error(ERROR_USER_NOT_MATCH);
 		break;
