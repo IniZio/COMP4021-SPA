@@ -27,13 +27,12 @@
       }
 
       window.addEventListener('hashchange', this.breadcrumbOnHash.bind(this))
-      if (!window.location.href.endsWith('#/')) window.location.href += '#/'
       this.breadcrumbOnHash({newURL: window.location.href})
     }
 
     breadcrumbOnHash ({newURL = '', oldURL = ''}) {
       const afterHash = newURL.split('#')[1]
-      this.data.path = afterHash.replace(/^\//, '').split('/')
+      this.data.path = afterHash.replace(/^\//, '').replace(/\?(.*)$/, '').split('/')
     }
   })
 </script>

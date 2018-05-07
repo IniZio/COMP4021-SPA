@@ -30,14 +30,29 @@
       super()
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
       this.visibilityOnHash({newURL: window.location.href})
+
+      if (!!this.getAttribute('protected')) {
+        const redirectOnLogout = () => {
+          if (!this.context.profile && this.active) {
+             window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
+          }
+          if (this.context.profile && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
+            window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
+          }
+        }
+        this.observe(this.context, redirectOnLogout.bind(this))
+        redirectOnLogout()
+      }
     }
 
     visibilityOnHash ({newURL = '', oldURL = ''}) {
       const afterHash = newURL.split('#')[1] || ''
       if (this.path && (!afterHash.startsWith(this.path) || (this.exact && afterHash !== this.path))) {
+        this.active = false
         this._display = this.style.display
         this.style.display = 'none'
       } else {
+        this.active = true
         if (this.style.display === 'none') {
           this.style.display = 'block'
         }

@@ -149,6 +149,29 @@ class MyElement extends HTMLElement {
         renderList()
       })
 
+    root.querySelectorAll('[x-if]')
+      .map(node => {
+        const name = node.attributes['x-if'].value
+        node.removeAttribute('x-if')
+
+        const conditionalRender = () => {
+          if (!path(name, instance.data) && !path(name, instance.context) && !path(name, instance)) {
+            if (node.style.display !== 'none') {
+              node.setAttribute('display', node.style.display)
+              node.style.display = 'none'
+            }
+          } else {
+            if (node.style.display === 'none') {
+              node.style.display = node.getAttribute('display') || 'block'
+            }
+          }
+        }
+
+        instance.observe(instance.data, conditionalRender.bind(instance))
+        instance.observe(instance.context, conditionalRender.bind(instance))
+        conditionalRender()
+      })
+
     // Apply listeners and data binding to nodes without directives
     root.querySelectorAll('*')
       .filter(node => !Object.keys(node.attributes).find(attr => attr.startsWith('x-')))

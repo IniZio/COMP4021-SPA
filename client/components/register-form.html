@@ -49,12 +49,12 @@
             </div>
             <div class="form-row">
                 <div class="col-md-6 col-sm-12 form-group">
-                    <label for="firstname">First name</label>
-                    <input type="text" required class="form-control" id="firstname" name="firstname" placeholder="First Name" :value="form.firstname" @input="changeField">
+                    <label for="first_name">First name</label>
+                    <input type="text" required class="form-control" id="first_name" name="first_name" placeholder="First Name" :value="form.first_name" @input="changeField">
                 </div>
                 <div class="col-md-6 col-sm-12 form-group">
-                    <label for="lastname">Last name</label>
-                    <input type="text" required class="form-control" id="lastname" name="lastname" placeholder="Last Name" :value="form.lastname" @input="changeField">
+                    <label for="last_name">Last name</label>
+                    <input type="text" required class="form-control" id="last_name" name="last_name" placeholder="Last Name" :value="form.last_name" @input="changeField">
                 </div>
             </div>
             <div style="height: 4rem; margin: auto; width: 304px;">
@@ -82,8 +82,8 @@
           username: '',
           password: '',
           confirmPassword: '',
-          firstname: '',
-          lastname: ''
+          first_name: '',
+          last_name: ''
         },
         invalidPassword: ''
       }
@@ -108,15 +108,30 @@
       this.data.form[e.target.id] = e.target.value
     }
 
-    submitRegister (e) {
+    async submitRegister (e) {
       e.preventDefault()
       e.target.classList.add('was-validated')
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      if (!captcha) return
+      // if (!captcha) return
       if (e.target.checkValidity() === false) return
       if (this.data.invalidPassword) return false
+
+      try {
+        const {user} = await api.register(this.data.form)
+        this.context.profile = user
+      } catch (e) {
+        switch (e.response && e.response.status) {
+          case 400:
+            swal('Error', 'User is already logged in', 'error')
+            break
+          default:
+            console.error(e)
+            swal('Error', 'Register failed', 'error')
+        }
+      }
+
       console.log('submitting: ', JSON.stringify(this.data.form))
     }
   })

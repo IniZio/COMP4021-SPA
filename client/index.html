@@ -18,6 +18,7 @@
   <link rel="import" href="./vendor/font-awesome.html" async>
   <link rel="import" href="./vendor/recaptcha.html" async>
   <link rel="import" href="./vendor/bootstrap.html">
+  <link rel="import" href="./vendor/sweetalert.html">
   <link rel="import" href="./vendor/jquery.html">
   <link rel="import" href="./vendor/axios.html">
 
@@ -30,6 +31,7 @@
 
   <!-- HTML imports -->
   <link rel="import" href="./components/api.html" async>
+  <link rel="import" href="./components/x-app.html">
   <link rel="import" href="./components/nav-breadcrumb.html" async>
   <link rel="import" href="./components/nav-bar.html" async>
   <link rel="import" href="./components/login-form.html" async>
@@ -37,11 +39,16 @@
   <link rel="import" href="./components/profile-form.html" async>
   <link rel="import" href="./components/main-page.html">
 
+  <script>
+    // HACK: force add hash if not already have to make route related primitives work
+    if (!window.location.href.includes('#/')) window.location.href += '#/'
+  </script>
+
   <!-- Main content -->
-  <div id="app" class="d-flex flex-column align-items-center" style="display: none; height: 100vh; box-sizing: border-box">
+  <x-app>
     <nav-bar></nav-bar>
     <nav-breadcrumb class="py-3"></nav-breadcrumb>
-    <match-route path="/" exact="true">
+    <match-route path="/" exact="true" protected="true">
       <main-page></main-page>
     </match-route>
     <match-route path="/login">
@@ -52,23 +59,16 @@
       </div>
     </match-route>
     <match-route path="/register">
-      <div class="card p-4" style="margin-top: 10rem">
+      <div class="card p-4" style="margin-top: 5rem">
         <register-form>
           <div id="register-recaptcha" slot="recaptcha"></div>
         </register-form>
       </div>
     </match-route>
-    <match-route path="/profile">
+    <match-route path="/profile" protected="true">
       <profile-form></profile-form>
     </match-route>
-  </div>
-
-  <script>
-    // Only show when all components are ready
-    window.addEventListener('WebComponentsReady', function(e) {
-      document.getElementById('app').style.display = "block"
-    })
-  </script>
+  </x-app>
   <noscript>JavaScript is required</noscript>
 </body>
 

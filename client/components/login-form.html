@@ -88,16 +88,30 @@
       // this.data.form.recaptcha = response
     // }
 
-    submitLogin (e) {
+    async submitLogin (e) {
       e.preventDefault()
       e.stopPropagation()
       e.target.classList.add('was-validated')
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      if (!captcha) return
+      // if (!captcha) return
       if (e.target.checkValidity() === false) return
-      console.log('submitting: ', JSON.stringify(this.data.form))
+      try {
+        const {data: {user}} = await api.login(this.data.form)
+        this.context.profile = user
+
+        console.log(this.context.profile)
+      } catch (e) {
+        switch (e.response && e.response.status) {
+          case 404:
+            swal('Error', 'Invalid username or password', 'error')
+            break
+          default:
+            console.error(e)
+            swal('Error', 'Login failed', 'error')
+        }
+      }
     }
   })
 </script>

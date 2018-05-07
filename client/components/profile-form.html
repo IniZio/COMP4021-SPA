@@ -6,7 +6,7 @@
         <hr>
       </div>
     </div>
-    <form id="profileEditForm">
+    <form id="profileEditForm" @submit="submitProfile">
       <div class="row">
         <div class="col-md-4 col-sm-12 p-3">
           <div class="col text-center">
@@ -15,13 +15,12 @@
             </label>
           </div>
           <div class="col">
-            <img id="preview" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
+            <object data="https://api.adorable.io/avatars/40/" type="image/png"  width="100%" height="100%">
+              <img id="preview" :src="userAvatar">
+            </object>
           </div>
           <div class="col mt-2" style="margin: auto;">
-            <!-- target.php to be changed -->
-            <form enctype="multipart/form-data" method="post" action="target.php">
-              <input type="file" id="profilePhoto" name="profilePhoto" accept=".jpg, .jpeg, .png">
-            </form>
+            <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="form.avatar" @input="changeField">
           </div>
         </div>
         <div class="col-md-8 col-sm-12 p-0 pr-3">
@@ -32,16 +31,16 @@
               </label>
             </div>
             <!-- Username to be changed -->
-            <div class="col-7 form-group text-left" id="getUsername">default</div>
+            <div class="col-7 form-group text-left" id="getUsername" :children="form.username">default</div>
           </div>
-          <div class="form-row">
+          <!-- <div class="form-row">
             <div class="col-3 form-group text-right mt-2">
-              <label for="newPassword">
+              <label for="password">
                 <strong>New Password</strong>
               </label>
             </div>
             <div class="col-7">
-              <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="New Password">
+              <input type="password" name="password" id="password" class="form-control" placeholder="New Password" :value="form.password" @input="changeField">
             </div>
           </div>
           <div class="form-row">
@@ -51,27 +50,28 @@
               </label>
             </div>
             <div class="col-7">
-              <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password">
+              <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password" :value="form.confirmPassword" @input="changeField">
+              <div x-if="invalidPassword" style="color: red; height: 1rem" :children="invalidPassword"></div>
             </div>
-          </div>
+          </div> -->
           <div class="form-row">
             <div class="col-3 form-group text-right mt-2">
-              <label for="firstname">
+              <label for="first_name">
                 <strong>First Name</strong>
               </label>
             </div>
             <div class="col-7">
-              <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name">
+              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" :value="form.first_name" @input="changeField">
             </div>
           </div>
           <div class="form-row">
             <div class="col-3 form-group text-right mt-2">
-              <label for="lastname">
+              <label for="last_name">
                 <strong>Last Name</strong>
               </label>
             </div>
             <div class="col-7">
-              <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name">
+              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" :value="form.last_name" @input="changeField">
             </div>
           </div>
           <div class="form-row">
@@ -81,7 +81,7 @@
               </label>
             </div>
             <div class="col-7">
-              <input type="email" id="email" name="email" class="form-control" placeholder="Email address">
+              <input type="email" id="email" name="email" class="form-control" placeholder="Email address" :value="form.email" @input="changeField">
             </div>
           </div>
           <div class="form-row">
@@ -91,7 +91,7 @@
               </label>
             </div>
             <div class="col-7">
-              <select class="form-control" id="major" name="major">
+              <select class="form-control" id="major" name="major" :value="form.major" @input="changeField">
                 <option value="cse">Computer Science Engineering</option>
                 <option value="cpeg">Computer Engineering</option>
                 <option value="ece">Electronic Engineering</option>
@@ -106,7 +106,7 @@
               </label>
             </div>
             <div class="col-7">
-              <select class="form-control" id="year" name="year">
+              <select class="form-control" id="year" name="year" :value="form.year" @input="changeField">
                 <option value="year1">Year 1</option>
                 <option value="year2">Year 2</option>
                 <option value="year3">Year 3</option>
@@ -122,7 +122,7 @@
               </label>
             </div>
             <div class="col-7">
-              <select class="form-control" id="status" name="status">
+              <select class="form-control" id="status" name="status" :value="form.status" @input="changeField">
                 <option value="single">Single</option>
                 <option value="couple">In a Relationship</option>
                 <option value="engaged">Engaged</option>
@@ -149,5 +149,60 @@
   </div>
 </template>
 <script>
-  exportTag('profile-form')
+  exportTag('profile-form', class extends MyElement {
+    data () {
+      return {
+        form: {},
+        userAvatar: ''
+      }
+    }
+
+    constructor () {
+      super()
+      this.observe(this.context, () => {
+      //   this.data.invalidPassword = this.data.form.password !== this.data.form.confirmPassword ? 'The passwords do not match' : ''
+        this.data.userAvatar = (this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/'
+        // console.log(this.data.userAvatar)
+      })
+
+      // this.computed = {
+      //   userAvatar () {
+      //     console.log('avatar: ', this.data)
+      //     return (this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/'
+      //   }
+      // }
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+
+      this.observe(this.context, () => {
+        if (this.context.profile) Object.assign(this.data.form, this.context.profile)
+      })
+      // this.data.form = this.context.profile
+    }
+
+    changeField (e) {
+      console.log(e.target.id, e.target.value)
+      this.data.form[e.target.id] = e.target.value
+    }
+
+    async submitProfile (e) {
+      e.preventDefault()
+      console.log('profile: ', this.data.form, this.context.profile.id)
+      try {
+        const {data: {user}} = await api.updateProfile(this.context.profile.id, this.data.form)
+        this.context.profile = user
+
+        console.log(this.context.profile)
+      } catch (e) {
+        switch (e.response && e.response.status) {
+          default:
+            console.error(e)
+            swal('Error', 'Profile update failed', 'error')
+        }
+      }
+
+    }
+  })
 </script>
