@@ -54,10 +54,11 @@ if (count($path) == 1)
 		break;
 	}
 
+
 $course_id = $path[1];
 $course = get_resource_by_id($course_id, "Courses");
 
-if (count($path) == 2)
+if (count($path) === 2)
 	switch ($method) {
 	case "GET":
 		do_check_auth();

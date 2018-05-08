@@ -93,14 +93,15 @@ function do_sqlite3_prepared_statement(
 
 function get_resource_by_id($id, $resource_name)
 {
-	if (is_integer($id) &&
+	if (is_numeric($id) &&
 		is_string($resource_name)) {
+
 		$sqlRet = do_sqlite3_prepared_statement(
 			"SELECT * FROM " . $resource_name . " WHERE id=:id",
 			[
 				[
 					"param" => ":id",
-					"value" => $id,
+					"value" => (int)$id,
 					"type" => SQLITE3_INTEGER,
 				],
 			]);
