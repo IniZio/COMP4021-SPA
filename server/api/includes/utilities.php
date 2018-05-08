@@ -118,6 +118,10 @@ $path = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 $post_json = json_decode(file_get_contents('php://input'), true);
 
 define("WEBROOT", dirname(dirname(__DIR__)) . "/");
+if (!file_exists(WEBROOT . "files")) {
+	mkdir(WEBROOT . "files");
+}
+
 define("FILEDIR", WEBROOT . "files/");
 
 $db = null;
@@ -125,7 +129,7 @@ if (file_exists(WEBROOT . "api/data.db"))
 	$db = new SQLite3(WEBROOT . "api/data.db");
 else {
 	$db = new SQLite3(WEBROOT . "api/data.db");
-	$db->exec(file_get_contents(WEBROOT."api/init.sql"));
+	$db->exec(file_get_contents(WEBROOT . "api/init.sql"));
 }
 
 const accepted_image_mime = [
