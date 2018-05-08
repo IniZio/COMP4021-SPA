@@ -31,12 +31,47 @@ const api =  {
     url: `users/${id}`,
     data: form
   }),
+  uploadProfilePicture: (id, form) => $http({
+    method: 'POST',
+    url: `users/${id}/picture`,
+    data: form
+  }),
+  getProfilePicture: (id) => $http({
+    method: 'GET',
+    url: `users/${id}/picture`,
+  }),
+  deleteProfilePicture: (id) => $http({
+    method: 'DELETE',
+    url: `users/${id}/picture`,
+  }),
   // Course
+  listCourse: () => $http({
+    method: 'GET',
+    url: `courses`,
+  }),
   getCourse: id => $http({
     method: 'GET',
     url: `courses/${id}`,
   }),
+  createCourse: form => $http({
+    method: 'POST',
+    url: `courses`,
+	data: form
+  }),
+  updateCourse: (id, form) => $http({
+    method: 'PUT',
+    url: `courses/${id}`,
+	data: form
+  }),
+  deleteCourse: (id, form) => $http({
+    method: 'DELETE',
+    url: `courses/${id}`,
+  }),
   // Resources
+  listResource: (cid) => $http({
+    method: 'GET',
+    url: `courses/${cid}/resources`,
+  }),
   getResource: (cid, rid) => $http({
     method: 'GET',
     url: `courses/${cid}/resources/${rid}`,
@@ -54,7 +89,25 @@ const api =  {
     method: 'DELETE',
     url: `courses/${cid}/resources/${rid}`,
   }),
+  uploadResourceFile: (cid, rid, form) => $http({
+    method: 'POST',
+    url: `courses/${cid}/resources/${rid}/file`,
+    data: form
+  }),
+  getResourceFile: (cid, rid) => $http({
+    method: 'GET',
+    url: `courses/${cid}/resources/${rid}/file`,
+  }),
+  deleteResourceFile: (cid, rid) => $http({
+    method: 'DELETE',
+    url: `courses/${cid}/resources/${rid}/file`,
+  }),
+  // Course
   // Comment
+  listComment: (cid) => $http({
+    method: 'GET',
+    url: `courses/${cid}/comments`,
+  }),
   getComment: (cid, coid) => $http({
     method: 'GET',
     url: `courses/${cid}/comments/${coid}`,
