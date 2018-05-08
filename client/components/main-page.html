@@ -136,7 +136,7 @@
             <h6 :children="comment.content">comment 1</h6>
           </div>
           <div class="col-2">
-            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1" @click="editComment">
+            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1">
               <i class="fas fa-edit"></i>
             </button>
             <button x-if="commentIsMine" name="deleteComment" id="deleteComment" class="btn btn-danger" @click="deleteComment">
@@ -144,6 +144,19 @@
             </button>
           </div>
         </div>
+        <form class="form-row pl-5" id="editCommentForm" style="display:none;">
+          <div class="col-10">
+            <textarea id="editCommentArea" class="form-control" rows="3" style="height:5rem;"></textarea>
+          </div>
+          <div class="col-2">
+            <button type="submit" name="finishEditComment" id="finishEditComment" class="btn btn-primary mr-1">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button name="cancelEdit" id="cancelEdit" class="btn btn-danger">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </form>
         <hr>
       </div>
       <!-- Add Course Form -->
@@ -302,10 +315,6 @@
     async deleteComment (e, node, overrides = {}) {
       await api.deleteComment(this.data.activeCourse.id, overrides.comment.id)
       this.refreshActiveCommentSection()
-    }
-
-    async editComment(e) {
-      
     }
     
     async submitComment (e) {
