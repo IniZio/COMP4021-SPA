@@ -3,14 +3,15 @@
 		"postinstall": "cd client && npm i",
 		"//dev": "lerna run dev",
 		"//build": "lerna run build",
-		"dev": "mkdir dist || true && ln -rs server/* dist/ && BASE_URL=./api ./node_modules/.bin/parcel watch client/index.html -d dist --public-url ./ & php -S localhost:8080 -t dist",
-		"build": "BASE_URL=./api ./node_modules/.bin/parcel build client/index.html --public-url ./ --out-dir dist && cp -R server/* dist",
+		"dev": "mkdir dist || true && ln -rs server/* dist/ && cross-env BASE_URL=./api ./node_modules/.bin/parcel watch client/index.html -d dist --public-url ./ & php -S localhost:8080 -t dist",
+		"build": "cross-env BASE_URL=./api ./node_modules/.bin/parcel build client/index.html --public-url ./ --out-dir dist && cp -R server/* dist",
 		"serve": "php -S localhost:8080 -t dist"
 	},
 	"devDependencies": {
 		"autoprefixer": "^8.4.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-preset-env": "^1.6.1",
+		"cross-env": "^5.1.4",
 		"parcel-bundler": "^1.7.1",
 		"postcss-modules": "^1.1.0"
 	}
