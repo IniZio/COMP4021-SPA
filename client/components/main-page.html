@@ -136,7 +136,7 @@
             <h6 :children="comment.content">comment 1</h6>
           </div>
           <div class="col-2">
-            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1" @click="deleteComment">
+            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1" @click="editComment">
               <i class="fas fa-edit"></i>
             </button>
             <button x-if="commentIsMine" name="deleteComment" id="deleteComment" class="btn btn-danger" @click="deleteComment">
