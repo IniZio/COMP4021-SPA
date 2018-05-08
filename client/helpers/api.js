@@ -45,9 +45,10 @@ const api =  {
     url: `users/${id}/picture`
   }),
   // Course
-  listCourse: () => $http({
+  listCourse: (filters) => $http({
     method: 'GET',
-    url: `courses`,
+    url: 'courses',
+    params: filters
   }),
   getCourse: id => $http({
     method: 'GET',

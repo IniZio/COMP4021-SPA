@@ -30,6 +30,10 @@
       return this.getAttribute('exact')
     }
 
+    get to () {
+      return this.getAttribute('to')
+    }
+
     connectedCallback () {
       super.connectedCallback()
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
@@ -55,9 +59,13 @@
         this._display = this.style.display
         this.style.display = 'none'
       } else {
-        this.active = true
-        if (this.style.display === 'none') {
-          this.style.display = 'contents'
+        if (this.to) {
+          window.location.hash = this.to
+        } else {
+          this.active = true
+          if (this.style.display === 'none') {
+            this.style.display = 'contents'
+          }
         }
       }
     }

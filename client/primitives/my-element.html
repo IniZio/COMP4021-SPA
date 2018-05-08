@@ -294,7 +294,7 @@ class MyElement extends HTMLElement {
       .map(attr => {
         node.removeAttribute(attr.name)
         if (instance[attr.value] instanceof Function) {
-          const handler = instance[attr.value].bind(instance)
+          const handler = e => instance[attr.value].apply(instance, [e, node])
           node.addEventListener(attr.name.slice(1), handler)
           instance._listeners.push({
             el: node,
