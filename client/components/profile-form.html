@@ -16,12 +16,12 @@
             </label>
           </div>
           <div class="col">
-            <object data="https://api.adorable.io/avatars/40/" type="image/png"  width="100%" height="100%">
-              <img id="preview" :src="userAvatar">
-            </object>
+            <!-- <object data="https://api.adorable.io/avatars/40/" type="image/png"  width="100%" height="100%"> -->
+              <img id="preview" :src="userAvatar" width="100%" height="100%">
+            <!-- </object> -->
           </div>
           <div class="col mt-2" style="margin: auto;">
-            <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="form.avatar" @input="changeField">
+            <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="form.avatar" @input="changeAvatar">
           </div>
         </div>
         <div class="col-md-8 col-sm-12 p-0 pr-3">
@@ -163,7 +163,7 @@
 
       this.observe(this.context, () => {
       //   this.data.invalidPassword = this.data.form.password !== this.data.form.confirmPassword ? 'The passwords do not match' : ''
-        this.data.userAvatar = (this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/'
+        this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/')
         // console.log(this.data.userAvatar)
       })
 
@@ -180,8 +180,20 @@
       // this.data.form = this.context.profile
     }
 
+    changeAvatar (e, node) {
+      if (node.files && node.files[0]) {
+        var reader = new FileReader()
+
+        reader.onload = (e) => {
+          this.data.userAvatar = e.target.result
+        }
+
+        reader.readAsDataURL(node.files[0])
+        this.data.avatarFile = node.files && node.files[0]
+      }
+    }
+
     changeField (e) {
-      // console.log(e.target.name, e.target.value)
       console.table(this.data.form)
       this.data.form[e.target.name] = e.target.value
     }
@@ -190,6 +202,11 @@
       e.preventDefault()
       console.log('profile: ', this.data.form, this.context.profile.id)
       try {
+        if (this.data.avatarFile) {
+          const data = new FormData()
+          data.append('file', this.data.avatarFile.__getTarget)
+          await api.uploadProfilePicture(this.data.form.id, data)
+        }
         const {data: {user}} = await api.updateProfile(this.context.profile.id, this.data.form)
         this.context.profile = user
 

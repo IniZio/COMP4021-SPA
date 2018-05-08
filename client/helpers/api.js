@@ -34,7 +34,7 @@ const api =  {
   uploadProfilePicture: (id, form) => $http({
     method: 'POST',
     url: `users/${id}/picture`,
-    data: form
+    data: form,
   }),
   getProfilePicture: (id) => $http({
     method: 'GET',
