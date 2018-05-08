@@ -84,7 +84,10 @@ class MyElement extends HTMLElement {
     } else {
       this.appendChild(this.template.content, true)
     }
-    this.compile()
+    // Do not compile children if instance is a shadow-dom
+    if (!this.noBind && !this.template.content.querySelectorAll('slot').length) {
+      this.compile()
+    }
   }
 
   initState() {
@@ -111,12 +114,14 @@ class MyElement extends HTMLElement {
                 }) => {
                   // BUG: not sure but think this makes list-render variable covered up with instance.data
                   const newNode = path(paths, instance.data)
-                  if (name === 'children') {
-                    node.innerText = newNode
-                  } else {
-                    node.setAttribute(name, newNode)
-                    // HACK: not sure if value attribute is the only one that sets default rather than live value?
-                    if (name === 'value') node.value = newNode
+                  if (newNode !== null) {
+                    if (name === 'children') {
+                      node.innerText = newNode
+                    } else {
+                      node.setAttribute(name, newNode)
+                      // HACK: not sure if value attribute is the only one that sets default rather than live value?
+                      if (name === 'value') node.value = newNode
+                    }
                   }
                 }
               )
@@ -126,7 +131,7 @@ class MyElement extends HTMLElement {
     )
   }
 
-  compile(root = this, overrides = {}, peek = false) {
+  compile (root = this, overrides = {}, peek = false) {
     root = root.shadowRoot || root
     const instance = this
 
@@ -188,7 +193,7 @@ class MyElement extends HTMLElement {
         conditionalRender()
       })
 
-    if (peek) console.log(Array.from(root.querySelectorAll('*')))
+    // if (peek) console.log(Array.from(root.querySelectorAll('*')))
 
     // Apply listeners and data binding to nodes without directives
     Array.from(root.querySelectorAll('*'))
@@ -313,9 +318,10 @@ class MyElement extends HTMLElement {
 window.MyElement = MyElement
 
 // Define custom element
-window.exportTag = (name = '', Class = class extends MyElement {}, {nonShadow = false} = {}) => {
+window.exportTag = (name = '', Class = class extends MyElement {}, {nonShadow = false, noBind = false} = {}) => {
   Class.template = Class.prototype.template = document.currentScript.parentElement.querySelector('template').cloneNode(true)
   Class.nonShadow = Class.prototype.nonShadow = nonShadow
+  Class.noBind = Class.prototype.noBind = noBind
   document.currentScript.parentElement.querySelector('template').remove()
   return customElements.define(name, Class)
 }

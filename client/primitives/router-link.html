@@ -5,7 +5,6 @@
       cursor: pointer;
     }
   </style>
-  <slot></slot>
 </template>
 
 <script>
@@ -31,5 +30,5 @@
       const current = window.location.href
       window.location.href = current.replace(/#(.*)$/, '') + '#' + this.to
     }
-  }, {nonShadow: true})
+  }, {nonShadow: true, noBind: true})
 </script>
