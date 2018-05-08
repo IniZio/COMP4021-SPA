@@ -156,7 +156,7 @@ class MyElement extends HTMLElement {
               const element = template.cloneNode(true)
               element.setAttribute('key', index)
               this.compile(element, Object.assign({}, overrides, {[name]: single}), true)
-              this.applyListeners(element)
+              this.applyListeners(element, Object.assign({}, overrides, {[name]: single}))
               this.activateBinds(element, Object.assign({}, overrides, {[name]: single}))
               this.activateContext(element)
               return element
@@ -176,7 +176,9 @@ class MyElement extends HTMLElement {
         node.removeAttribute('x-if')
 
         const conditionalRender = () => {
-          if (!path(name, instance.data) && !path(name, instance.context) && !path(name, instance)) {
+          const computed = path(name, instance.computed) instanceof Function ? path(name, instance.computed) : null
+
+          if (!path(name, instance.data) && !path(name, instance.context) && !path(name, instance) && !(computed && computed.call(instance, node, overrides))) {
             if (node.style.display !== 'none') {
               node.setAttribute('display', node.style.display)
               node.style.display = 'none'
@@ -199,7 +201,7 @@ class MyElement extends HTMLElement {
     Array.from(root.querySelectorAll('*'))
       .filter(node => !Object.keys(node.attributes).find(attr => attr.startsWith('x-')))
       .map(node => {
-        this.applyListeners(node)
+        this.applyListeners(node, overrides)
         this.activateBinds(node, overrides)
         this.activateContext(node)
       })
@@ -288,7 +290,7 @@ class MyElement extends HTMLElement {
     // this.diactivateContext()
   }
 
-  applyListeners(node) {
+  applyListeners(node, overrides = {}) {
     const instance = this
 
     Array.from(node.attributes)
@@ -297,7 +299,7 @@ class MyElement extends HTMLElement {
       .map(attr => {
         node.removeAttribute(attr.name)
         if (instance[attr.value] instanceof Function) {
-          const handler = e => instance[attr.value].apply(instance, [e, node])
+          const handler = e => instance[attr.value].apply(instance, [e, node, overrides])
           node.addEventListener(attr.name.slice(1), handler)
           instance._listeners.push({
             el: node,
