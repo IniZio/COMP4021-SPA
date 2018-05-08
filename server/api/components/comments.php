@@ -6,12 +6,12 @@ if (count($path) == 3)
 		do_check_auth();
 		$resources = do_sqlite3_prepared_statement(
 			"
-			SELECT (
+			SELECT 
 				id, 
 				author_user_id, 
 				content, 
 				created_timestamp, 
-				course_id) 
+				course_id
 			FROM Comments 
 			WHERE course_id=:course_id",
 			[

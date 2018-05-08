@@ -62,6 +62,15 @@ function do_sqlite3_prepared_statement(
 {
 	global $db;
 	$sqlStmt = $db->prepare($statement);
+	if ($sqlStmt == false){
+		if ($returnError) {
+			$ret = [$db->lastErrorCode(), $db->lastErrorMsg()];
+			var_dump($ret);
+			return $ret;
+		}
+		$sqlStmt->close();
+		do_error(500, $db->lastErrorMsg());
+	}
 	foreach ($values as $value) {
 		$sqlStmt->bindValue($value["param"], $value["value"], $value["type"]);
 	}
