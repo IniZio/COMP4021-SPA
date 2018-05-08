@@ -12,6 +12,14 @@ npm i # or yarn
 npm run dev # Runs dev server with live-reload
 
 npm run build # Builds project for production
+
+npm run serve # Serve the built project
+```
+#### Windows users:
+
+```sh
+# Serve the built project
+"X:\path-to-php-folder\php.exe" -d extension_dir="X:\path-to-php-folder\ext" -d extension=sqlite3 -S localhost:8080 -t dist
 ```
 
 ## How to (Frontend)
