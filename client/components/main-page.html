@@ -136,10 +136,10 @@
             <h6 :children="comment.content">comment 1</h6>
           </div>
           <div class="col-2">
-            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1" style="align-self:right ;" @click="deleteComment">
+            <button x-if="commentIsMine" name="editComment" id="editComment" class="btn btn-primary mr-1" @click="deleteComment">
               <i class="fas fa-edit"></i>
             </button>
-            <button x-if="commentIsMine" name="deleteComment" id="deleteComment" class="btn btn-danger" style="align-self:right;" @click="deleteComment">
+            <button x-if="commentIsMine" name="deleteComment" id="deleteComment" class="btn btn-danger" @click="deleteComment">
                 <i class="fas fa-times"></i>
             </button>
           </div>
