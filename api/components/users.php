@@ -9,21 +9,36 @@ if (count($path) == 1)
 		}
 		if (is_string($post_json["username"]) &&
 			is_string($post_json["password"])) {
+			if (!is_string($post_json["first_name"]))
+				unset($post_json["first_name"]);
+			if (!is_string($post_json["last_name"]))
+				unset($post_json["last_name"]);
 			$sqlRet = do_sqlite3_prepared_statement(
 				"
 				INSERT INTO Users
-					(username, hashed_password)
+					(username, hashed_password, first_name, last_name)
 				VALUES
-					(:username, :hashed_password);",
+					(:username, :hashed_password, :first_name, :last_name);",
 				[
 					[
 						"param" => ":username",
 						"value" => $post_json["username"],
-						"type" => SQLITE3_TEXT],
+						"type" => SQLITE3_TEXT,
+					],
 					[
 						"param" => ":hashed_password",
 						"value" => password_hash(
 							$post_json["password"], PASSWORD_DEFAULT),
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":first_name",
+						"value" => $post_json["first_name"],
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":last_name",
+						"value" => $post_json["last_name"],
 						"type" => SQLITE3_TEXT,
 					],
 				],
@@ -50,12 +65,12 @@ if (count($path) == 1)
 						"param" => ":username",
 						"value" => $post_json["username"],
 						"type" => SQLITE3_TEXT],
-        ]);
-      $userEntry = $userEntries[0];
-      unset($userEntry["hashed_password"]);
+				]);
+			$userEntry = $userEntries[0];
+			unset($userEntry["hashed_password"]);
 
-      $_SESSION["user"] = $userEntry;
-      $responseObj = [];
+			$_SESSION["user"] = $userEntry;
+			$responseObj = [];
 			$responseObj["user"] = $userEntry;
 			$responseObj["id"] = $userEntries[0]["id"];
 
@@ -82,6 +97,9 @@ if (count($path) == 2)
 		// PUT /users/{id}
 	case "PUT":
 		do_check_auth();
+
+		register_user_info:
+
 		if ($user_id == $_SESSION["user"]["id"]) {
 			$post_json["first_name"] =
 				is_string($post_json["first_name"]) ?
@@ -164,7 +182,8 @@ if (count($path) == 2)
 				],
 				true
 			);
-			if (is_string($post_json["password"])) {
+			if (isset($post_json["password"]) && is_string(
+					$post_json["password"])) {
 				do_sqlite3_prepared_statement(
 					"
 					UPDATE Users
@@ -191,11 +210,11 @@ if (count($path) == 2)
 					"param" => ":id",
 					"value" => $user_id,
 					"type" => SQLITE3_INTEGER]]
-      )[0];
-      unset($userEntry["hashed_password"]);
+			)[0];
+			unset($userEntry["hashed_password"]);
 
-      $_SESSION["user"] = $userEntry;
-      $responseObj = [];
+			$_SESSION["user"] = $userEntry;
+			$responseObj = [];
 			$responseObj["user"] = $userEntry;
 			do_response(200, $responseObj);
 		}
@@ -206,10 +225,10 @@ if (count($path) == 2)
 	case "GET":
 		do_check_auth();
 		if ($user_id == $_SESSION["user"]["id"]) {
-      $responseObj = [];
+			$responseObj = [];
 			$responseObj["user"] = do_sanitize_user_info($_SESSION["user"]);
 			do_response(200, $responseObj);
-    }
+		}
 		else
 			error(ERROR_USER_NOT_MATCH);
 		break;

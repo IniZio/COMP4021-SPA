@@ -82,7 +82,7 @@ if (count($path) == 3)
 		break;
 	}
 
-$resource_id = $path[3];
+$resource_id = (int)$path[3];
 $resource = get_resource_by_id($resource_id, "Resources");
 
 if (count($path) == 4)
