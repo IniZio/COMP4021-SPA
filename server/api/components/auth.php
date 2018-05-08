@@ -78,7 +78,8 @@ case "PUT":
 						$post_json["password"], PASSWORD_DEFAULT),
 					"type" => SQLITE3_TEXT,
 				],
-			]
+			],
+			true
 		);
 		do_response(200);
 	}

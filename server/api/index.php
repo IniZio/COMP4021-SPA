@@ -40,13 +40,18 @@ case "courses":
 case "master":
 	if ($method === "DELETE" &&
 		$post_json["master_key"] === "master_delete_key") {
-		do_sqlite3_prepared_statement("DELETE FROM Users", []);
-		do_sqlite3_prepared_statement("DELETE FROM Courses", []);
-		do_sqlite3_prepared_statement("DELETE FROM Comments", []);
-		do_sqlite3_prepared_statement("DELETE FROM Resources", []);
-		do_sqlite3_prepared_statement("DELETE FROM Files", []);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM sqlite_sequence", []);
+			"DELETE FROM Users", [],true);
+		do_sqlite3_prepared_statement(
+			"DELETE FROM Courses", [],true);
+		do_sqlite3_prepared_statement(
+			"DELETE FROM Comments", [],true);
+		do_sqlite3_prepared_statement(
+			"DELETE FROM Resources", [],true);
+		do_sqlite3_prepared_statement(
+			"DELETE FROM Files", [],true);
+		do_sqlite3_prepared_statement(
+			"DELETE FROM sqlite_sequence", [],true);
 		unset($_SESSION["user"]);
 		do_response(200);
 	}

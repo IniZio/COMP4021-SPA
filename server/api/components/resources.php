@@ -74,7 +74,8 @@ if (count($path) == 3)
 					"value" => $post_json["text_content"],
 					"type" => SQLITE3_TEXT,
 				],
-			]);
+			],
+			true);
 		do_response(201);
 		break;
 	default:
@@ -132,7 +133,8 @@ if (count($path) == 4)
 					"value" => $resource_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]);
+			],
+			true);
 		do_response(200);
 		break;
 	case "DELETE":
@@ -145,7 +147,8 @@ if (count($path) == 4)
 					"value" => $resource_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]
+			],
+			true
 		);
 		do_response(200);
 		break;
@@ -247,7 +250,8 @@ if ($path[4] === "file")
 					"value" => $resource_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]
+			],
+			true
 		);
 		do_response(201);
 		break;

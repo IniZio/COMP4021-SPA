@@ -188,7 +188,8 @@ if (count($path) === 2)
 					"value" => $course_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]
+			],
+			true
 		);
 		do_response(200);
 		break;
@@ -202,7 +203,8 @@ if (count($path) === 2)
 					"value" => $course_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]);
+			],
+			true);
 		do_response(200);
 		break;
 	default:
