@@ -223,6 +223,9 @@ class MyElement extends HTMLElement {
           node.innerText = value
         } else node.setAttribute(name, value)
 
+        // HACK: not sure if value attribute is the only one that sets default rather than live value?
+        if (name === 'value') node.value = value
+
         if (this._mapper.hasOwnProperty(attr.value)) {
           this._mapper[attr.value].push({name: (computed ? '' : name), node})
         } else this._mapper[attr.value] = [{name: (computed ? '' : name), node}]

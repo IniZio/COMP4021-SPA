@@ -113,10 +113,10 @@ const api =  {
     method: 'GET',
     url: `courses/${cid}/comments/${coid}`,
   }),
-  createComment: (cid, coid, form) => $http({
+  createComment: (cid, form) => $http({
     method: 'POST',
-    url: `courses/${cid}/comments/${coid}`,
-    data: form
+    url: `courses/${cid}/comments`,
+    data: Object.assign({}, form, {course_id: cid})
   }),
   updateComment: (cid, coid, form) => $http({
     method: 'PUT',
