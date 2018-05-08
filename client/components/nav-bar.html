@@ -1,12 +1,9 @@
-
-<style>
-  nav-bar {
-    display: contents;
-  }
-</style>
-
 <template>
-
+  <style>
+    :host {
+      display: contents;
+    }
+  </style>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
       <router-link to="/">
         <a class="navbar-brand">
@@ -44,6 +41,7 @@
 <script>
   exportTag('nav-bar', class extends MyElement {
     logout () {
+      console.log('logout: ', this.context)
       this.context.profile = null
       api.logout()
     }

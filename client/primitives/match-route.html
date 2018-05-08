@@ -3,8 +3,12 @@
     display: contents;
   }
 </style>
-
 <template>
+  <style>
+    :host {
+      display: contents;
+    }
+  </style>
   <slot></slot>
 </template>
 
@@ -31,18 +35,17 @@
       window.addEventListener('hashchange', this.visibilityOnHash.bind(this), false)
       this.visibilityOnHash({newURL: window.location.href})
 
-      if (!!this.getAttribute('protected')) {
-        const redirectOnLogout = () => {
-          if (!this.context.profile && this.active) {
-             window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
-          }
-          if (this.context.profile && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
-            window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
-          }
+      const redirectOnLogout = () => {
+        if (!this.context.isLoggedIn && this.active && !!this.getAttribute('protected')) {
+            window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
         }
-        this.observe(this.context, redirectOnLogout.bind(this))
-        redirectOnLogout()
+        if (this.context.isLoggedIn && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
+          window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
+        }
       }
+      this.observe(this.context, redirectOnLogout.bind(this))
+      window.addEventListener('hashchange', redirectOnLogout.bind(this), false)
+      redirectOnLogout()
     }
 
     visibilityOnHash ({newURL = '', oldURL = ''}) {
@@ -62,5 +65,5 @@
     disconnectedCallback () {
       super.disconnectedCallback()
     }
-  })
+  }, {nonShadow: true})
 </script>

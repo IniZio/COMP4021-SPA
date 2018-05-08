@@ -23,7 +23,7 @@
   <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
     <div class="row" style="height:100%;">
       <!-- List of courses-->
-      <match-route path="/courses">
+      <match-route path="/">
       <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
         <div class="row form-group justify-content-center mt-3">
             <div class="col">
@@ -52,7 +52,7 @@
         </div>
         <hr>
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+          <a x-for="course:courses" :abc="courses" class="list-group-item list-group-item-action flex-column align-items-start active">
             <div class="row">
               <div class="col-3 pl-0 pr-2">
                 <img id="professorPhoto" src="https://api.adorable.io/avatars/40/" width="100%" height="100%">
@@ -260,7 +260,7 @@
                 </div>
               </div>
               <div class="row mt-2" style="height:100%;">
-                <textarea type="text" id="editCourseDescription" name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
+                <textarea type="text"  name="editCourseDescription" class="form-control">Learn HTML, JS, CSS, PHP</textarea>
               </div>
             </div>
           </div>
@@ -275,8 +275,17 @@
 
 <script>
   exportTag('main-page', class extends MyElement {
+    data () {
+      return {
+        courses: []
+      }
+    }
+
     connectedCallback() {
       super.connectedCallback()
+
+      this.refreshCourses()
+
       if ($(window).width() < 768) {
         $(this.shadowRoot).find("#add").click(function () {
           $(this.shadowRoot).find("#course_list").hide();
@@ -308,6 +317,12 @@
           $(this.shadowRoot).find("#course_edit").show();
         });
       }
+    }
+
+    async refreshCourses () {
+      const {data: courses} = await api.getCourses()
+      this.data.courses = courses
+      // console.log('courses: ', this.data)
     }
   })
 

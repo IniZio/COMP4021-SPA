@@ -42,7 +42,7 @@ const api =  {
   }),
   deleteProfilePicture: (id) => $http({
     method: 'DELETE',
-    url: `users/${id}/picture`,
+    url: `users/${id}/picture`
   }),
   // Course
   listCourse: () => $http({

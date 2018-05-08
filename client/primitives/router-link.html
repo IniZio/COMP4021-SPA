@@ -1,10 +1,10 @@
-<style>
-  router-link {
-    display: contents;
-  }
-</style>
-
 <template>
+  <style>
+    :host {
+      display: contents;
+      cursor: pointer;
+    }
+  </style>
   <slot></slot>
 </template>
 
@@ -31,5 +31,5 @@
       const current = window.location.href
       window.location.href = current.replace(/#(.*)$/, '') + '#' + this.to
     }
-  })
+  }, {nonShadow: true})
 </script>

@@ -20,7 +20,7 @@ const SingleSlim = (() => {
   }
 })()
 
-function path(paths, obj) {
+function path (paths = '', obj) {
   paths = Array.isArray(paths) ? paths : paths.split('.')
   let val = obj
   let idx = 0
@@ -143,7 +143,7 @@ class MyElement extends HTMLElement {
 
         const renderList = changes => {
           // Clear current children
-          elements.map(element => element.parentNode.removeChild(element))
+          elements.map(element => element.remove())
           // Compile elements
           elements = (path(iterable, instance.data) || path(iterable, overrides) || [])
             .map((single, index) => {
@@ -152,7 +152,8 @@ class MyElement extends HTMLElement {
               this.applyListeners(element)
               this.activateBinds(element, Object.assign({}, overrides, {[name]: single}))
               this.activateContext(element)
-              this.compile(element, Object.assign({}, overrides, {[name]: single}))
+              this.compile(element, Object.assign({}, overrides, {[name]: single}), true)
+              console.log(element)
               return element
             })
 
@@ -187,6 +188,8 @@ class MyElement extends HTMLElement {
         conditionalRender()
       })
 
+    if (peek) console.log(Array.from(root.querySelectorAll('*')))
+
     // Apply listeners and data binding to nodes without directives
     Array.from(root.querySelectorAll('*'))
       .filter(node => !Object.keys(node.attributes).find(attr => attr.startsWith('x-')))
@@ -207,12 +210,13 @@ class MyElement extends HTMLElement {
         node.removeAttribute(attr.name)
         const computed = path(attr.value, instance.computed) instanceof Function ? path(attr.value, instance.computed) : null
         const name = attr.name.slice(1)
-        const value = overrides.hasOwnProperty(attr.value) ? overrides[attr.value] :
-          computed ? computed.call(instance, node, overrides) :
-          path(attr.value, this.data)
+        const value = path(attr.value, overrides) || (computed ? computed.call(instance, node, overrides) : path(attr.value, this.data))
+
+        // attr.value === 'segment' && console.log('value of child: ', attr.name, value, overrides, node)
+
         if (name === 'children') {
-          node.innerText = '' + value
-        } else node.setAttribute(name, '' + value)
+          node.innerText = value
+        } else node.setAttribute(name, value)
 
         if (this._mapper.hasOwnProperty(attr.value)) {
           this._mapper[attr.value].push({name: (computed ? '' : name), node})
