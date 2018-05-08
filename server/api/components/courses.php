@@ -4,9 +4,51 @@ if (count($path) == 1)
 	switch ($method) {
 	case "GET":
 		do_check_auth();
+		if (!isset($_GET["search"]) || !is_string($_GET["search"])) {
+			$_GET["search"] = "%";
+		}
+		else
+			$_GET["search"] = "%" . $_GET["search"] . "%";
+		if (!isset($_GET["sortby"]) || !is_string($_GET["sortby"]))
+			$_GET["sortby"] = "code";
+		if (!isset($_GET["pagesize"]) || !is_numeric($_GET["pagesize"]))
+			$_GET["pagesize"] = "5";
+		if (!isset($_GET["page"]) || !is_numeric($_GET["page"]))
+			$_GET["page"] = "0";
+
 		$sqlRet = do_sqlite3_prepared_statement(
-			"SELECT * FROM Courses ORDER BY name ASC ",
-			[]);
+			"
+			SELECT * 
+			FROM Courses 
+			WHERE 
+				(name LIKE :search) OR 
+				(description LIKE :search) OR
+				(code LIKE :search) OR 
+				(summary LIKE :search) OR 
+				(professor LIKE :search)
+			ORDER BY :sortby ASC LIMIT :pagesize OFFSET :skip",
+			[
+				[
+					"param" => ":search",
+					"value" => $_GET["search"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":sortby",
+					"value" => $_GET["sortby"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":pagesize",
+					"value" => (int)$_GET["pagesize"],
+					"type" => SQLITE3_INTEGER,
+				],
+				[
+					"param" => ":skip",
+					"value" => ((int)$_GET["page"]) * ((int)$_GET["pagesize"]),
+					"type" => SQLITE3_INTEGER,
+				],
+			]);
 		do_response(200, $sqlRet);
 		break;
 	case "POST":
@@ -15,10 +57,19 @@ if (count($path) == 1)
 			if (!is_string($post_json["description"])) {
 				$post_json["description"] = null;
 			}
+			if (!is_string($post_json["code"])) {
+				$post_json["code"] = null;
+			}
+			if (!is_string($post_json["summary"])) {
+				$post_json["summary"] = null;
+			}
+			if (!is_string($post_json["professor"])) {
+				$post_json["professor"] = null;
+			}
 			do_sqlite3_prepared_statement(
 				"
-				INSERT INTO Courses (name, descrption) 
-				VALUES (:name, :description)",
+				INSERT INTO Courses (name, description, code, summary, professor) 
+				VALUES (:name, :description, :code, :summary, :professor)",
 				[
 					[
 						"param" => ":name",
@@ -28,6 +79,21 @@ if (count($path) == 1)
 					[
 						"param" => ":description",
 						"value" => $post_json["description"],
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":code",
+						"value" => $post_json["code"],
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":summary",
+						"value" => $post_json["summary"],
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":professor",
+						"value" => $post_json["professor"],
 						"type" => SQLITE3_TEXT,
 					],
 				],
@@ -72,10 +138,24 @@ if (count($path) === 2)
 		if (!is_string($post_json["description"])) {
 			$post_json["description"] = $course["description"];
 		}
+		if (!is_string($post_json["code"])) {
+			$post_json["code"] = null;
+		}
+		if (!is_string($post_json["summary"])) {
+			$post_json["summary"] = null;
+		}
+		if (!is_string($post_json["professor"])) {
+			$post_json["professor"] = null;
+		}
 		do_sqlite3_prepared_statement(
 			"
 			UPDATE Courses 
-			SET name=:name, descrption=:description 
+			SET 
+				name=:name, 
+				description=:description,
+				code=:code,
+				summary=:summary,
+				professor=:professor 
 			WHERE id=:id",
 			[
 				[
@@ -86,6 +166,21 @@ if (count($path) === 2)
 				[
 					"param" => ":description",
 					"value" => $post_json["description"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":code",
+					"value" => $post_json["code"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":summary",
+					"value" => $post_json["summary"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":professor",
+					"value" => $post_json["professor"],
 					"type" => SQLITE3_TEXT,
 				],
 				[

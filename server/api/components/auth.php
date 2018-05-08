@@ -13,10 +13,13 @@ case "POST":
 			SELECT *
 			FROM Users
 			WHERE username=:username",
-			[[
-				"param" => ":username",
-				"value" => $post_json["username"],
-				"type" => SQLITE3_TEXT]]
+			[
+				[
+					"param" => ":username",
+					"value" => $post_json["username"],
+					"type" => SQLITE3_TEXT,
+				],
+			]
 		);
 
 		if (!isset($userEntries[0])) {
@@ -27,11 +30,11 @@ case "POST":
 
 		if (password_verify(
 			$post_json["password"],
-      $userEntry["hashed_password"])
-    ) {
-      unset($userEntry["hashed_password"]);
-      $_SESSION["user"] = $userEntry;
-      $responseObj = [];
+			$userEntry["hashed_password"])
+		) {
+			unset($userEntry["hashed_password"]);
+			$_SESSION["user"] = $userEntry;
+			$responseObj = [];
 			$responseObj["user"] = $userEntry;
 			do_response(201, $responseObj);
 		}
