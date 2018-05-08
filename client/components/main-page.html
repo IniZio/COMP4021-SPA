@@ -304,6 +304,10 @@
       this.refreshActiveCommentSection()
     }
 
+    async editComment(e) {
+      
+    }
+    
     async submitComment (e) {
       e.preventDefault()
       await api.createComment(this.data.activeCourse.id, this.data.newComment)
