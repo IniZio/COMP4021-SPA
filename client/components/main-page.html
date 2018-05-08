@@ -116,11 +116,11 @@
         </div> -->
         <hr>
         <div class="row" >
-            <div class="col">
+            <form class="col" @submit="submitComment">
                 <label class="row text-left ml-3"><h5>Comment</h5></label>
                 <div class="form-row pl-5">
                     <div class="col-10 p-0 text-center">
-                        <textarea id="comment" class="form-control" rows="3" style="height:5rem;"></textarea>
+                        <textarea id="comment" class="form-control" rows="3" style="height:5rem;" @input="changeComment"></textarea>
                     </div>
                     <div class="col-2">
                         <button type="submit" name="registerComment" id="registerComment" class="btn btn-primary" style="height:5rem;">
@@ -128,16 +128,16 @@
                         </button>
                     </div>
                 </div>
-            </div>
+              </form>
         </div>
         <hr>
-        <div class="row pl-5" class="comment_display">
-            <h6>comment 1</h6>
+        <div x-for="comment:activeCommentSection" class="row pl-5" class="comment_display">
+            <h6 :children="comment.content">comment 1</h6>
+            <button x-if="commentIsMine" name="registerComment" id="registerComment" class="btn btn-danger" style="margin-left:auto;" @click="deleteComment">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <hr>
-        <div class="row pl-5" class="comment_display">
-            <h6>comment 2</h6>
-        </div>
       </div>
       <!-- Add Course Form -->
       <match-route path="/courses/add">
@@ -255,16 +255,23 @@
 </template>
 
 <script>
+  const commentTemplate = () => ({
+    content: ''
+  })
+
   exportTag('main-page', class extends MyElement {
     data () {
       return {
         courses: [],
+        commentSections: [],
         filters: {
           search: '',
           sortby: 'title',
           page: 0
         },
-        activeCourse: {}
+        activeCourse: {},
+        activeCommentSection: [],
+        newComment: commentTemplate()
       }
     }
 
@@ -277,14 +284,24 @@
         courseClass (node, overrides) {
           const activeClass = overrides.course && this.data.activeCourse.id === overrides.course.id ? ' active' : ''
           return 'list-group-item list-group-item-action flex-column align-items-start' + activeClass
+        },
+        commentIsMine (node, overrides) {
+          return overrides.comment && overrides.comment.author_user_id === this.context.profile.id
         }
       }
 
       // Change active course on /courses/id change
       window.addEventListener('hashchange', async () => {
         const courseId = +location.href.split('/courses/')[1]
-        this.data.activeCourse = this.data.courses.find(course => course.id === courseId) || await api.getCourse(courseId) || {}
+        if (courseId) {
+          this.data.activeCourse = this.data.courses.find(course => course.id === courseId) || await api.getCourse(courseId).then(({data}) => data).catch(() => {}) || {}
+          this.refreshActiveCommentSection ()
+        }
       })
+    }
+
+    async refreshActiveCommentSection () {
+      this.data.activeCommentSection = this.data.commentSections.find(section => section.course_id === this.data.activeCourse.id) || await api.listComment(this.data.activeCourse.id).then(({data}) => data.reverse()).catch(() => {}) || []
     }
 
     connectedCallback() {
@@ -323,6 +340,22 @@
           $(this.shadowRoot).find("#course_edit").show();
         });
       }
+    }
+
+    changeComment (e) {
+      this.data.newComment.content = e.target.value
+      console.log('comment: ', this.data)
+    }
+
+    async deleteComment (e, node, overrides = {}) {
+      await api.deleteComment(this.data.activeCourse.id, overrides.comment.id)
+      this.refreshActiveCommentSection()
+    }
+
+    async submitComment (e) {
+      e.preventDefault()
+      await api.createComment(this.data.activeCourse.id, this.data.newComment)
+      this.refreshActiveCommentSection()
     }
 
     // ENHANCE: use throttle and debounce

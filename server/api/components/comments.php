@@ -36,14 +36,14 @@ if (count($path) == 3)
 		do_sqlite3_prepared_statement(
 			"
 			INSERT INTO Comments (
-				author_user_id, 
-				content, 
-				created_timestamp, 
+				author_user_id,
+				content,
+				created_timestamp,
 				course_id)
 			VALUES (
-				:author_user_id, 
-				:content, 
-				:created_timestamp, 
+				:author_user_id,
+				:content,
+				:created_timestamp,
 				:course_id)",
 			[
 				[
@@ -58,7 +58,7 @@ if (count($path) == 3)
 				],
 				[
 					"param" => ":created_timestamp",
-					"value" => $post_json["created_timestamp"],
+					"value" => $created_timestamp,
 					"type" => SQLITE3_INTEGER,
 				],
 				[
