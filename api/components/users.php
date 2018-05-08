@@ -337,7 +337,8 @@ if (count($path) == 3 &&
 					"value" => $_SESSION["user"]["id"],
 					"type" => SQLITE3_INTEGER,
 				],
-			]
+			],
+			true
 		);
 		$_SESSION["user"]["picture_file_id"] = $sqlRet[0]["id"];
 		do_response(201);
