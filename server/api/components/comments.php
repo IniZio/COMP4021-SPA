@@ -6,13 +6,13 @@ if (count($path) == 3)
 		do_check_auth();
 		$resources = do_sqlite3_prepared_statement(
 			"
-			SELECT
-				id,
-				author_user_id,
-				content,
-				created_timestamp,
+			SELECT 
+				id, 
+				author_user_id, 
+				content, 
+				created_timestamp, 
 				course_id
-			FROM Comments
+			FROM Comments 
 			WHERE course_id=:course_id",
 			[
 				[
@@ -26,9 +26,7 @@ if (count($path) == 3)
 		break;
 	case "POST":
 		do_check_auth();
-		if (
-			!is_integer($post_json["course_id"]) &&
-			!is_string($post_json["content"])) {
+		if (!is_string($post_json["content"])) {
 			error(ERROR_PARAMETER_FAULT);
 		}
 		$created_timestamp = time();
@@ -63,10 +61,11 @@ if (count($path) == 3)
 				],
 				[
 					"param" => ":course_id",
-					"value" => $post_json["course_id"],
+					"value" => $course_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]);
+			],
+			true);
 		do_response(201);
 		break;
 	default:
@@ -93,7 +92,8 @@ if (count($path) == 4)
 					"value" => $comment_id,
 					"type" => SQLITE3_INTEGER,
 				],
-			]
+			],
+			true
 		);
 		do_response(200);
 		break;
