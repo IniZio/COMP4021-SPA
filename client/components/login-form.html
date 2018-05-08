@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div style="height: 4rem; margin: 0 auto">
-                      <!-- <slot name="recaptcha"></slot> -->
+                      <slot name="recaptcha"></slot>
                       <div id="login-recaptcha" slot="recaptcha"></div>
                     </div>
                     <br>
@@ -75,7 +75,6 @@
     connectedCallback () {
       super.connectedCallback()
       const instance = this
-      console.log('login captcha', document.getElementById('login-recaptcha'), this.querySelector('*'))
       this.captchaWidget = grecaptcha.render(
         document.getElementById('login-recaptcha'),
         {
@@ -100,7 +99,7 @@
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      // if (!captcha) return
+      if (!captcha) return
       if (e.target.checkValidity() === false) return
       try {
         const {data: {user}} = await api.login(this.data.form)
@@ -119,5 +118,5 @@
         }
       }
     }
-  })
+  }, {nonShadow: true})
 </script>

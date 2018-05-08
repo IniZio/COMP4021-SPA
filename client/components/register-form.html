@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div style="height: 4rem; margin: auto; width: 304px;">
-              <!-- <slot name="recaptcha"></slot> -->
+              <slot name="recaptcha"></slot>
               <div id="register-recaptcha" slot="recaptcha"></div>
             </div>
             <div class="col form-group text-center mt-4">
@@ -116,7 +116,7 @@
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      // if (!captcha) return
+      if (!captcha) return
       if (e.target.checkValidity() === false) return
       if (this.data.invalidPassword) return false
 
@@ -136,5 +136,5 @@
 
       console.log('submitting: ', JSON.stringify(this.data.form))
     }
-  })
+  }, {nonShadow: true})
 </script>

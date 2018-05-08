@@ -62,9 +62,15 @@ class MyElement extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log()
+    const cssFrag = (stylesheets || []).reduce((frag, href) => {
+      const el =  document.createElement('link')
+      el.href = href
+      el.rel = 'stylesheet'
+      frag.appendChild(el)
+      return frag
+    }, document.createDocumentFragment())
     // if (this.shadow || this.template.content.querySelectorAll('slot').length) {
-    if (this.shadow) {
+    if (!this.nonShadow) {
       if (!this.shadowRoot) {
         // Attach shadow DOM
         this.attachShadow({
@@ -72,10 +78,11 @@ class MyElement extends HTMLElement {
         })
 
         // Append template content to custom element
-        this.shadowRoot.appendChild(this.template.content)
+        this.shadowRoot.appendChild(cssFrag)
+        this.shadowRoot.appendChild(document.importNode(this.template.content, true))
       }
     } else {
-      this.appendChild(document.importNode(this.template.content, true))
+      this.appendChild(this.template.content, true)
     }
     this.compile()
   }
@@ -118,7 +125,8 @@ class MyElement extends HTMLElement {
     )
   }
 
-  compile(root = this, overrides = {}) {
+  compile(root = this, overrides = {}, peek = false) {
+    root = root.shadowRoot || root
     const instance = this
 
     Array.from(root.querySelectorAll('[x-for]'))
@@ -137,7 +145,7 @@ class MyElement extends HTMLElement {
           // Clear current children
           elements.map(element => element.parentNode.removeChild(element))
           // Compile elements
-          elements = path(iterable, instance.data)
+          elements = (path(iterable, instance.data) || path(iterable, overrides) || [])
             .map((single, index) => {
               const element = template.cloneNode(true)
               element.setAttribute('key', index)
@@ -301,9 +309,9 @@ class MyElement extends HTMLElement {
 window.MyElement = MyElement
 
 // Define custom element
-window.exportTag = (name = '', Class = class extends MyElement {}, {shadow = false} = {}) => {
+window.exportTag = (name = '', Class = class extends MyElement {}, {nonShadow = false} = {}) => {
   Class.template = Class.prototype.template = document.currentScript.parentElement.querySelector('template').cloneNode(true)
-  Class.shadow = Class.prototype.shadow = shadow
+  Class.nonShadow = Class.prototype.nonShadow = nonShadow
   document.currentScript.parentElement.querySelector('template').remove()
   return customElements.define(name, Class)
 }
