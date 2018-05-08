@@ -289,7 +289,7 @@
         const courseId = +location.href.split('/courses/')[1]
         if (courseId) {
           this.data.activeCourse = this.data.courses.find(course => course.id === courseId) || await api.getCourse(courseId).then(({data}) => data).catch(() => {}) || {}
-          this.data.activeCommentSection = this.data.commentSections.find(section => section.course_id === courseId) || await api.listComment(courseId).then(({data}) => data).catch(() => {}) || []
+          this.data.activeCommentSection = this.data.commentSections.find(section => section.course_id === courseId) || await api.listComment(courseId).then(({data}) => data.reverse()).catch(() => {}) || []
         }
       })
     }
@@ -340,7 +340,7 @@
     async submitComment (e) {
       e.preventDefault()
       await api.createComment(this.data.activeCourse.id, this.data.newComment)
-      this.data.activeCommentSection = await api.listComment(this.data.activeCourse.id).then(({data}) => data)
+      this.data.activeCommentSection = await api.listComment(this.data.activeCourse.id).then(({data}) => data.reverse())
     }
 
     // ENHANCE: use throttle and debounce
