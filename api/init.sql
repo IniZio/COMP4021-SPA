@@ -17,20 +17,23 @@ CREATE INDEX Comments_course_id_index
 
 CREATE TABLE Courses
 (
-  id         INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  name       TEXT                              NOT NULL,
-  description TEXT
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT,
+  code TEXT NOT NULL ,
+  summary TEXT,
+  professor TEXT NOT NULL
 );
-CREATE UNIQUE INDEX Courses_id_uindex
-  ON Courses (id);
-CREATE UNIQUE INDEX Courses_name_uindex
-  ON Courses (name);
+CREATE UNIQUE INDEX Courses_id_uindex ON Courses (id);
+CREATE UNIQUE INDEX Courses_name_uindex ON Courses (name);
+CREATE INDEX Courses_code_index ON Courses (code);
+CREATE INDEX Courses_code_index ON Courses (professor);
 
-INSERT INTO Courses (name, description)
-VALUES ('COMP4021', 'Technologies and standards for World Wide Web (WWW), user interfaces and Browsers, authoring tools, Internet protocols, Internet servers, database connectivity, Robots, Search engines, server-side programming, client-side programming, security and privacy, recent advances.');
+INSERT INTO Courses (name, code, professor, description)
+VALUES ('Internet Computing', 'COMP4021', 'LAM, Gibson', 'Technologies and standards for World Wide Web (WWW), user interfaces and Browsers, authoring tools, Internet protocols, Internet servers, database connectivity, Robots, Search engines, server-side programming, client-side programming, security and privacy, recent advances.');
 
-INSERT INTO Courses (name, description)
-VALUES ('COMP4111', 'This course provides students with the exposure of effective real-world software engineering practices and the underlying concepts via working around a realistic modern software system and applying popular tools and practices in industry. ');
+INSERT INTO Courses (name, code, professor, description)
+VALUES ('Software Engineering Practices', 'COMP4111', 'ZHANG, Charles Chuan', 'This course provides students with the exposure of effective real-world software engineering practices and the underlying concepts via working around a realistic modern software system and applying popular tools and practices in industry. ');
 
 
 CREATE TABLE Files
