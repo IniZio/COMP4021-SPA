@@ -8,7 +8,7 @@ if (count($path) == 1)
 			$_GET["search"] = "%";
 		}
 		else
-			$_GET["search"] = "%" . $_GET["search"] . "%";
+			$_GET["search"] = "%" . str_replace("%", "[%]", $_GET["search"]) . "%";
 		if (!isset($_GET["sortby"]) || !is_string($_GET["sortby"]))
 			$_GET["sortby"] = "code";
 		if (!isset($_GET["pagesize"]) || !is_numeric($_GET["pagesize"]))
