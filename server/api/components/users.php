@@ -182,7 +182,8 @@ if (count($path) == 2)
 				],
 				true
 			);
-			if (is_string($post_json["password"])) {
+			if (isset($post_json["password"]) && is_string(
+					$post_json["password"])) {
 				do_sqlite3_prepared_statement(
 					"
 					UPDATE Users
