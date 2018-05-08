@@ -41,7 +41,6 @@
 <script>
   exportTag('nav-bar', class extends MyElement {
     logout () {
-      console.log('logout: ', this.context)
       this.context.profile = null
       api.logout()
     }
