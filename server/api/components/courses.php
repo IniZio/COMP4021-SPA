@@ -55,7 +55,7 @@ if (count($path) == 1)
 	}
 
 
-$course_id = $path[1];
+$course_id = (int)$path[1];
 $course = get_resource_by_id($course_id, "Courses");
 
 if (count($path) === 2)

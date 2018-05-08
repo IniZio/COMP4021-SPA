@@ -74,7 +74,7 @@ if (count($path) == 3)
 		break;
 	}
 
-$comment_id = $path[3];
+$comment_id = (int)$path[3];
 $comment = get_resource_by_id($comment_id, "Comments");
 
 if (count($path) == 4)
