@@ -17,9 +17,11 @@
     }
   }
 
+  main-page {
+    display: contents;
+  }
 </style>
 <template>
-
   <div id="main" class="container-fluid form-group rounded" style="border:1px solid #d3d3d3; height: 42rem;">
     <div class="row" style="height:100%;">
       <!-- List of courses-->
@@ -320,10 +322,10 @@
     }
 
     async refreshCourses () {
-      const {data: courses} = await api.getCourses()
+      const {data: courses} = await api.listCourse()
       this.data.courses = courses
       // console.log('courses: ', this.data)
     }
-  })
+  }, {nonShadow: true})
 
 </script>

@@ -109,6 +109,7 @@ class MyElement extends HTMLElement {
                   name,
                   node
                 }) => {
+                  // BUG: not sure but think this makes list-render variable covered up with instance.data
                   const newNode = path(paths, instance.data)
                   if (name === 'children') {
                     node.innerText = newNode
@@ -149,11 +150,10 @@ class MyElement extends HTMLElement {
             .map((single, index) => {
               const element = template.cloneNode(true)
               element.setAttribute('key', index)
+              this.compile(element, Object.assign({}, overrides, {[name]: single}), true)
               this.applyListeners(element)
               this.activateBinds(element, Object.assign({}, overrides, {[name]: single}))
               this.activateContext(element)
-              this.compile(element, Object.assign({}, overrides, {[name]: single}), true)
-              console.log(element)
               return element
             })
 
@@ -210,7 +210,7 @@ class MyElement extends HTMLElement {
         node.removeAttribute(attr.name)
         const computed = path(attr.value, instance.computed) instanceof Function ? path(attr.value, instance.computed) : null
         const name = attr.name.slice(1)
-        const value = path(attr.value, overrides) || (computed ? computed.call(instance, node, overrides) : path(attr.value, this.data))
+        const value = path(attr.value, overrides) || (computed ? computed.call(instance, node, overrides) : path(attr.value, this.data)) || ''
 
         // attr.value === 'segment' && console.log('value of child: ', attr.name, value, overrides, node)
 
