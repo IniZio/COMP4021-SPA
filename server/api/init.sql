@@ -5,7 +5,8 @@ CREATE TABLE Comments
   content               TEXT                              NOT NULL,
   created_timestamp     INTEGER                           NOT NULL,
   last_edited_timestamp INTEGER                           NOT NULL,
-  course_id             INTEGER                           NOT NULL
+  course_id             INTEGER                           NOT NULL,
+  picture_file_id       INTEGER                           NOT NULL
 );
 CREATE UNIQUE INDEX Comments_id_uindex
   ON Comments (id);
@@ -24,10 +25,14 @@ CREATE TABLE Courses
   summary     TEXT,
   professor   TEXT                              NOT NULL
 );
-CREATE UNIQUE INDEX Courses_id_uindex ON Courses (id);
-CREATE UNIQUE INDEX Courses_name_uindex ON Courses (name);
-CREATE INDEX Courses_code_index ON Courses (code);
-CREATE INDEX Courses_professor_index ON Courses (professor);
+CREATE UNIQUE INDEX Courses_id_uindex
+  ON Courses (id);
+CREATE UNIQUE INDEX Courses_name_uindex
+  ON Courses (name);
+CREATE INDEX Courses_code_index
+  ON Courses (code);
+CREATE INDEX Courses_professor_index
+  ON Courses (professor);
 
 INSERT INTO Courses (name, code, professor, description)
 VALUES ('Internet Computing', 'COMP4021', 'LAM, Gibson',
@@ -46,8 +51,9 @@ VALUES ('Introduction to Computing with Excel VBA', 'COMP1022Q', 'LAM, Gibson',
         'This course is designed to equip students with the fundamental concepts of programming using the VBA programming language, within the context of the Microsoft Excel program. Students will first learn how to use Excel to analyze and present data and will then learn how to use VBA code to build powerful programs.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES ('Introduction to Object-oriented Programming', 'COMP2011', 'CHAN, Ki Cecia',
-        'This course is an introduction to object-oriented programming and data structures. Students will learn abstract data types and their implementation as classes in an object-oriented programming language; static and dynamic construction and destruction of objects; data member and member functions; public interface and encapsulation. It will cover data structures such as stacks, queues, linked lists, and binary trees.');
+VALUES
+  ('Introduction to Object-oriented Programming', 'COMP2011', 'CHAN, Ki Cecia',
+   'This course is an introduction to object-oriented programming and data structures. Students will learn abstract data types and their implementation as classes in an object-oriented programming language; static and dynamic construction and destruction of objects; data member and member functions; public interface and encapsulation. It will cover data structures such as stacks, queues, linked lists, and binary trees.');
 
 INSERT INTO Courses (name, code, professor, description)
 VALUES ('Computer Organization', 'COMP2611', 'LAM, Ngok',
@@ -107,7 +113,6 @@ CREATE INDEX Resources_course_id_index
   ON Resources (course_id);
 CREATE INDEX Resources_type_index
   ON Resources (type);
-
 
 
 CREATE TABLE Users
