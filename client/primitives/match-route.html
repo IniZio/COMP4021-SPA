@@ -60,7 +60,7 @@
             window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
         }
         if (this.context.isLoggedIn && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
-          window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
+          window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || 'courses')
         }
       }
       this.observe(this.context, redirectOnLogout.bind(this))
@@ -83,7 +83,7 @@
               window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
           }
           if (this.context.isLoggedIn && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
-            window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
+            window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || 'courses')
           }
           if (this.style.display === 'none') {
             this.style.display = 'contents'

@@ -126,7 +126,12 @@ const api =  {
   deleteComment: (cid, coid) => $http({
     method: 'DELETE',
     url: `courses/${cid}/comments/${coid}`,
-  })
+  }),
+  uploadCommentFile: (cid, coid, form) => $http({
+    method: 'POST',
+    url: `courses/${cid}/comments/${coid}/file`,
+    data: form
+  }),
 }
 
 window.axios = axios

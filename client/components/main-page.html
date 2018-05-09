@@ -161,14 +161,29 @@
           <div class="col" style="border-right: 1px grey solid">
             <div class="row" >
                 <form class="col" @submit="createComment">
-                    <label class="row text-left ml-3"><h5>Comment</h5></label>
+                    <label class="row text-left ml-3"><h5>Resources</h5></label>
                     <div class="form-row">
-                        <div class="col-10 p-0 text-center">
+                        <div class="col-4 text-center">
+                            <div class="col text-center">
+                                <label for="profilePhoto">
+                                  <strong>Resource file</strong>
+                                </label>
+                              </div>
+                              <div class="col">
+                                  <!-- <object data="https://api.adorable.io/avatars/40/" type="image/png"  width="100%" height="100%"> -->
+                                    <img id="preview" :src="resourceUrl" width="100%" height="100%">
+                                  <!-- </object> -->
+                                </div>
+                              <div class="col mt-2" style="margin: auto;">
+                                <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="form.avatar" @input="changeFile">
+                              </div>
+                        </div>
+                        <div class="col-4 text-center">
                             <textarea id="comment" class="form-control" rows="3" style="height:5rem;" :value="newComment.content" @input="changeComment"></textarea>
                         </div>
                         <div class="col-2">
                             <button type="submit" name="registerComment" id="registerComment" class="btn btn-primary" style="height:5rem;">
-                                Comment
+                                Share
                             </button>
                         </div>
                     </div>
@@ -176,7 +191,23 @@
             </div>
             <hr>
             <form x-for="comment:activeCommentSection" class="form-row pl-5 my-4" class="comment_display" @submit="updateComment">
-              <div class="col-10">
+                <div class="col-4 text-center">
+
+                <div class="col text-center">
+                  <label for="profilePhoto">
+                    <strong>Resource file</strong>
+                  </label>
+                </div>
+                <div x-if="notEdittingComment" class="col">
+                    <!-- <object data="https://api.adorable.io/avatars/40/" type="image/png"  width="100%" height="100%"> -->
+                      <img id="preview" :src="resourceUrl" width="100%" height="100%">
+                    <!-- </object> -->
+                  </div>
+                <div x-else class="col mt-2" style="margin: auto;">
+                  <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="activeCommentFile" @input="changeFile">
+                </div>
+              </div>
+              <div class="col-4">
                 <h6 x-if="notEdittingComment" :children="comment.content">comment 1</h6>
                 <textarea x-else class="form-control" rows="3" style="height:5rem;" :value="comment.content" @change="setCommentContent"></textarea>
               </div>
@@ -223,7 +254,9 @@
         },
         activeCourse: {},
         activeCommentSection: [],
-        newComment: commentTemplate()
+        activeCommentFile: null,
+        newComment: commentTemplate(),
+        newCommentFile: null
       }
     }
 
@@ -249,7 +282,11 @@
         },
         notEdittingComment (node, overrides) {
           return  !overrides.comment || !this.data.activeComment || this.data.activeComment.id !== overrides.comment.id
+        },
+        resourceUrl (node, overrides) {
+          return overrides.comment && `${BASE_URL}/courses/${this.data.activeCourse.id}/resources/${overrides.comment.id}/picture?abc=${Math.random()}`
         }
+
       }
 
       // Change active course on /courses/id change
@@ -352,6 +389,20 @@
       this.refreshCourses()
     }
 
+    changeFile (e, node) {
+      if (node.files && node.files[0]) {
+        var reader = new FileReader()
+
+        // reader.onload = (e) => {
+        //   this.data.userAvatar = e.target.result
+        // }
+
+        reader.readAsDataURL(node.files[0])
+        this.data.activeCommentFile = node.files && node.files[0]
+        this.data.newCommentFile = node.files && node.files[0]
+      }
+    }
+
     changeComment (e) {
       this.data.newComment.content = e.target.value
       console.log('comment: ', this.data)
@@ -375,6 +426,11 @@
 
     async updateComment (e) {
       e.preventDefault()
+      if (this.data.activeCommentFile) {
+        const data = new FormData()
+        data.append('file', this.data.activeCommentFile.__getTarget)
+        await api.uploadCommentFile(this.data.activeCourse.id, this.data.activeComment.id, data)
+      }
       this.data.activeComment && await api.updateComment(this.data.activeCourse.id, this.data.activeComment.id, this.data.activeComment)
       location.hash = location.hash.replace(/\/comments\/([^\/]*)/, '')
       this.refreshActiveCommentSection()
@@ -382,7 +438,12 @@
 
     async createComment (e, node) {
       e.preventDefault()
-      await api.createComment(this.data.activeCourse.id, this.data.newComment)
+      const {data: {comment: {id}}} = await api.createComment(this.data.activeCourse.id, this.data.newComment)
+      if (this.data.newCommentFile) {
+        const data = new FormData()
+        data.append('file', this.data.newCommentFile.__getTarget)
+        await api.uploadCommentFile(this.data.activeCourse.id, id, data)
+      }
       this.data.newComment = commentTemplate()
       this.refreshActiveCommentSection()
     }
