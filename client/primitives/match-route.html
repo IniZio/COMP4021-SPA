@@ -20,7 +20,7 @@
 
     set path (val) {
       if (val) {
-        this.setAttribute('path', '');
+        this.setAttribute('path', val);
       } else {
         this.removeAttribute('path');
       }
@@ -36,6 +36,18 @@
 
     get partial () {
       return !!this.getAttribute('partial')
+    }
+
+    get active () {
+      return this.hasAttribute('active')
+    }
+
+    set active (val) {
+      if (val) {
+        this.setAttribute('active', '');
+      } else {
+        this.removeAttribute('active');
+      }
     }
 
     connectedCallback () {
@@ -67,6 +79,12 @@
           window.location.hash = this.to
         } else {
           this.active = true
+          if (!this.context.isLoggedIn && this.hasAttribute('protected')) {
+              window.location.hash = `#/login?redirect=${encodeURIComponent(window.location.hash)}`
+          }
+          if (this.context.isLoggedIn && (window.location.href.split('redirect=')[1] || window.location.hash.includes('login') || window.location.hash.includes('register'))) {
+            window.location.hash = decodeURIComponent(window.location.href.split('redirect=')[1] || '')
+          }
           if (this.style.display === 'none') {
             this.style.display = 'contents'
           }
