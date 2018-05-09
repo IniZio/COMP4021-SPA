@@ -18,6 +18,7 @@ ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_STRICTT);
 ini_set("extension", "sqlite3");
 ini_set("extension", "openssl");
 
+session_set_cookie_params(2147483647);
 session_start();
 
 include_once "./includes/utilities.php";
