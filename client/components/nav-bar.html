@@ -4,45 +4,40 @@
       display: contents;
     }
   </style>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
+  <nav id="navBar" class="navbar navbar-expand-lg navbar-light ng-light" style="width: 100vw; justify-content: space-between;">
+    <div class="form-row p-0">
       <router-link to="/">
-        <a class="navbar-brand">
-          UST.Course
+        UST.Course
+      </router-link>
+    </div>
+    <div class="form-row p-0" style="align-items: center;">
+      <img id="navPhoto" src="https://api.adorable.io/avatars/40/" width="40rem;" height="40rem;">
+      <router-link to="/profile">
+        <a class="nav-link">
+          <button class="btn btn-secondary m-0">
+            Profile
+          </button>
         </a>
       </router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button x-if="isLoggedIn" class="btn btn-secondary m-0" @click="logout" style="height:100%;">
+        Logout
       </button>
-
-      <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-      <div id="navbarSupportedContent" style="margin-left: auto">
-        <!-- <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
-        <ul class="navbar-nav ml-auto">
-            <li x-if="isLoggedIn" class="nav-item">
-              <router-link to="/profile"><a class="nav-link">Profile</a></router-link>
-            </li>
-            <button x-if="isLoggedIn" class="btn btn-secondary" style="margin-left: 20px" @click="logout">
-              Logout
-            </button>
-          </ul>
-        <router-link x-if="notLoggedIn" to="/login">
-          <a class="btn btn-primary" style="margin-left: 20px; color: white">
+      <router-link x-if="notLoggedIn" to="/login">
+        <a>
+          <button class="btn btn-primary m-0">
             Login
-          </a>
-        </router-link>
-      </div>
-    </nav>
+          </button>
+        </a>
+      </router-link>
+    </div>
+  </nav>
 </template>
 
 <script>
-  exportTag('nav-bar', class extends MyElement {
-    logout () {
-      this.context.profile = null
-      api.logout()
-    }
-  })
+    exportTag('nav-bar', class extends MyElement {
+        logout () {
+            this.context.profile = null
+            api.logout()
+        }
+    })
 </script>
