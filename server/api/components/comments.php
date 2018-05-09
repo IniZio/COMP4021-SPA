@@ -81,7 +81,23 @@ if (count($path) == 3)
 				],
 			],
 			true);
-		do_response(201);
+		$comments = do_sqlite3_prepared_statement(
+			"
+					SELECT * FROM Comments WHERE created_timestamp=:ts AND content=:content",
+			[
+				[
+					"param" => ":created_timestamp",
+					"value" => $created_timestamp,
+					"type" => SQLITE3_INTEGER,
+				],
+				[
+					"param" => ":content",
+					"value" => $post_json["content"],
+					"type" => SQLITE3_TEXT,
+				],
+			]);
+		if (count($comments) > 0)
+			do_response(201, $comments[0]);
 		break;
 	default:
 		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
