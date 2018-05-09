@@ -99,7 +99,7 @@
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      if (!captcha) return
+      if (!captcha) return swal('Woops!', 'Come on prove you are human..', 'error')
       if (e.target.checkValidity() === false) return
       try {
         const {data: {user}} = await api.login(Object.assign(this.data.form, {captcha}))
@@ -110,7 +110,7 @@
       } catch (e) {
         switch (e.response && e.response.status) {
           case 404:
-            swal('Error', 'Invalid username or password', 'error')
+            swal('Woops!', 'Invalid username or password', 'error')
             break
           default:
             console.error(e)
