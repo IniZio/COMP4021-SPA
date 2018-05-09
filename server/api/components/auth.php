@@ -19,10 +19,14 @@ case "POST":
 				'method' => 'POST',
 				'content' => http_build_query($data),
 			],
+			'ssl' => [
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+			],
 		];
 		$context = stream_context_create($options);
 		$verify = json_decode(file_get_contents($url, false, $context), true);
-		if (!$verify["success"]){
+		if (!$verify["success"]) {
 			error(ERROR_CAPTCHA_NOT_PASSED);
 		}
 
