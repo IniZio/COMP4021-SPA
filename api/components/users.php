@@ -111,6 +111,11 @@ if (count($path) == 2)
 					$post_json["last_name"] :
 					$_SESSION["user"]["last_name"];
 
+			$post_json["password"] =
+				is_string($post_json["password"]) ?
+					password_hash($post_json["password"], PASSWORD_DEFAULT) :
+					$_SESSION["user"]["password"];
+
 			$post_json["email"] =
 				is_string($post_json["email"]) ?
 					$post_json["email"] :
@@ -138,6 +143,7 @@ if (count($path) == 2)
 				SET
 					first_name=:first_name,
 					last_name=:last_name,
+					password=:password,
 					email=:email,
 					major=:major,
 					year=:year,
@@ -152,6 +158,11 @@ if (count($path) == 2)
 					[
 						"param" => ":last_name",
 						"value" => $post_json["last_name"],
+						"type" => SQLITE3_TEXT,
+					],
+					[
+						"param" => ":password",
+						"value" => $post_json["password"],
 						"type" => SQLITE3_TEXT,
 					],
 					[
