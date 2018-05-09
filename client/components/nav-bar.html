@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="form-row p-0" style="align-items: center;">
-      <img id="navPhoto" src="https://api.adorable.io/avatars/40/" width="40rem;" height="40rem;">
+      <img id="navPhoto" :src="userAvatar" width="40rem;" height="40rem;">
       <router-link to="/profile">
         <a class="nav-link">
           <button class="btn btn-secondary m-0">
@@ -35,6 +35,20 @@
 
 <script>
     exportTag('nav-bar', class extends MyElement {
+      data () {
+        return {
+          userAvatar: ''
+        }
+      }
+
+      constructor () {
+        super()
+        this.observe(this.context, () => {
+        //   this.data.invalidPassword = this.data.form.password !== this.data.form.confirmPassword ? 'The passwords do not match' : ''
+          this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/')
+          // console.log(this.data.userAvatar)
+        })
+      }
         logout () {
             this.context.profile = null
             api.logout()
