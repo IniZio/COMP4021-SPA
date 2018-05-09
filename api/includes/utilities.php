@@ -1,5 +1,8 @@
 <?php
 
+//ini_set("display_errors",2);
+//ini_set('error_reporting', E_ALL | E_STRICT);
+
 function cleanup_exit()
 {
 	global $db;
