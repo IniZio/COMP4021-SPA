@@ -14,6 +14,10 @@
 
 <script>
   exportTag('match-route', class extends MyElement {
+    get display () {
+      return 'contents'
+    }
+
     get path () {
       return this.getAttribute('path');
     }

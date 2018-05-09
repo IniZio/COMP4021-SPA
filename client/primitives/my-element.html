@@ -201,7 +201,8 @@ class MyElement extends HTMLElement {
 
         const conditionalRender = () => {
           if (node.previousElementSibling.style && node.previousElementSibling.style.display === 'none') {
-            node.style.display = node.getAttribute('display') || 'contents'
+            // HACK: make match-route to display as contents instaed of block
+            node.style.display = node.display || node.getAttribute('display') || 'block'
           } else {
             node.setAttribute('display', node.style.display !== 'none' ? node.style.display : '')
             node.style.display = 'none'
