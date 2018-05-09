@@ -27,14 +27,6 @@
       <!-- List of courses-->
       <match-route path="/">
       <div id="course_list" class="col-md-3 col-sm-12" style="border-right:0.3rem solid #CCFFFF;">
-        <div class="row form-group justify-content-center mt-3">
-            <router-link class="col" to="/courses/add">
-                <button id="add" class="btn btn-primary" style="width:100%;">Add</button>
-            </router-link>
-            <div class="col">
-                <button id="delete" class="btn btn-light" style="width:100%;" @click="deleteActive">Delete</button>
-            </div>
-            </div>
         <hr>
         <div class="row p-0 mr-2">
             <label class="col-3 ml-3 mt-2 p-0" for="search"><strong>Search</strong></label>
@@ -52,7 +44,7 @@
         <div class="list-group">
           <router-link :to="courseUrl" x-for="course:courses" :abc="courses" :class="courseClass" style="cursor: pointer;">
             <div class="row">
-              <div class="col-9" style="height:100%;">
+              <div class="col-12" style="height:100%">
                 <div class="row justify-content-between align-items-center">
                   <h5 class="mb-1" :children="course.name">COMP4021</h5>
                 </div>
@@ -79,79 +71,8 @@
         </nav>
       </div>
       </match-route>
-      <!-- Display Course -->
-      <div x-if="activeCourse.name" id="course_display" class="col-md-9 col-sm-12">
-        <div class="row">
-          <div class="ml-5 mt-4">
-            <button class="return btn btn-primary">
-              <i class="fas fa-long-arrow-alt-left"></i>
-            </button>
-          </div>
-          <div class="col p-1 text-center mr-3">
-            <p id="title">
-              <u>
-                <h3 :children="activeCourse.name">Course title</h3>
-              </u>
-            </p>
-          </div>
-        </div>
-        <div class="row m-0">
-          <div class="col text-center">
-            <p id="summary" :children="activeCourse.description"></p>
-          </div>
-        </div>
-        <!-- <div class="row">
-          <div class="col text-right mr-5">
-            <p id="instructor" :children="activeCourse.professor">
-              <h6>Taught by Professor_name</h6>
-            </p>
-          </div>
-        </div> -->
-        <hr>
-        <div class="row" >
-            <form class="col" @submit="createComment">
-                <label class="row text-left ml-3"><h5>Comment</h5></label>
-                <div class="form-row pl-5">
-                    <div class="col-10 p-0 text-center">
-                        <textarea id="comment" class="form-control" rows="3" style="height:5rem;" :value="newComment.content" @input="changeComment"></textarea>
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" name="registerComment" id="registerComment" class="btn btn-primary" style="height:5rem;">
-                            Comment
-                        </button>
-                    </div>
-                </div>
-              </form>
-        </div>
-        <hr>
-        <form x-for="comment:activeCommentSection" class="form-row pl-5 my-4" class="comment_display" @submit="updateComment">
-          <div class="col-10">
-            <h6 x-if="notEdittingComment" :children="comment.content">comment 1</h6>
-            <textarea x-else class="form-control" rows="3" style="height:5rem;" :value="comment.content"></textarea>
-          </div>
-          <div x-if="commentIsMine" class="col-2">
-            <router-link x-if="notEdittingComment" :to="commentUrl">
-              <button name="editComment" class="btn btn-primary mr-1">
-                <i class="fas fa-edit"></i>
-              </button>
-            </router-link>
-            <div x-else>
-              <button type="submit" name="finishEditComment" class="btn btn-primary mr-1">
-                <i class="fas fa-save"></i>
-              </button>
-              <button name="cancelEdit" class="btn btn-light" @click="exitEdit">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <button name="deleteComment" class="btn btn-danger" @click="deleteComment">
-                <i class="fas fa-minus"></i>
-            </button>
-          </div>
-        </form>
-        <hr>
-      </div>
       <!-- Add Course Form -->
-      <match-route path="/courses/add">
+      <match-route path="resources/add" partial="true">
         <div id="course_add" class="col-md-9 col-sm-12 p-0 mt-4">
         <div class="row">
           <div class="ml-5 mt-2">
@@ -206,6 +127,94 @@
         </form>
       </div>
       </match-route>
+      <!-- Display Course -->
+      <!-- <match-route path="/" x-else> -->
+      <div x-if="activeCourse.name" id="course_display" class="col-md-9 col-sm-12">
+        <div class="row">
+          <div class="ml-5 mt-4">
+            <button class="return btn btn-primary">
+              <i class="fas fa-long-arrow-alt-left"></i>
+            </button>
+          </div>
+          <div class="col p-1 text-center mr-3">
+            <p id="title">
+              <u>
+                <h3 :children="activeCourse.name">Course title</h3>
+              </u>
+            </p>
+          </div>
+        </div>
+        <div class="row m-0">
+          <div class="col text-center">
+            <p id="summary" :children="activeCourse.description"></p>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col text-right mr-5">
+            <p id="instructor" :children="activeCourse.professor">
+              <h6>Taught by Professor_name</h6>
+            </p>
+          </div>
+        </div> -->
+        <hr>
+        <div class="row">
+          <div class="col" style="border-right: 1px grey solid">
+            <div class="row" >
+                <form class="col" @submit="createComment">
+                    <label class="row text-left ml-3"><h5>Comment</h5></label>
+                    <div class="form-row">
+                        <div class="col-10 p-0 text-center">
+                            <textarea id="comment" class="form-control" rows="3" style="height:5rem;" :value="newComment.content" @input="changeComment"></textarea>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" name="registerComment" id="registerComment" class="btn btn-primary" style="height:5rem;">
+                                Comment
+                            </button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+            <hr>
+            <form x-for="comment:activeCommentSection" class="form-row pl-5 my-4" class="comment_display" @submit="updateComment">
+              <div class="col-10">
+                <h6 x-if="notEdittingComment" :children="comment.content">comment 1</h6>
+                <textarea x-else class="form-control" rows="3" style="height:5rem;" :value="comment.content" @change="setCommentContent"></textarea>
+              </div>
+              <div x-if="commentIsMine" class="col-2">
+                <router-link x-if="notEdittingComment" :to="commentUrl" class="btn btn-primary mr-1">
+                  <i class="fas fa-edit"></i>
+                </router-link>
+                <div x-else>
+                  <button type="submit" name="finishEditComment" class="btn btn-primary mr-1">
+                    <i class="fas fa-save"></i>
+                  </button>
+                  <button name="cancelEdit" class="btn btn-light" @click="exitEdit">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <button name="deleteComment" class="btn btn-danger" @click="deleteComment">
+                    <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="col">
+            <div class="row">
+              <label class="row text-left ml-3"><h5>Resource</h5></label>
+            </div>
+            <div class="row form-group justify-content-center mt-3">
+                <!-- <router-link class="col" :to="addResourceUrl"> -->
+                    <button id="add" class="btn btn-primary" style="width:100%;" @click="toAddResource">Add resource</button>
+                <!-- </router-link> -->
+                <!-- <div class="col">
+                    <button id="delete" class="btn btn-light" style="width:100%;" @click="deleteActive">Delete</button>
+                </div> -->
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <!-- </match-route> -->
     </div>
   </div>
 </template>
@@ -239,8 +248,8 @@
         },
         commentUrl (node, overrides) {
           return overrides.comment && (
-            location.hash.match(/\/comments\/(.*)\//)
-            ? location.hash.replace(/\/comments\/(.*)\//, `/comments/${overrides.comment.id}`).slice(1)
+            location.hash.match(/\/comments\/([^\/]*)/)
+            ? location.hash.replace(/\/comments\/([^\/]*)/, `/comments/${overrides.comment.id}`).slice(1)
             : (location.hash + `/comments/${overrides.comment.id}`).slice(1)
           )
         },
@@ -258,20 +267,30 @@
 
       // Change active course on /courses/id change
       window.addEventListener('hashchange', async () => {
-        const courseId = +((location.href.split('/courses/')[1] || '').split('/')[0])
-        if (courseId) {
-          this.data.activeCourse = this.data.courses.find(course => course.id === courseId) || await api.getCourse(courseId).then(({data}) => data).catch(() => {}) || {}
-          this.refreshActiveCommentSection ()
-        } else {
-          this.data.activeCourse = {}
-        }
+        const getCourseId = () => +((location.href.split('/courses/')[1] || '').split('/')[0].replace(/\//, ''))
+        this.data.activeCourse = this.data.courses.find(course => course.id === getCourseId()) || await api.getCourse(getCourseId()).then(({data}) => data).catch(() => {}) || {}
+        await this.refreshActiveCommentSection ()
+        this.observe(this.data, async () => {
+          if (getCourseId()) {
+            if (!this.data.activeCourse) {
+              this.data.activeCourse = this.data.courses.find(course => course.id === getCourseId()) || {}
+            }
+          } else {
+            this.data.activeCourse = {}
+          }
+        })
 
-        const commentId = +((location.href.split('/comments/')[1] || '').split('/')[0])
-        if (commentId) {
-          this.data.activeComment = this.data.activeCommentSection.find(comment => comment.id === commentId)
-        } else {
-          this.data.activeComment = null
-        }
+        const getCommentId = () => +((location.href.split('/comments/')[1] || '').split('/')[0].replace(/\//, ''))
+        this.data.activeComment = this.data.activeCommentSection.find(comment => comment.id === getCommentId())
+        this.observe(this.data, () => {
+          if (getCommentId()) {
+            if (!this.data.activeComment) {
+              this.data.activeComment = this.data.activeCommentSection.find(comment => comment.id === getCommentId())
+            }
+          } else {
+            this.data.activeComment = null
+          }
+        })
       })
 
       this.observe(this.context, () => {
@@ -281,8 +300,16 @@
       })
     }
 
+    toAddResource () {
+      location.hash = (
+        location.hash.match(/\/resources\/([^\/]*)/)
+        ? location.hash.replace(/\/resources\/([^\/]*)/, `/resources/add`).slice(1)
+        : (location.hash + `/resources/add`).slice(1)
+      )
+    }
+
     async refreshActiveCommentSection () {
-      this.data.activeCommentSection = this.data.commentSections.find(section => section.course_id === this.data.activeCourse.id) || await api.listComment(this.data.activeCourse.id).then(({data}) => data.reverse()).catch(() => {}) || []
+      this.data.activeCommentSection = await api.listComment(this.data.activeCourse.id).then(({data}) => data.reverse()).catch(() => {}) || []
     }
 
     connectedCallback() {
@@ -348,14 +375,20 @@
       this.refreshActiveCommentSection()
     }
 
-    exitEdit () {
-      console.log()
+    exitEdit (e) {
+      e.preventDefault()
+      e.stopPropagation()
       location.hash = location.hash.replace(/\/comments\/(.*)/, '')
+    }
+
+    setCommentContent (e) {
+      this.data.activeComment.content = e.target.value
     }
 
     async updateComment (e) {
       e.preventDefault()
-      await api.updateComment(this.data.activeCourse.id, this.data.activeComment.id, this.data.activeComment)
+      this.data.activeComment && await api.updateComment(this.data.activeCourse.id, this.data.activeComment.id, this.data.activeComment)
+      location.hash = location.hash.replace(/\/comments\/([^\/]*)/, '')
       this.refreshActiveCommentSection()
     }
 
