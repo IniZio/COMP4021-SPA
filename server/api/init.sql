@@ -24,14 +24,10 @@ CREATE TABLE Courses
   summary     TEXT,
   professor   TEXT                              NOT NULL
 );
-CREATE UNIQUE INDEX Courses_id_uindex
-  ON Courses (id);
-CREATE UNIQUE INDEX Courses_name_uindex
-  ON Courses (name);
-CREATE INDEX Courses_code_index
-  ON Courses (code);
-CREATE INDEX Courses_professor_index
-  ON Courses (professor);
+CREATE UNIQUE INDEX Courses_id_uindex ON Courses (id);
+CREATE UNIQUE INDEX Courses_name_uindex ON Courses (name);
+CREATE INDEX Courses_code_index ON Courses (code);
+CREATE INDEX Courses_professor_index ON Courses (professor);
 
 INSERT INTO Courses (name, code, professor, description)
 VALUES ('Internet Computing', 'COMP4021', 'LAM, Gibson',
