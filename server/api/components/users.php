@@ -143,7 +143,7 @@ if (count($path) == 2)
 				SET
 					first_name=:first_name,
 					last_name=:last_name,
-					password=:password,
+					hashed_password=:password,
 					email=:email,
 					major=:major,
 					year=:year,
