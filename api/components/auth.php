@@ -9,7 +9,6 @@ case "POST":
 		is_string($post_json["password"]) &&
 		is_string($post_json["captcha"])
 	) {
-		var_dump($post_json["captcha"]);
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
 		$data = ['secret' => '6LfCOVgUAAAAANv-d3QoFzrXOpBkDe9QUZj3cJ_h', 'response' => $post_json["captcha"]];
 
@@ -24,7 +23,6 @@ case "POST":
 		$context = stream_context_create($options);
 		$verify = json_decode(file_get_contents($url, false, $context), true);
 		if (!$verify["success"]){
-			var_dump($verify);
 			error(ERROR_CAPTCHA_NOT_PASSED);
 		}
 
