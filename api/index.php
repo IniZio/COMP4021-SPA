@@ -13,9 +13,10 @@
  */
 
 
-
-ini_set("display_errors",2);
-ini_set('error_reporting', E_ALL | E_STRICT);
+ini_set("display_errors", "Off");
+ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_STRICTT);
+ini_set("extension", "sqlite3");
+ini_set("extension", "openssl");
 
 session_start();
 
@@ -46,17 +47,17 @@ case "master":
 	if ($method === "DELETE" &&
 		$post_json["master_key"] === "master_delete_key") {
 		do_sqlite3_prepared_statement(
-			"DELETE FROM Users", [],true);
+			"DELETE FROM Users", [], true);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM Courses", [],true);
+			"DELETE FROM Courses", [], true);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM Comments", [],true);
+			"DELETE FROM Comments", [], true);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM Resources", [],true);
+			"DELETE FROM Resources", [], true);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM Files", [],true);
+			"DELETE FROM Files", [], true);
 		do_sqlite3_prepared_statement(
-			"DELETE FROM sqlite_sequence", [],true);
+			"DELETE FROM sqlite_sequence", [], true);
 		unset($_SESSION["user"]);
 		do_response(200);
 	}
