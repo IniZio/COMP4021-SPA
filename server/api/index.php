@@ -14,7 +14,7 @@
 
 
 ini_set("display_errors", "Off");
-ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_STRICTT);
+ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_STRICT);
 ini_set("extension", "sqlite3");
 ini_set("extension", "openssl");
 
