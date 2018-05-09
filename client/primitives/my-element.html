@@ -152,8 +152,8 @@ class MyElement extends HTMLElement {
           elements.map(element => element.remove())
           // Compile elements
           const datas = path(iterable, instance.data) || path(iterable, overrides) || []
-          console.log(datas)
-          elements = (Array.isArray(datas) ? datas : Array.from(datas))
+          console.log(iterable, instance.data, overrides)
+          elements = (Array.isArray(datas) ? datas : [])
             .map((single, index) => {
               const element = template.cloneNode(true)
               element.setAttribute('key', index)
