@@ -359,6 +359,7 @@
 
     async deleteComment (e, node, overrides = {}) {
       await api.deleteComment(this.data.activeCourse.id, overrides.comment.id)
+      location.hash = location.hash.replace(/\/comments\/([^\/]*)/, '')
       this.refreshActiveCommentSection()
     }
 
