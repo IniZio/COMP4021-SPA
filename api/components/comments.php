@@ -11,6 +11,7 @@ if (count($path) == 3)
 				author_user_id, 
 				content, 
 				created_timestamp, 
+				last_edited_timestamp,
 				course_id
 			FROM Comments 
 			WHERE course_id=:course_id",
@@ -36,12 +37,14 @@ if (count($path) == 3)
 			INSERT INTO Comments (
 				author_user_id,
 				content,
+				picture_url,
 				created_timestamp,
 				last_edited_timestamp,
 				course_id)
 			VALUES (
 				:author_user_id,
 				:content,
+				:picture_url,
 				:created_timestamp,
 				:last_edited_timestamp,
 				:course_id)",
@@ -54,6 +57,11 @@ if (count($path) == 3)
 				[
 					"param" => ":content",
 					"value" => $post_json["content"],
+					"type" => SQLITE3_TEXT,
+				],
+				[
+					"param" => ":picture_url",
+					"value" => $post_json["picture_url"],
 					"type" => SQLITE3_TEXT,
 				],
 				[
@@ -99,12 +107,14 @@ if (count($path) == 4)
 		if (is_string($post_json["content"])) {
 			$comment["last_edited_timestamp"] = time();
 			$comment["content"] = $post_json["content"];
+			$comment["picture_url"] = $post_json["picture_url"];
 			do_sqlite3_prepared_statement(
 				"
 			UPDATE Comments 
 			SET 
 				content=:content, 
-				last_edited_timestamp=:last_edited_timestamp
+				last_edited_timestamp=:last_edited_timestamp,
+				picture_url=:picture_url
 			WHERE id=:id",
 				[
 					[
@@ -116,6 +126,11 @@ if (count($path) == 4)
 						"param" => ":last_edited_timestamp",
 						"value" => $comment["last_edited_timestamp"],
 						"type" => SQLITE3_INTEGER,
+					],
+					[
+						"param" => ":picture_url",
+						"value" => $comment["picture_url"],
+						"type" => SQLITE3_TEXT,
 					],
 					[
 						"param" => ":id",

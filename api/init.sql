@@ -3,6 +3,7 @@ CREATE TABLE Comments
   id                    INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   author_user_id        INTEGER                           NOT NULL,
   content               TEXT                              NOT NULL,
+  picture_url           TEXT,
   created_timestamp     INTEGER                           NOT NULL,
   last_edited_timestamp INTEGER                           NOT NULL,
   course_id             INTEGER                           NOT NULL,
