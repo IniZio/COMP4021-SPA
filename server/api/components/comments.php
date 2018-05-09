@@ -83,21 +83,20 @@ if (count($path) == 3)
 			true);
 		$comments = do_sqlite3_prepared_statement(
 			"
-					SELECT * FROM Comments WHERE created_timestamp=:ts AND content=:content",
+			SELECT * FROM Comments WHERE author_user_id=:as AND created_timestamp=:ts",
 			[
 				[
-					"param" => ":created_timestamp",
+					"param" => ":ts",
 					"value" => $created_timestamp,
 					"type" => SQLITE3_INTEGER,
 				],
 				[
-					"param" => ":content",
-					"value" => $post_json["content"],
-					"type" => SQLITE3_TEXT,
+					"param" => ":as",
+					"value" => $author_user_id,
+					"type" => SQLITE3_INTEGER,
 				],
 			]);
-		if (count($comments) > 0)
-			do_response(201, $comments[0]);
+		do_response(201, $comments[0]);
 		break;
 	default:
 		error(ERROR_HTTP_METHOD_NOT_ALLOWED);
@@ -179,8 +178,9 @@ if (count($path) == 4)
 	}
 
 
-if (count($path) == 5 &&
-	$path[4] === "picture") {
+
+if (count($path) == 6 &&
+	($path[5] === "file" || $path[5] === "picture")) {
 	switch ($method) {
 	case "GET":
 		do_check_auth();
