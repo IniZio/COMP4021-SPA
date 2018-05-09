@@ -102,7 +102,7 @@
       if (!captcha) return
       if (e.target.checkValidity() === false) return
       try {
-        const {data: {user}} = await api.login(this.data.form)
+        const {data: {user}} = await api.login(Object.assign(this.data.form, {captcha}))
         this.context.profile = user
         // Cookies.set('userId', user.id)
 

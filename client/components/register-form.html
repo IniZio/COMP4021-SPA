@@ -121,7 +121,7 @@
       if (this.data.invalidPassword) return false
 
       try {
-        const {data: {user}} = await api.register(this.data.form)
+        const {data: {user}} = await api.register(Object.assign(this.data.form, {captcha}))
         this.context.profile = user
       } catch (e) {
         switch (e.response && e.response.status) {
