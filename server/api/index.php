@@ -12,6 +12,11 @@
  * and then do your own output and content_type header.
  */
 
+
+
+ini_set("display_errors",2);
+ini_set('error_reporting', E_ALL | E_STRICT);
+
 session_start();
 
 include_once "./includes/utilities.php";

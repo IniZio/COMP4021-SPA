@@ -38,44 +38,44 @@ VALUES ('Software Engineering Practices', 'COMP4111', 'ZHANG, Charles Chuan',
         'This course provides students with the exposure of effective real-world software engineering practices and the underlying concepts via working around a realistic modern software system and applying popular tools and practices in industry. ');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES ('Introduction to Computing with Java', ‘COMP1022P’, ' TSOI, Yau Chat',
-        ‘This course is designed to equip students with the fundamental concepts of programming elements and data abstraction using Java. Students will learn how to write procedural programs using variables, arrays, control statements, loops, recursion, data abstraction and objects using an integrated development environment.');
+VALUES ('Introduction to Computing with Java', 'COMP1022P', ' TSOI, Yau Chat',
+        'This course is designed to equip students with the fundamental concepts of programming elements and data abstraction using Java. Students will learn how to write procedural programs using variables, arrays, control statements, loops, recursion, data abstraction and objects using an integrated development environment.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Introduction to Computing with Excel VBA’, COMP1022Q, ‘LAM, Gibson’,
-        ‘This course is designed to equip students with the fundamental concepts of programming using the VBA programming language, within the context of the Microsoft Excel program. Students will first learn how to use Excel to analyze and present data and will then learn how to use VBA code to build powerful programs.');
+VALUES ('Introduction to Computing with Excel VBA', 'COMP1022Q', 'LAM, Gibson',
+        'This course is designed to equip students with the fundamental concepts of programming using the VBA programming language, within the context of the Microsoft Excel program. Students will first learn how to use Excel to analyze and present data and will then learn how to use VBA code to build powerful programs.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Introduction to Object-oriented Programming’, ‘COMP2011’, ‘CHAN, Ki Cecia’,
-        ‘This course is an introduction to object-oriented programming and data structures. Students will learn abstract data types and their implementation as classes in an object-oriented programming language; static and dynamic construction and destruction of objects; data member and member functions; public interface and encapsulation. It will cover data structures such as stacks, queues, linked lists, and binary trees.');
+VALUES ('Introduction to Object-oriented Programming', 'COMP2011', 'CHAN, Ki Cecia',
+        'This course is an introduction to object-oriented programming and data structures. Students will learn abstract data types and their implementation as classes in an object-oriented programming language; static and dynamic construction and destruction of objects; data member and member functions; public interface and encapsulation. It will cover data structures such as stacks, queues, linked lists, and binary trees.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Computer Organization’, ‘COMP2611’, ‘LAM, Ngok’,
-        ‘Inner workings of modern digital computer systems and tradeoffs at the hardware-software interface. Topics include: instructions set design, memory systems, input-output systems, interrupts and exceptions, pipelining, performance and cost analysis, assembly language programming, and a survey of advanced architectures.');
+VALUES ('Computer Organization', 'COMP2611', 'LAM, Ngok',
+        'Inner workings of modern digital computer systems and tradeoffs at the hardware-software interface. Topics include: instructions set design, memory systems, input-output systems, interrupts and exceptions, pipelining, performance and cost analysis, assembly language programming, and a survey of advanced architectures.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Java Programming’, ‘COMP3021’, ‘LAM, Ngok’,
-        ‘Inner workings of modern digital computer systems and tradeoffs at the hardware-software interface. Topics include: instructions set design, memory systems, input-output systems, interrupts and exceptions, pipelining, performance and cost analysis, assembly language programming, and a survey of advanced architectures.');
+VALUES ('Java Programming', 'COMP3021', 'LAM, Ngok',
+        'Inner workings of modern digital computer systems and tradeoffs at the hardware-software interface. Topics include: instructions set design, memory systems, input-output systems, interrupts and exceptions, pipelining, performance and cost analysis, assembly language programming, and a survey of advanced architectures.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Software Engineering’, ‘COMP3111’, ‘LEUNG, Wai Ting’,
-        ‘Methods and tools for planning, designing, implementing, validating, and maintaining large software systems. Project work to build a software system as a team, using appropriate software engineering tools and techniques.');
+VALUES ('Software Engineering', 'COMP3111', 'LEUNG, Wai Ting',
+        'Methods and tools for planning, designing, implementing, validating, and maintaining large software systems. Project work to build a software system as a team, using appropriate software engineering tools and techniques.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Fundamentals of Artificial Intelligence’, ‘COMP3211’, ‘LIN, Fangzhen’,
-        ‘Foundations underlying design of intelligent systems. Relations between logical, statistical, cognitive, biological paradigms; basic techniques for heuristic search, theorem proving, knowledge representation, adaptation; applications in vision, language, planning, expert systems.');
+VALUES ('Fundamentals of Artificial Intelligence', 'COMP3211', 'LIN, Fangzhen',
+        'Foundations underlying design of intelligent systems. Relations between logical, statistical, cognitive, biological paradigms; basic techniques for heuristic search, theorem proving, knowledge representation, adaptation; applications in vision, language, planning, expert systems.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Database Management Systems’, ‘COMP3311’, ‘NG, Wilfred Siu Hung’,
-        ‘Principles of database systems; conceptual modeling and data models; logical and physical database design; query languages and query processing; database services including concurrency, crash recovery, security and integrity. Hands-on DBMS experience.');
+VALUES ('Database Management Systems', 'COMP3311', 'NG, Wilfred Siu Hung',
+        'Principles of database systems; conceptual modeling and data models; logical and physical database design; query languages and query processing; database services including concurrency, crash recovery, security and integrity. Hands-on DBMS experience.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Operating Systems’, ‘COMP3511’, ‘LI, Bo’,
-        ‘Principles, purpose and structure of operating systems; processes, threads, and multi-threaded programming; CPU scheduling; synchronization, mutual exclusion; memory management and virtual memory; device management; file systems, security and protection.');
+VALUES ('Operating Systems', 'COMP3511', 'LI, Bo',
+        'Principles, purpose and structure of operating systems; processes, threads, and multi-threaded programming; CPU scheduling; synchronization, mutual exclusion; memory management and virtual memory; device management; file systems, security and protection.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES (‘Design and Analysis of Algorithms’, ‘COMP3711’, ‘GOLIN, Mordecai Jay’,
-        ‘Techniques for designing algorithms, proving their correctness, and analyzing their running times. Topics covered include: sorting, selection, heaps, balanced search trees, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms.');
+VALUES ('Design and Analysis of Algorithms', 'COMP3711', 'GOLIN, Mordecai Jay',
+        'Techniques for designing algorithms, proving their correctness, and analyzing their running times. Topics covered include: sorting, selection, heaps, balanced search trees, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms.');
 
 CREATE TABLE Files
 (
