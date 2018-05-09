@@ -23,10 +23,10 @@ case "POST":
 		];
 		$context = stream_context_create($options);
 		$verify = json_decode(file_get_contents($url, false, $context), true);
-		if (!$verify["success"]){
-			var_dump($verify);
-			error(ERROR_CAPTCHA_NOT_PASSED);
-		}
+//		if (!$verify["success"]){
+////			var_dump($verify);
+//			error(ERROR_CAPTCHA_NOT_PASSED);
+//		}
 
 
 		$userEntries = do_sqlite3_prepared_statement(
