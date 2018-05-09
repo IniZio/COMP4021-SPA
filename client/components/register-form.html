@@ -13,7 +13,7 @@
         </div>
         <form id="regForm" @submit="submitRegister">
             <div class="form-row">
-              <div class="col-md-6 col-sm-12 form-group" style="width: 100%">
+              <div class="col-md-6 col-xs-12 form-group" style="width: 100%">
                 <label for="username">Username</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6 col-sm-12 form-group">
+                <div class="col-md-6 col-xs-12 form-group">
                     <label for="password">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -38,7 +38,7 @@
                     </div>
                     <div style="color: red; height: 1rem" :children="invalidPassword"></div>
                 </div>
-                <div class="col-md-6 col-sm-12 form-group">
+                <div class="col-md-6 col-xs-12 form-group">
                     <label for="confirmPassword">Confirm Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -49,11 +49,11 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6 col-sm-12 form-group">
+                <div class="col-md-6 col-xs-12 form-group">
                     <label for="first_name">First name</label>
                     <input type="text" required class="form-control"  name="first_name" placeholder="First Name" :value="form.first_name" @input="changeField">
                 </div>
-                <div class="col-md-6 col-sm-12 form-group">
+                <div class="col-md-6 col-xs-12 form-group">
                     <label for="last_name">Last name</label>
                     <input type="text" required class="form-control"  name="last_name" placeholder="Last Name" :value="form.last_name" @input="changeField">
                 </div>

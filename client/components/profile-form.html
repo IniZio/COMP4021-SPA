@@ -9,7 +9,7 @@
     </div>
     <form id="profileEditForm" @submit="submitProfile">
       <div class="row">
-        <div class="col-md-4 col-sm-12 p-3">
+        <div class="col-md-4 col-xs-12 p-3">
           <div class="col text-center">
             <label for="profilePhoto">
               <strong>Profile Photo</strong>
@@ -24,7 +24,7 @@
             <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" :value="form.avatar" @input="changeAvatar">
           </div>
         </div>
-        <div class="col-md-8 col-sm-12 p-0 pr-3">
+        <div class="col-md-8 col-xs-12 p-0 pr-3">
           <div class="form-row mt-3">
             <div class="col-3 form-group text-right">
               <label>
@@ -34,7 +34,7 @@
             <!-- Username to be changed -->
             <div class="col-7 form-group text-left" id="getUsername" :children="form.username">default</div>
           </div>
-          <!-- <div class="form-row">
+           <div class="form-row">
             <div class="col-3 form-group text-right mt-2">
               <label for="password">
                 <strong>New Password</strong>
@@ -54,7 +54,7 @@
               <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password" :value="form.confirmPassword" @input="changeField">
               <div x-if="invalidPassword" style="color: red; height: 1rem" :children="invalidPassword"></div>
             </div>
-          </div> -->
+          </div> 
           <div class="form-row">
             <div class="col-3 form-group text-right mt-2">
               <label for="first_name">
