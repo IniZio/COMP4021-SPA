@@ -201,9 +201,9 @@ class MyElement extends HTMLElement {
 
         const conditionalRender = () => {
           if (node.previousElementSibling.style && node.previousElementSibling.style.display === 'none') {
-            node.style.display = node.display || 'block'
+            node.style.display = node.getAttribute('display') || 'block'
           } else {
-            node.display = node.style.display
+            node.setAttribute('display', node.style.display)
             node.style.display = 'none'
           }
         }
