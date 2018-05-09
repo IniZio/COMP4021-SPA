@@ -65,7 +65,6 @@ function do_sqlite3_prepared_statement(
 	if ($sqlStmt == false) {
 		if ($returnError) {
 			$ret = [$db->lastErrorCode(), $db->lastErrorMsg()];
-			var_dump($ret);
 			return $ret;
 		}
 		do_error(500, $db->lastErrorMsg());

@@ -98,6 +98,19 @@ if (count($path) == 4)
 		unset($resource["id"]);
 		unset($resource["course_id"]);
 		unset($resource["file_id"]);
+		if (is_string($post_json["name"])) {
+			$resource["name"] = $post_json["name"];
+		}
+		if (is_string($post_json["description"])) {
+			$resource["description"] = $post_json["description"];
+		}
+		if (is_string($post_json["type"])) {
+			$resource["type"] = $post_json["type"];
+		}
+		if (is_string($post_json["text_content"])) {
+			$resource["text_content"] = $post_json["text_content"];
+		}
+
 		do_sqlite3_prepared_statement(
 			"
 			UPDATE Resources 
@@ -110,22 +123,22 @@ if (count($path) == 4)
 			[
 				[
 					"param" => ":name",
-					"value" => $post_json["name"],
+					"value" => $resource["name"],
 					"type" => SQLITE3_TEXT,
 				],
 				[
 					"param" => ":description",
-					"value" => $post_json["description"],
+					"value" => $resource["description"],
 					"type" => SQLITE3_TEXT,
 				],
 				[
 					"param" => ":type",
-					"value" => $post_json["type"],
+					"value" => $resource["type"],
 					"type" => SQLITE3_TEXT,
 				],
 				[
 					"param" => ":text_content",
-					"value" => $post_json["text_content"],
+					"value" => $resource["text_content"],
 					"type" => SQLITE3_TEXT,
 				],
 				[
