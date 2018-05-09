@@ -195,6 +195,24 @@ class MyElement extends HTMLElement {
         conditionalRender()
       })
 
+    Array.from(root.querySelectorAll('[x-else]'))
+      .map(node => {
+        node.removeAttribute('x-else')
+
+        const conditionalRender = () => {
+          if (node.previousElementSibling.style && node.previousElementSibling.style.display === 'none') {
+            node.style.display = node.display || 'block'
+          } else {
+            node.display = node.style.display
+            node.style.display = 'none'
+          }
+        }
+
+        instance.observe(instance.data, conditionalRender.bind(instance))
+        instance.observe(instance.context, conditionalRender.bind(instance))
+        conditionalRender()
+      })
+
     // if (peek) console.log(Array.from(root.querySelectorAll('*')))
 
     // Apply listeners and data binding to nodes without directives
