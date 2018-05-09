@@ -140,6 +140,34 @@ exportTag('xyz-abc', class extends MyElement {
 </script>
 ```
 
+### 7. Use `x-if` and `x-else` directive
+
+```html
+<template>
+  <button @click="toggleEdit">Edit</button>
+  <input x-if="isEditting" :value="content" @input="changeContent">
+  <div x-else :children="content"></div>
+</template>
+
+<script>
+  exportTag('abc-xyz', class extends MyElement {
+    data () {
+      return {
+        isEditting: false,
+        content: ''
+      }
+    }
+  
+    toggleEdit () {
+      this.data.isEditting = !this.data.isEditting
+    }
+  
+    changeContent (e) {
+      this.data.content = e.target.value
+    }
+  })
+```
+
 ## How to (backend)
 
 ### 1. Set up sqlite database
