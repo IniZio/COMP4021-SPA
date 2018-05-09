@@ -17,6 +17,7 @@ const ERROR_HTTP_RESOURCE_404 = [404, "Resource requested does not exist."];
 const ERROR_UNEXPECTED = [404, "Unexpected error."];
 const ERROR_USER_NOT_LOGGEDIN = [401, "User not logged in."];
 const ERROR_USER_NOT_MATCH = [401, "User not match."];
+const ERROR_CAPTCHA_NOT_PASSED = [401, "Captcha not passed."];
 const ERROR_USER_LOGGEDIN = [400, "User logged in."];
 const ERROR_SQL_FAIL = [500, "SQL Error!"];
 const ERROR_NOT_IMPLEMENTED = [500, "Feature not implemented yet!"];
