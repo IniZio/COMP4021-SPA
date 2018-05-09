@@ -92,49 +92,44 @@ if (count($path) == 1)
 	}
 
 $user_id = (int)$path[1];
+$user = get_resource_by_id($user_id, "Users");
+
 if (count($path) == 2)
 	switch ($method) {
 		// PUT /users/{id}
 	case "PUT":
 		do_check_auth();
 
-		register_user_info:
-
 		if ($user_id == $_SESSION["user"]["id"]) {
 			$post_json["first_name"] =
 				is_string($post_json["first_name"]) ?
 					$post_json["first_name"] :
-					$_SESSION["user"]["first_name"];
+					$user["first_name"];
 
 			$post_json["last_name"] =
 				is_string($post_json["last_name"]) ?
 					$post_json["last_name"] :
-					$_SESSION["user"]["last_name"];
-
-			$post_json["password"] =
-				is_string($post_json["password"]) ?
-					password_hash($post_json["password"], PASSWORD_DEFAULT) :
-					$_SESSION["user"]["password"];
+					$user["last_name"];
 
 			$post_json["email"] =
 				is_string($post_json["email"]) ?
 					$post_json["email"] :
-					$_SESSION["user"]["email"];
+					$user["email"];
 
 			$post_json["major"] =
 				is_string($post_json["major"]) ?
 					$post_json["major"] :
-					$_SESSION["user"]["major"];
+					$user["major"];
 
 			$post_json["year"] =
 				is_string($post_json["year"]) ?
 					$post_json["year"] :
-					$_SESSION["user"]["year"];
+					$user["year"];
 
 			$post_json["status"] =
 				is_string($post_json["status"]) ?
 					$post_json["status"] :
-					$_SESSION["user"]["status"];
+					$user["status"];
 
 
 			do_sqlite3_prepared_statement(
@@ -143,7 +138,6 @@ if (count($path) == 2)
 				SET
 					first_name=:first_name,
 					last_name=:last_name,
-					password=:password,
 					email=:email,
 					major=:major,
 					year=:year,
@@ -158,11 +152,6 @@ if (count($path) == 2)
 					[
 						"param" => ":last_name",
 						"value" => $post_json["last_name"],
-						"type" => SQLITE3_TEXT,
-					],
-					[
-						"param" => ":password",
-						"value" => $post_json["password"],
 						"type" => SQLITE3_TEXT,
 					],
 					[
