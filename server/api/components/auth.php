@@ -6,8 +6,24 @@ case "POST":
 		error(ERROR_USER_LOGGEDIN);
 	if (
 		is_string($post_json["username"]) &&
-		is_string($post_json["password"])
+		is_string($post_json["password"]) &&
+		is_string($post_json["captcha"])
 	) {
+		$url = 'https://www.google.com/recaptcha/api/siteverify';
+		$data = array('secret' => "d3QoFzrXOpBkDe9QUZj3cJ_h", 'response' => $post_json["captcha"]);
+
+// use key 'http' even if you send the request to https://...
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$verify = file_get_contents($url, false, $context);
+		var_dump($verify);
+
 		$userEntries = do_sqlite3_prepared_statement(
 			"
 			SELECT *
