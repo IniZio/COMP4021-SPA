@@ -44,8 +44,9 @@
       constructor () {
         super()
         this.observe(this.context, () => {
+          if (this.context.changedAvatar) this.context.changedAvatar = false
         //   this.data.invalidPassword = this.data.form.password !== this.data.form.confirmPassword ? 'The passwords do not match' : ''
-          this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/')
+          this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture?abc=${Math.random()}` : 'https://api.adorable.io/avatars/40/')
           // console.log(this.data.userAvatar)
         })
       }
