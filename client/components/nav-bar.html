@@ -11,8 +11,8 @@
       </router-link>
     </div>
     <div class="form-row p-0" style="align-items: center;">
-      <img id="navPhoto" :src="userAvatar" width="40rem;" height="40rem;">
-      <router-link to="/profile">
+      <img x-if="isLoggedIn" id="navPhoto" :src="userAvatar" width="40rem;" height="40rem;">
+      <router-link x-if="isLoggedIn" to="/profile">
         <a class="nav-link">
           <button class="btn btn-secondary m-0">
             Profile
