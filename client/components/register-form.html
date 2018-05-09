@@ -116,7 +116,7 @@
       const captcha = grecaptcha.getResponse(this.captchaWidget)
       grecaptcha.reset(this.captchaWidget)
       // If no captcha response
-      if (!captcha) return
+      // if (!captcha) return
       if (e.target.checkValidity() === false) return
       if (this.data.invalidPassword) return false
 

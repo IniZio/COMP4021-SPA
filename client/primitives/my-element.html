@@ -180,7 +180,7 @@ class MyElement extends HTMLElement {
 
           if (!path(name, instance.data) && !path(name, instance.context) && !path(name, instance) && !(computed && computed.call(instance, node, overrides))) {
             if (node.style.display !== 'none') {
-              node.setAttribute('display', node.style.display)
+              node.setAttribute('display', node.style.display !== 'none' ? node.style.display : '')
               node.style.display = 'none'
             }
           } else {
@@ -201,9 +201,9 @@ class MyElement extends HTMLElement {
 
         const conditionalRender = () => {
           if (node.previousElementSibling.style && node.previousElementSibling.style.display === 'none') {
-            node.style.display = node.getAttribute('display') || 'block'
+            node.style.display = node.getAttribute('display') || 'contents'
           } else {
-            node.setAttribute('display', node.style.display)
+            node.setAttribute('display', node.style.display !== 'none' ? node.style.display : '')
             node.style.display = 'none'
           }
         }
