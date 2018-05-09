@@ -285,7 +285,7 @@ if (count($path) == 3 &&
 		}
 		$file_name = "";
 		do {
-			$file_name = date("y-m-d-H:i:s") . $_FILES["file"]["name"];
+			$file_name = date("ymdHis") . $_FILES["file"]["name"];
 			$sqlRet = do_sqlite3_prepared_statement(
 				"
 				INSERT INTO Files (file_name, content_type)
