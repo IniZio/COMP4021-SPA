@@ -1,10 +1,11 @@
 CREATE TABLE Comments
 (
-  id                INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  author_user_id    INTEGER                           NOT NULL,
-  content           TEXT                              NOT NULL,
-  created_timestamp INTEGER                           NOT NULL,
-  course_id         INTEGER                           NOT NULL
+  id                    INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  author_user_id        INTEGER                           NOT NULL,
+  content               TEXT                              NOT NULL,
+  created_timestamp     INTEGER                           NOT NULL,
+  last_edited_timestamp INTEGER                           NOT NULL,
+  course_id             INTEGER                           NOT NULL
 );
 CREATE UNIQUE INDEX Comments_id_uindex
   ON Comments (id);
@@ -14,26 +15,31 @@ CREATE INDEX Comments_course_id_index
   ON Comments (course_id);
 
 
-
 CREATE TABLE Courses
 (
-  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  name TEXT NOT NULL,
+  id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  name        TEXT                              NOT NULL,
   description TEXT,
-  code TEXT NOT NULL ,
-  summary TEXT,
-  professor TEXT NOT NULL
+  code        TEXT                              NOT NULL,
+  summary     TEXT,
+  professor   TEXT                              NOT NULL
 );
-CREATE UNIQUE INDEX Courses_id_uindex ON Courses (id);
-CREATE UNIQUE INDEX Courses_name_uindex ON Courses (name);
-CREATE INDEX Courses_code_index ON Courses (code);
-CREATE INDEX Courses_professor_index ON Courses (professor);
+CREATE UNIQUE INDEX Courses_id_uindex
+  ON Courses (id);
+CREATE UNIQUE INDEX Courses_name_uindex
+  ON Courses (name);
+CREATE INDEX Courses_code_index
+  ON Courses (code);
+CREATE INDEX Courses_professor_index
+  ON Courses (professor);
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES ('Internet Computing', 'COMP4021', 'LAM, Gibson', 'Technologies and standards for World Wide Web (WWW), user interfaces and Browsers, authoring tools, Internet protocols, Internet servers, database connectivity, Robots, Search engines, server-side programming, client-side programming, security and privacy, recent advances.');
+VALUES ('Internet Computing', 'COMP4021', 'LAM, Gibson',
+        'Technologies and standards for World Wide Web (WWW), user interfaces and Browsers, authoring tools, Internet protocols, Internet servers, database connectivity, Robots, Search engines, server-side programming, client-side programming, security and privacy, recent advances.');
 
 INSERT INTO Courses (name, code, professor, description)
-VALUES ('Software Engineering Practices', 'COMP4111', 'ZHANG, Charles Chuan', 'This course provides students with the exposure of effective real-world software engineering practices and the underlying concepts via working around a realistic modern software system and applying popular tools and practices in industry. ');
+VALUES ('Software Engineering Practices', 'COMP4111', 'ZHANG, Charles Chuan',
+        'This course provides students with the exposure of effective real-world software engineering practices and the underlying concepts via working around a realistic modern software system and applying popular tools and practices in industry. ');
 
 
 CREATE TABLE Files
@@ -46,7 +52,6 @@ CREATE UNIQUE INDEX Files_id_uindex
   ON Files (id);
 CREATE UNIQUE INDEX Files_file_name_uindex
   ON Files (file_name);
-
 
 
 CREATE TABLE Resources
@@ -67,7 +72,6 @@ CREATE INDEX Resources_course_id_index
   ON Resources (course_id);
 CREATE INDEX Resources_type_index
   ON Resources (type);
-
 
 
 CREATE TABLE Users
