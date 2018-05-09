@@ -163,7 +163,7 @@
 
       this.observe(this.context, () => {
       //   this.data.invalidPassword = this.data.form.password !== this.data.form.confirmPassword ? 'The passwords do not match' : ''
-        this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture` : 'https://api.adorable.io/avatars/40/')
+        this.data.userAvatar = ((this.context.profile && this.context.profile.id) ? `${BASE_URL}/users/${this.context.profile.id}/picture?abc=${Math.random()}` : 'https://api.adorable.io/avatars/40/')
         // console.log(this.data.userAvatar)
       })
 
@@ -209,8 +209,7 @@
         }
         const {data: {user}} = await api.updateProfile(this.context.profile.id, this.data.form)
         this.context.profile = user
-
-        console.log(this.context.profile)
+        this.context.changedAvatar = true
       } catch (e) {
         switch (e.response && e.response.status) {
           default:
