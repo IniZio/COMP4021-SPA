@@ -7,7 +7,7 @@ CREATE TABLE Comments
   created_timestamp     INTEGER                           NOT NULL,
   last_edited_timestamp INTEGER                           NOT NULL,
   course_id             INTEGER                           NOT NULL,
-  picture_file_id       INTEGER                           NOT NULL
+  picture_file_id       INTEGER
 );
 CREATE UNIQUE INDEX Comments_id_uindex
   ON Comments (id);
