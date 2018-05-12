@@ -166,6 +166,7 @@ exportTag('xyz-abc', class extends MyElement {
       this.data.content = e.target.value
     }
   })
+</script>
 ```
 
 ## How to (backend)
